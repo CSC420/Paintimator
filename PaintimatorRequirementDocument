@@ -5,9 +5,21 @@ Back End:
   2) Paintimator will utilize {VLC} for the playback of created animations.
   
 Target User Group:
-  Paintimator will target elementary school aged children.
+  Paintimator will target American elementary school aged children.
   
 Overview of functionality:
   Paintimator will allow the user to create simplistic images (think: MS Paint) and add them into an array of 'frames',
   which can then be converted into an animation using FFMPEG. The user then will have the ability to play the animation
   using {VLC Media Player}.
+  
+  
+  
+  LIST OF TASKS:
+  
+    1) Allow the user to draw a line on the canvas
+    2) Allow the user to free-draw (pen tool) on the canvas
+    3) Allow the user to add a text bow to the canvas
+    4) Allow the user to add a shape to the canvas
+      a) User selects between a circle, triangle or reactangle
+    5) Allow the user to add the contents of the canvas (the picture) to the list of frames
+    6) Allow the user to click on any frame in the list to re-edit the image
