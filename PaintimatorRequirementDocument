@@ -10,4 +10,4 @@ Target User Group:
 Overview of functionality:
   Paintimator will allow the user to create simplistic images (think: MS Paint) and add them into an array of 'frames',
   which can then be converted into an animation using FFMPEG. The user then will have the ability to play the animation
-  using VLC Media Player.
+  using {VLC Media Player}.
