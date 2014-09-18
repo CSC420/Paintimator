@@ -14,7 +14,7 @@ Overview of functionality:
   to play the animation using {VLC, MPlayer} by simply pressing a 'play' button that will become active after
   an animation has been created.
 
-  LIST OF TASKS:
+  List of Tasks:
   
     1) Allow the user to draw a line on the canvas
     2) Allow the user to free-draw (pen tool) on the canvas
