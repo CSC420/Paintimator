@@ -16,11 +16,13 @@ Overview of functionality:
 
   List of Tasks:
   
-    1) Allow the user to draw a line on the canvas
-    2) Allow the user to free-draw (pen tool) on the canvas
-    3) Allow the user to add a text bow to the canvas
-    4) Allow the user to add a shape to the canvas
+    1) Allow the user to draw a line on the canvas*
+    2) Allow the user to free-draw (pen tool) on the canvas*
+    3) Allow the user to add a text bow to the canvas*
+    4) Allow the user to add a shape to the canvas*
       a) User selects between a circle, triangle or rectangle
     5) Allow the user to add the contents of the canvas (the picture) to the list of frames
     6) Allow the user to click on any frame in the list to re-edit the image
     7) Allow the user to play back the generated animation using {VLC, MPlayer}
+
+        * Upon selection of tool, the user will be given option to set the line width, color, etc.
