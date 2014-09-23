@@ -17,11 +17,11 @@ Overview of functionality (goals):
   media player.
   
 Description of Interface:
-  Paintimator will initiate as a typical Java Swing 'window' with a preferred size of 500 x 500. The majority of
+  Paintimator will initiate as a typical Java Swing 'window' with a preferred size of {500 x 500}. The majority of
   the window will consist of the canvas on which the user will draw. There will be a panel on the {left, right}
   side of the window (that is always visible) comprised of the different tools the user will use to draw on the
-  canvas (the "tool bar"). The bottom of the window will have a panel for the list of frames, along with the
-  controls for adding frames, and the creation and playback of the animations.
+  canvas (the "tool bar"). The {top, bottom} of the window will have a panel for the list of frames, along with the
+  controls for adding frames based on the current canvas, and the creation and playback of the animations.
 
   List of Tasks:
   
