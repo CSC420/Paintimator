@@ -15,6 +15,13 @@ Overview of functionality (goals):
   frames have been added to the frames list. Upon pressing play, the program will convert each frame into an image
   (jpeg) and, using FFMPEG, will compile the list of images into an animation, which will be played using the
   media player.
+  
+Description of Interface:
+  Paintimator will initiate as a typical Java Swing 'window' with a preferred size of 500 x 500. The majority of
+  the window will consist of the canvas on which the user will draw. There will be a panel on the {left, right}
+  side of the window (that is always visible) comprised of the different tools the user will use to draw on the
+  canvas (the "tool bar"). The bottom of the window will have a panel for the list of frames, along with the
+  controls for adding frames, and the creation and playback of the animations.
 
   List of Tasks:
   
