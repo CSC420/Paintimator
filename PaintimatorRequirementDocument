@@ -8,11 +8,13 @@ Back End:
 Target User Group:
   Paintimator will target U.S. Elementary School aged children.
   
-Overview of functionality:
+Overview of functionality (goals):
   Paintimator will allow the user to create simplistic images (think: MS Paint) and add them into an array of
   'frames', which can then be converted into an animation using FFMPEG. The user then will have the ability
   to play the animation using {VLC, MPlayer} by simply pressing a 'play' button that will become active after
-  an animation has been created.
+  frames have been added to the frames list. Upon pressing play, the program will convert each frame into an image
+  (jpeg) and, using FFMPEG, will compile the list of images into an animation, which will be played using the
+  media player.
 
   List of Tasks:
   
