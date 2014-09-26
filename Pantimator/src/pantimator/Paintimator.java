@@ -78,21 +78,42 @@ public class Paintimator extends JFrame{
             line.addActionListener(new ActionListener() {
                 @Override public void actionPerformed(ActionEvent e) {
                     canvas.setTool(Drawable.Line);
-                }
+                }//end actionPerformed
             });
 
             shapes = new JButton("Shapes");
             shapes.addActionListener(new ActionListener() {
                 @Override public void actionPerformed(ActionEvent e) {
                     canvas.setTool(Drawable.Shape);
-                }
+                }//end actionPerformed
+            });
+
+            draw = new JButton("Draw");
+            draw.addActionListener(new ActionListener() {
+                @Override public void actionPerformed(ActionEvent e) {
+                    canvas.setTool(Drawable.Draw);
+                }//end actionPerformed
+            });
+
+            text = new JButton("Text");
+            text.addActionListener(new ActionListener() {
+                @Override public void actionPerformed(ActionEvent e) {
+                    canvas.setTool(Drawable.Text);
+                }//end actionPerformed
+            });
+
+            erase = new JButton("Erase");
+            erase.addActionListener(new ActionListener() {
+                @Override public void actionPerformed(ActionEvent e) {
+                    canvas.setTool(Drawable.Erase);
+                }//end actionPerformed
             });
 
             toolPanel.add(line);
-            toolPanel.add(new JButton("Draw"));
-            toolPanel.add(new JButton("Text"));
+            toolPanel.add(draw);
+            toolPanel.add(text);
             toolPanel.add(shapes);
-            toolPanel.add(new JButton("Erase"));
+            toolPanel.add(erase);
         }//end if
 
         this.add(toolPanel, BorderLayout.LINE_END);

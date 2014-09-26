@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.LinkedList;
@@ -20,11 +21,13 @@ public class Canvas extends JPanel {
 
     private Drawable tool = Drawable.None;
     private LinkedList<Shape> shapesToDraw;
+    private LinkedList<Point> pointsToDraw;
 
     public Canvas(){
         super();
 
         shapesToDraw = new LinkedList<Shape>();
+        pointsToDraw = new LinkedList<Point>();
 
         cm = new ComponentMover();
         cm.setEdgeInsets( new Insets(-100, -100, -100, -100) );
@@ -45,6 +48,10 @@ public class Canvas extends JPanel {
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
+        while(!pointsToDraw.isEmpty() && (pointsToDraw.size()%2 == 0)){
+            shapesToDraw.add(new Line2D.Float(pointsToDraw.pop(), pointsToDraw.pop()));
+        }
+
         while(!shapesToDraw.isEmpty()){
             Shape s = shapesToDraw.pop();
             LOG.log(Level.INFO, "Drawing shape: " + s);
@@ -53,6 +60,16 @@ public class Canvas extends JPanel {
     }//end paintcomponent
 
     private void createAndSetMouseListener(){
+        addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if(tool.equals(Drawable.Draw)){
+                    pointsToDraw.add(new Point(e.getX(), e.getY()));
+                    canvas.repaint();
+                }//end if
+            }
+            @Override public void mouseMoved(MouseEvent e) {}
+        });
         addMouseListener(new MouseListener() {
             int x1, x2, y1, y2;
             @Override public void mouseClicked(MouseEvent e) {}
@@ -64,6 +81,7 @@ public class Canvas extends JPanel {
                 LOG.log(Level.INFO, "Mouse Pressed, tool = " + tool);
                 x1 = e.getX();
                 y1 = e.getY();
+
             }//end mousePressed
 
             @Override
@@ -74,13 +92,13 @@ public class Canvas extends JPanel {
 
                 switch (tool){
                     case Line:
-                        shapesToDraw.add(new Line2D.Double(x1, y1, x2, y2));
+                        shapesToDraw.add(new Line2D.Float(x1, y1, x2, y2));
                         canvas.repaint();
                         break;
                     case Draw:
                         break;
                     case Shape:
-                        shapesToDraw.add(new Ellipse2D.Double((x1<x2?x1:x2), (y1<y2?y1:y2), Math.abs(x1-x2), Math.abs(y1-y2)));
+                        shapesToDraw.add(new Ellipse2D.Float((x1<x2?x1:x2), (y1<y2?y1:y2), Math.abs(x1-x2), Math.abs(y1-y2)));
                         canvas.repaint();
                         break;
                     case Text:
