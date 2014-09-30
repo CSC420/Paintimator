@@ -2,6 +2,8 @@ package pantimator;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,8 +17,8 @@ public class Paintimator extends JFrame{
     private final String FRAME_TITLE = "Paintimator!";
 
     private Canvas canvas;
-    private JPanel toolPanel,
-                    animationPanel;
+    private JPanel toolPanel, animationPanel;
+    private JMenuBar menuBar;
 
     public Paintimator(){
         super();
@@ -27,6 +29,7 @@ public class Paintimator extends JFrame{
 
         canvas = new Canvas();
         this.add(canvas, BorderLayout.CENTER);
+        createMenu();
         createToolPanel();
         createAnimationPanel();
 
@@ -66,12 +69,34 @@ public class Paintimator extends JFrame{
         });
     }//end main
 
+    private void createMenu(){
+        menuBar = new JMenuBar();
+
+        JMenu fileMenu = new JMenu("File");
+        JMenu editMenu = new JMenu("Edit");
+
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+
+        this.setJMenuBar(menuBar);
+    }
+
     private void createToolPanel(){
         toolPanel = new JPanel(new GridLayout(0,1));
         toolPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
         //TODO add tool buttons
 
         final JButton line, draw, text, shapes, erase;
+        final JSlider lineSize = new JSlider(JSlider.HORIZONTAL, 1, 10, 1);
+        final JLabel lineSizeLabel = new JLabel("Line Size: " + lineSize.getValue());
+        lineSize.setPreferredSize(new Dimension(10, lineSize.getHeight()));
+        lineSize.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                canvas.setLineSize(lineSize.getValue());
+                lineSizeLabel.setText("Line Size: " + lineSize.getValue());
+            }
+        });
 
         if(DEBUG){
             line = new JButton("Line");
@@ -84,7 +109,28 @@ public class Paintimator extends JFrame{
             shapes = new JButton("Shapes");
             shapes.addActionListener(new ActionListener() {
                 @Override public void actionPerformed(ActionEvent e) {
-                    canvas.setTool(Drawable.Shape);
+                    final Drawable tool = Drawable.Shape;
+
+                    String[] shapes = {"Circle", "Rectangle", "Triangle"};
+
+                    int type = JOptionPane.showOptionDialog(canvas, "Select the shape type",
+                            "Shapes", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+                            null, shapes, shapes[0]);
+
+                    switch (type){
+                        case JOptionPane.CLOSED_OPTION:
+                            tool.setShapeType(Drawable.ShapeType.Circle);
+                            break;
+                        case 0:
+                            tool.setShapeType(Drawable.ShapeType.Circle);
+                            break;
+                        case 1:
+                            tool.setShapeType(Drawable.ShapeType.Rectangle);
+                            break;
+                        case 2:
+                            tool.setShapeType(Drawable.ShapeType.Triangle);
+                    }
+                    canvas.setTool(tool);
                 }//end actionPerformed
             });
 
@@ -114,6 +160,8 @@ public class Paintimator extends JFrame{
             toolPanel.add(text);
             toolPanel.add(shapes);
             toolPanel.add(erase);
+            toolPanel.add(lineSizeLabel);
+            toolPanel.add(lineSize);
         }//end if
 
         this.add(toolPanel, BorderLayout.LINE_END);

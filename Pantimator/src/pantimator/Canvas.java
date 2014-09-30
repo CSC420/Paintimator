@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +23,10 @@ public class Canvas extends JPanel {
     private Drawable tool = Drawable.None;
     private LinkedList<Shape> shapesToDraw;
     private LinkedList<Point> pointsToDraw;
+    private Point lastPoint;
+
+    private int lineSize = 1;
+    private int eraseSize;
 
     public Canvas(){
         super();
@@ -36,7 +41,7 @@ public class Canvas extends JPanel {
         createAndSetMouseListener();
 
         this.setLayout(new DragLayout());
-        this.setBackground(Color.WHITE);
+//        this.setBackground(Color.WHITE);
     }//end constructor
 
     public void setTool(Drawable d){
@@ -44,18 +49,34 @@ public class Canvas extends JPanel {
         LOG.log(Level.INFO, "Setting tool to " + d);
     }//end drawLine
 
+    public void setLineSize(int l){
+        lineSize = l;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        while(!pointsToDraw.isEmpty() && (pointsToDraw.size()%2 == 0)){
-            shapesToDraw.add(new Line2D.Float(pointsToDraw.pop(), pointsToDraw.pop()));
+        if(lastPoint == null && !pointsToDraw.isEmpty()){
+            lastPoint = pointsToDraw.pop();
         }
+
+            while(!pointsToDraw.isEmpty()){
+                Point next = pointsToDraw.pop();
+                shapesToDraw.add(new Line2D.Float(lastPoint, next));
+                lastPoint = next;
+            }
 
         while(!shapesToDraw.isEmpty()){
             Shape s = shapesToDraw.pop();
             LOG.log(Level.INFO, "Drawing shape: " + s);
-            g2d.draw(s);
+            if (tool.equals(Drawable.Erase)) {
+                g2d.setColor(canvas.getBackground());
+                g2d.fill(s);
+            } else {
+                g2d.setStroke(new BasicStroke(lineSize));
+                g2d.draw(s);
+            }
         }
     }//end paintcomponent
 
@@ -66,7 +87,10 @@ public class Canvas extends JPanel {
                 if(tool.equals(Drawable.Draw)){
                     pointsToDraw.add(new Point(e.getX(), e.getY()));
                     canvas.repaint();
-                }//end if
+                } else if(tool.equals(Drawable.Erase)){
+                    shapesToDraw.add(new Rectangle2D.Float(e.getX(), e.getY(), 10, 10));
+                    canvas.repaint();
+                }
             }
             @Override public void mouseMoved(MouseEvent e) {}
         });
@@ -96,9 +120,27 @@ public class Canvas extends JPanel {
                         canvas.repaint();
                         break;
                     case Draw:
+                        pointsToDraw.clear();
+                        lastPoint = null;
                         break;
                     case Shape:
-                        shapesToDraw.add(new Ellipse2D.Float((x1<x2?x1:x2), (y1<y2?y1:y2), Math.abs(x1-x2), Math.abs(y1-y2)));
+                        switch (tool.getShapeType()){
+                            case None:
+                                break;
+                            case Circle:
+                                shapesToDraw.add(new Ellipse2D.Float((x1<x2?x1:x2), (y1<y2?y1:y2), Math.abs(x1-x2), Math.abs(y1-y2)));
+                                break;
+                            case Rectangle:
+                                shapesToDraw.add(new Rectangle2D.Float(x1, y1, Math.abs(x2-x1), Math.abs(y2-y1)));
+                                break;
+                            case Triangle:
+                                int x3 = Math.abs((x2-x1)/2);
+                                //TODO Fix the 3rd point!!
+                                Double y3 = (Math.abs(y2-y1)/2) + (Math.abs(y2-y1)/2)*(Math.sqrt(3));
+                                shapesToDraw.add(new Polygon(new int[]{/*X points*/ x1, x2, x3},
+                                        new int[]{/*Y points*/ y1, y2, y3.intValue()}, 3));
+                                break;
+                        }
                         canvas.repaint();
                         break;
                     case Text:
