@@ -23,10 +23,11 @@ public class Paintimator extends JFrame{
 
 	private Canvas canvas;
 	private JPanel contentPane;
-	//private JPanel toolPanel;
 	private JPanel centerPanel;
 	private JPanel rightPanel;
 	private JPanel bottomPanel;
+	
+	private JMenuBar menuBar;
 	
 	private Listener myListener;
 	
@@ -64,6 +65,7 @@ public class Paintimator extends JFrame{
 		//right panel
 		rightPanel = new JPanel();
 		createToolPanel();
+		createMenu();
 		//createAnimationPanel(); //want to put this in centerPanel under the
 								  //canvas with GidBag layout
 		
@@ -240,6 +242,18 @@ public class Paintimator extends JFrame{
 			rightPanel.add(toolPanel);
 		
 	}
+	
+    private void createMenu(){
+        menuBar = new JMenuBar();
+
+        JMenu fileMenu = new JMenu("File");
+        JMenu editMenu = new JMenu("Edit");
+
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+
+        this.setJMenuBar(menuBar);
+    }
 	
 //	 private void createAnimationPanel(){
 //	        animationPanel = new JPanel(new GridLayout(1,0));

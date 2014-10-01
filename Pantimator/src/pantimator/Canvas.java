@@ -34,6 +34,12 @@ public class Canvas extends JPanel {
         brushSize = 1;
         currentBGColor = backColor;
         currentState = State.NONE;
+        
+//        cm = new ComponentMover();
+//        cm.setEdgeInsets( new Insets(-100, -100, -100, -100) );
+//        cm.setAutoLayout(true);
+//        
+//        this.setLayout(new DragLayout());
     }
 
     
