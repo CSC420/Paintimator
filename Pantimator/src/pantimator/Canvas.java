@@ -109,17 +109,16 @@ public class Canvas extends JPanel {
 			}
 		},
 		CIRCLE{
-			//having issues painting a circle
+
 			public void paintComponent(Canvas c, Graphics g) {
 				Graphics2D g2d = (Graphics2D) g; 
-				g2d.setColor(c.currentBGColor);
+				g2d.setColor(c.currentColor);
 				g2d.setStroke(new BasicStroke(c.brushSize));
 				g2d.draw(new Ellipse2D.Float((c.p1.x<c.p2.x?c.p1.x:c.p2.x), (c.p1.y<c.p2.y?c.p1.y:c.p2.y), Math.abs(c.p1.x-c.p2.x), Math.abs(c.p1.y-c.p2.y)));
 			}
 		},
 		SQUARE{
 			
-			//having issues painting the square
 			public void paintComponent(Canvas c, Graphics g) {
 				
 				Graphics2D g2d = (Graphics2D) g; 
