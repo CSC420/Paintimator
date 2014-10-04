@@ -1,18 +1,11 @@
 package pantimator;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Polygon;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.util.LinkedList;
-import java.util.logging.Level;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -20,7 +13,6 @@ import java.util.logging.Logger;
  */
 public class Canvas extends JPanel {
     private final Logger LOG = Logger.getLogger(Canvas.class.getName());
-    //private final ComponentMover cm;
     private State currentState;
 	private Point p1;
 	private Point p2;
@@ -28,44 +20,57 @@ public class Canvas extends JPanel {
 	private Color currentBGColor;
 	private int brushSize;
 
+    private ArrayList<Shape> shapesToDraw = new ArrayList<Shape>();
+
     public Canvas(Color backColor){
         super();
         currentColor = Color.BLACK;
         brushSize = 1;
         currentBGColor = backColor;
         currentState = State.NONE;
-        
-//        cm = new ComponentMover();
-//        cm.setEdgeInsets( new Insets(-100, -100, -100, -100) );
-//        cm.setAutoLayout(true);
-//        
-//        this.setLayout(new DragLayout());
+
+        setLayout(new BorderLayout());
     }
 
-    
     public void setTool(State d){
         this.currentState = d;
         System.out.println("State changed to " + currentState);
         //LOG.log(Level.INFO, "Setting tool to " + d);
     }
-    
+
      public void setPoint1(Point p){
     	 p1 = p;
      }
-     
+
      public void setColor(Color c){
     	 currentColor = c;
      }
-     
-     public void setPoint2(Point p){
+
+    public Color getCurrentColor(){
+        return currentColor;
+    }
+
+    public void setPoint2(Point p){
     	 p2 = p;
      }
-     
-     public void setBrushSize(int b){
+
+    public Point getP1(){
+        return p1;
+    }
+
+    public Point getP2(){
+        return p2;
+    }
+
+    public void setBrushSize(int b){
     	 brushSize = b+2;
      }
 
-    
+    public int getBrushSize(){
+        return brushSize;
+    }
+
+
     @Override
     public void paintComponent(Graphics g) {
     	currentState.paintComponent(this, g);
@@ -79,7 +84,8 @@ public class Canvas extends JPanel {
 				g2d.setColor(c.currentColor);
 				g2d.setStroke(new BasicStroke(c.brushSize));
 				g2d.draw(new Line2D.Double(c.p1, c.p2));
-			}
+                System.out.println("LINES!!!!");
+            }
 		},
 		DRAW{
 			public void paintComponent(Canvas c, Graphics g) {
@@ -88,7 +94,8 @@ public class Canvas extends JPanel {
 				g2d.setStroke(new BasicStroke(c.brushSize));
 				g2d.draw(new Line2D.Double(c.p1, c.p2));
 				c.p1 = c.p2;
-			}
+                System.out.println("DRAWING!!!!!");
+            }
 		},
 		ERASE {
 			public void paintComponent(Canvas c, Graphics g) {
@@ -115,7 +122,7 @@ public class Canvas extends JPanel {
 			//having issues painting a circle
 			public void paintComponent(Canvas c, Graphics g) {
 				Graphics2D g2d = (Graphics2D) g; 
-				g2d.setColor(c.currentBGColor);
+				g2d.setColor(c.currentColor);
 				g2d.setStroke(new BasicStroke(c.brushSize));
 				g2d.draw(new Ellipse2D.Float((c.p1.x<c.p2.x?c.p1.x:c.p2.x), (c.p1.y<c.p2.y?c.p1.y:c.p2.y), Math.abs(c.p1.x-c.p2.x), Math.abs(c.p1.y-c.p2.y)));
 			}
@@ -154,7 +161,5 @@ public class Canvas extends JPanel {
 //        shapesToDraw.add(new Polygon(new int[]{/*X points*/ x1, x2, x3},
 //                new int[]{/*Y points*/ y1, y2, y3.intValue()}, 3));
 //        break;
-
-
 
 }//end Canvas
