@@ -114,26 +114,26 @@ public class Paintimator extends JFrame{
                 //should keep look and feels off while figuring out the display
                 //some look and feels drastically change how some components
                 //naturally look and may change your code from doing what you want
-//				try {
-//					for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-//						if ("Nimbus".equals(info.getName())) {
-//							UIManager.setLookAndFeel(info.getClassName());
-//							break;
-//						}
-//					}
-//				} catch (ClassNotFoundException e) {
-//					e.printStackTrace();
-//					System.exit(1);
-//				} catch (UnsupportedLookAndFeelException e) {
-//					e.printStackTrace();
-//					JOptionPane.showMessageDialog(null, "Setting the Look and Feel to Nimbus failed - falling back to default.");
-//				} catch (InstantiationException e) {
-//					e.printStackTrace();
-//					System.exit(1);
-//				} catch (IllegalAccessException e) {
-//					e.printStackTrace();
-//					System.exit(1);
-//				}
+				try {
+					for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+						if ("Nimbus".equals(info.getName())) {
+							UIManager.setLookAndFeel(info.getClassName());
+							break;
+						}
+					}
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+					System.exit(1);
+				} catch (UnsupportedLookAndFeelException e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Setting the Look and Feel to Nimbus failed - falling back to default.");
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+					System.exit(1);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+					System.exit(1);
+				}
 
                 Paintimator frame = new Paintimator();
                 frame.setVisible(true);
