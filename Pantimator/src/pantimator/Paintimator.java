@@ -1,6 +1,6 @@
 package pantimator;
 
-import pantimator.Canvas.State;
+
 import pantimator.Listener.LisState;
 
 import javax.swing.*;
@@ -18,18 +18,13 @@ public class Paintimator extends JFrame{
 
     private final int GUI_WIDTH = 500, GUI_HEIGHT = 500;
     private final String FRAME_TITLE = "Paintimator!";
-    private final Color canvasColor = new Color(50, 165, 13);
-
-    private Canvas canvas;
     private JPanel contentPane;
     private JPanel centerPanel;
     private JPanel rightPanel;
     private JPanel bottomPanel;
 
     private LayeredPanel layeredPanel;
-
-    private JInternalFrame canvasFrame;
-
+    private JPanel canvasBackground;
     private JMenuBar menuBar;
 
     private Listener myListener;
@@ -45,23 +40,21 @@ public class Paintimator extends JFrame{
         this.setPreferredSize(new Dimension(1200, 750));
         this.setTitle(FRAME_TITLE);
 
-        //draw panel
-        canvas = new Canvas(canvasColor);
-        layeredPanel.setCanvasBG(canvasColor);
+        //drawing area
+        layeredPanel.setCanvasBG(Color.BLUE);
         layeredPanel.setDrawColor(Color.BLACK);
         layeredPanel.setPreferredSize(new Dimension(700,500));
-//        canvas.setLayout(null);
-        //canvas.setBackground(Color.GREEN);//why doesn't this work
-        canvas.setPreferredSize(new Dimension(700,510));
+
         //background for canvas
-        canvasFrame = new JInternalFrame();
-        canvasFrame.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        canvasFrame.setBackground(canvasColor);
-        canvasFrame.setPreferredSize(new Dimension(700, 500));
+        canvasBackground = new JPanel();
+        canvasBackground.setAlignmentX(Component.CENTER_ALIGNMENT);
+        canvasBackground.setPreferredSize(new Dimension(700, 500));
+        canvasBackground.setBackground(Color.MAGENTA);
+        
         //center panel
         centerPanel = new JPanel();
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        centerPanel.setBackground(Color.GREEN);
+        centerPanel.setBackground(Color.GREEN);
 
         //bottom Panel
         bottomPanel = new JPanel();
@@ -72,68 +65,48 @@ public class Paintimator extends JFrame{
         rightPanel = new JPanel();
         createToolPanel();
         createMenu();
-        //createAnimationPanel(); //want to put this in centerPanel under the
-        //canvas with GridBag layout
 
         //listener
         myListener = new Listener(layeredPanel);
         layeredPanel.addMouseListener(myListener);
         layeredPanel.addMouseMotionListener(myListener);
-
-        canvas.addMouseListener(myListener);
-        canvas.addMouseMotionListener(myListener);
-
-        //add canvas to the canvasPanel so there appears to be a
-        //
-//        canvasFrame.add(layeredPanel);
-        centerPanel.add(layeredPanel);
-        //centerPanel.add(bottomPanel);
+        
+        canvasBackground.add(layeredPanel);
+        centerPanel.add(canvasBackground);
+      //  centerPanel.add(layeredPanel);
         contentPane.add(centerPanel, BorderLayout.CENTER);
         contentPane.add(rightPanel, BorderLayout.WEST);
 
 
         //add the content pane to the frame
-//        this.getContentPane().add(contentPane);
         this.setContentPane(contentPane);
         this.pack();
         this.setVisible(true);
     }
 
-    public void setCanvasGlassPane(JPanel jp){
-        canvasFrame.setGlassPane(jp);
-    }
-
-    public Component getCanvasGlassPane(){
-        return canvasFrame.getGlassPane();
-    }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                //nimbus is default so this is not needed unless we change it
-                //should keep look and feels off while figuring out the display
-                //some look and feels drastically change how some components
-                //naturally look and may change your code from doing what you want
-				try {
-					for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-						if ("Nimbus".equals(info.getName())) {
-							UIManager.setLookAndFeel(info.getClassName());
-							break;
-						}
-					}
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-					System.exit(1);
-				} catch (UnsupportedLookAndFeelException e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Setting the Look and Feel to Nimbus failed - falling back to default.");
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-					System.exit(1);
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-					System.exit(1);
-				}
+//				try {
+//					for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+//						if ("Nimbus".equals(info.getName())) {
+//							UIManager.setLookAndFeel(info.getClassName());
+//							break;
+//						}
+//					}
+//				} catch (ClassNotFoundException e) {
+//					e.printStackTrace();
+//					System.exit(1);
+//				} catch (UnsupportedLookAndFeelException e) {
+//					e.printStackTrace();
+//					JOptionPane.showMessageDialog(null, "Setting the Look and Feel to Nimbus failed - falling back to default.");
+//				} catch (InstantiationException e) {
+//					e.printStackTrace();
+//					System.exit(1);
+//				} catch (IllegalAccessException e) {
+//					e.printStackTrace();
+//					System.exit(1);
+//				}
 
                 Paintimator frame = new Paintimator();
                 frame.setVisible(true);
@@ -151,7 +124,7 @@ public class Paintimator extends JFrame{
         line.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvas.setTool(State.LINE);
+               // canvas.setTool(State.LINE);
                 myListener.setLisState(LisState.LINE);
 
             }
@@ -162,7 +135,7 @@ public class Paintimator extends JFrame{
         color.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvas.setColor(Color.BLUE);
+               // canvas.setColor(Color.BLUE);
 
             }
         });
@@ -171,7 +144,7 @@ public class Paintimator extends JFrame{
         circle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvas.setTool(State.CIRCLE);
+               // canvas.setTool(State.CIRCLE);
                 myListener.setLisState(LisState.CIRCLE);
             }
         });
@@ -180,7 +153,7 @@ public class Paintimator extends JFrame{
         square.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvas.setTool(State.SQUARE);
+                //canvas.setTool(State.SQUARE);
                 myListener.setLisState(LisState.SQUARE);
             }
         });
@@ -190,7 +163,7 @@ public class Paintimator extends JFrame{
         triangle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvas.setTool(State.TRIANGLE);
+                //canvas.setTool(State.TRIANGLE);
                 myListener.setLisState(LisState.TRIANGLE);
             }
         });
@@ -200,7 +173,7 @@ public class Paintimator extends JFrame{
         draw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvas.setTool(State.DRAW);
+                //canvas.setTool(State.DRAW);
                 myListener.setLisState(LisState.DRAW);
 
             }
@@ -223,13 +196,12 @@ public class Paintimator extends JFrame{
         erase.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canvas.setTool(State.ERASE);
+                //canvas.setTool(State.ERASE);
                 myListener.setLisState(LisState.ERASE);
             }
         });
 
-        //not sure if slider is best approach to selecting a brush size
-        //but works just fine
+
         final JSlider lineSize = new JSlider(JSlider.HORIZONTAL, 1, 15, 1);
         final JLabel lineSizeLabel = new JLabel("Line Size: " + lineSize.getValue());
         lineSize.setPreferredSize(new Dimension(10, lineSize.getHeight()));
@@ -271,20 +243,5 @@ public class Paintimator extends JFrame{
         this.setJMenuBar(menuBar);
     }
 
-//	 private void createAnimationPanel(){
-//	        animationPanel = new JPanel(new GridLayout(1,0));
-//	        animationPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-//	        //TODO add animation controls, etc.
-//
-//	        if(DEBUG){
-//	            animationPanel.add(new JButton("Play"));
-//	            animationPanel.add(new JButton("Pause"));
-//	            animationPanel.add(new JButton("Stop"));
-//	        }//end if
-//
-//	        this.add(animationPanel, BorderLayout.PAGE_END);
-//	    }//end createAnimationPanel
 
-
-
-}//end Paintimator
+}
