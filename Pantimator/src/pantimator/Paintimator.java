@@ -142,7 +142,7 @@ public class Paintimator extends JFrame{
     }
 
     private void createToolPanel(){
-        JPanel toolPanel = new JPanel(new GridLayout(6,2)); //this will need to be GridBag
+        final JPanel toolPanel = new JPanel(new GridLayout(6,2)); //this will need to be GridBag
         toolPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
         final JButton line, draw, text, erase, color, circle, square, triangle;
@@ -212,6 +212,7 @@ public class Paintimator extends JFrame{
         text.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                FileDialog fd = new FileDialog(toolPanel);
                 //canvas.setTool(Drawable.Text);
             }
         });
