@@ -2,13 +2,19 @@ package pantimator;
 
 import pantimator.Listener.LisState;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Paintimator extends JFrame{
@@ -26,16 +32,23 @@ public class Paintimator extends JFrame{
 
     private LayeredPanel layeredPanel;
 
-    private JInternalFrame canvasFrame;
+    private static JInternalFrame canvasFrame;
 
     private JMenuBar menuBar;
 
     private Listener myListener;
 
+    private JFileChooser fc;
+
     public Paintimator(){
         super();
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        fc = new JFileChooser();
+        fc.addChoosableFileFilter(new ImageFilter());
+        fc.setAcceptAllFileFilterUsed(false);
+
         //create a contentPane
         contentPane = new JPanel(new BorderLayout());
         layeredPanel = new LayeredPanel();
@@ -255,8 +268,49 @@ public class Paintimator extends JFrame{
     private void createMenu(){
         menuBar = new JMenuBar();
 
+        final BufferedImage[] img = new BufferedImage[1];
+
         JMenu fileMenu = new JMenu("File");
         JMenu editMenu = new JMenu("Edit");
+        JMenuItem loadImg = new JMenuItem("Load Image");
+        JMenuItem saveImg = new JMenuItem("Save Image");
+
+        loadImg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int returnVal = fc.showOpenDialog(Paintimator.this);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        img[0] = ImageIO.read(fc.getSelectedFile());
+                        layeredPanel.importImgToPane(img[0]);
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(new JPanel(), "Image could not be loaded.",
+                                "Image error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+
+        saveImg.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int returnVal = fc.showSaveDialog(Paintimator.this);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        img[0] = ImageIO.read(fc.getSelectedFile());
+                        layeredPanel.importImgToPane(img[0]);
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(new JPanel(), "Image could not be loaded.",
+                                "Image error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+
+        fileMenu.add(loadImg);
+        fileMenu.add(saveImg);
 
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
@@ -277,7 +331,4 @@ public class Paintimator extends JFrame{
 //
 //	        this.add(animationPanel, BorderLayout.PAGE_END);
 //	    }//end createAnimationPanel
-
-
-
 }//end Paintimator

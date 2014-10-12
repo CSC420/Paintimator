@@ -1,6 +1,8 @@
 package pantimator;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 
 /**
  * Created by wilhelmi on 10/7/14.
@@ -13,8 +15,19 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>{
     private boolean fill = false;
     private String string = "";
 
+    private BufferedImage bi;
+    private boolean img = false;
+
     public ShapeWrapper(Shape s){
         shape = s;
+    }
+
+    /* added by Jeremy
+     * Constructor to create a ShapeWrapper as a Buffered Image
+     */
+    public ShapeWrapper(BufferedImage bi, boolean i) {
+        this.bi = bi;
+        img = i;
     }
 
     public ShapeWrapper(Shape s, String st){
@@ -83,6 +96,20 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>{
 
     public void setFill(boolean f){
         this.fill = f;
+    }
+
+    /* added by Jeremy
+     * Buffered Image getter
+     */
+    public BufferedImage getImg () {
+        return bi;
+    }
+
+    /* added by Jeremy
+     * boolean to let paint method know that this ShapeWrapper object is an image
+     */
+    public boolean isImg() {
+        return img;
     }
 
     public void setString(String s){

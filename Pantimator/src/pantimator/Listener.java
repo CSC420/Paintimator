@@ -1,5 +1,6 @@
 package pantimator;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -11,6 +12,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Listener implements MouseListener, MouseMotionListener  {
@@ -229,6 +231,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
 		},
         TEXT{
             public void mouseClicked(Listener l, MouseEvent e){
+                LOG.info("Text button clicked");
 //                System.out.println("Mouse Clicked......");
 //                JTextArea ta = new JTextArea();
 //                JScrollPane sp = new JScrollPane(ta);
