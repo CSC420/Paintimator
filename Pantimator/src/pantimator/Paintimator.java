@@ -314,6 +314,7 @@ public class Paintimator extends JFrame{
                     } else {
                         JOptionPane.showMessageDialog(new JPanel(), "Extension not accepted. Please choose a new one.",
                                 "Extension error", JOptionPane.ERROR_MESSAGE);
+                        actionPerformed(e);
                     }
                 }
             }
