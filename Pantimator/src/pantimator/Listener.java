@@ -12,7 +12,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Listener implements MouseListener, MouseMotionListener  {
@@ -163,14 +162,16 @@ public class Listener implements MouseListener, MouseMotionListener  {
 		ERASE {
 
             public void mousePressed(Listener l, MouseEvent e) {
-                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(), 1, 1);
+                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
+                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
 
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
             }
 
 
             public void mouseDragged(Listener l, MouseEvent e) {
-                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(), 1, 1);
+                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
+                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
 
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
             }
@@ -232,23 +233,13 @@ public class Listener implements MouseListener, MouseMotionListener  {
         TEXT{
             public void mouseClicked(Listener l, MouseEvent e){
                 LOG.info("Text button clicked");
-//                System.out.println("Mouse Clicked......");
-//                JTextArea ta = new JTextArea();
-//                JScrollPane sp = new JScrollPane(ta);
-//                sp.setPreferredSize(new Dimension(sp.getWidth(), 100));
-//
-//                JOptionPane.showOptionDialog(null, sp, "Enter text here", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
-//
-////                Shape s = generateShapeFromText(ta.getText());
-////                AffineTransform at = new AffineTransform();
-////                at.setToTranslation((double)e.getX(), (double)e.getY());
-////                Shape text = at.createTransformedShape(s);
-////                System.out.println(text.getBounds());
-//
-//
-//                Shape s = new Rectangle2D.Float(e.getX(),e.getY(),0,0);
-//
-//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(s, ta.getText()));
+                JTextArea ta = new JTextArea();
+                JScrollPane sp = new JScrollPane(ta);
+                sp.setPreferredSize(new Dimension(sp.getWidth(), 100));
+
+                JOptionPane.showOptionDialog(null, sp, "Enter text here", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
+
+                l.layeredPanel.addText(ta.getText(), e.getX(), e.getY());
 
             }
         },

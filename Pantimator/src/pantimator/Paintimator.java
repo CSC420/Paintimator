@@ -7,13 +7,10 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -23,7 +20,7 @@ public class Paintimator extends JFrame{
 
     private final int GUI_WIDTH = 500, GUI_HEIGHT = 500;
     private final String FRAME_TITLE = "Paintimator!";
-    private final Color canvasColor = new Color(50, 165, 13);
+    private final Color canvasColor = new Color(132, 165, 165);
 
     private JPanel contentPane;
     private JPanel centerPanel;
@@ -151,7 +148,7 @@ public class Paintimator extends JFrame{
         JPanel toolPanel = new JPanel(new GridLayout(6,2)); //this will need to be GridBag
         toolPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
-        final JButton line, draw, text, erase, color, circle, square, triangle;
+        final JButton line, draw, text, erase, fg_color, bg_color, circle, square, triangle;
 
         line = new JButton("Line");
         line.addActionListener(new ActionListener() {
@@ -163,11 +160,20 @@ public class Paintimator extends JFrame{
         });
 
         //this will need to change to a color chooser
-        color = new JButton("Color");
-        color.addActionListener(new ActionListener() {
+        fg_color = new JButton("Line Color");
+        fg_color.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 layeredPanel.setDrawColor(JColorChooser.showDialog(null, "Choose a color", layeredPanel.getDrawColor()));
+
+            }
+        });
+
+        bg_color = new JButton("Background Color");
+        bg_color.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                layeredPanel.setCanvasBG(JColorChooser.showDialog(null, "Choose a color", layeredPanel.getCanvasBG()));
 
             }
         });
@@ -255,7 +261,8 @@ public class Paintimator extends JFrame{
         toolPanel.add(square);
         toolPanel.add(triangle);
         toolPanel.add(erase);
-        toolPanel.add(color);
+        toolPanel.add(fg_color);
+        toolPanel.add(bg_color);
         toolPanel.add(lineSizeLabel);
         toolPanel.add(lineSize);
         toolPanel.setBackground(Color.RED);

@@ -23,6 +23,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass;
     private Random random = new Random();
     private Color drawColor = new Color(0,0,0,0), canvasBG;
+    private ComponentMover componentMover = new ComponentMover();
 
     private Listener.LisState tool = Listener.LisState.DRAW;
 
@@ -38,6 +39,14 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
         this.add(canvas, canvasLayerIndex);
         this.add(glass, glassLayerIndex);
+
+        componentMover.setEdgeInsets( new Insets(-100, -100, -100, -100) );
+        componentMover.setAutoLayout(true);
+        canvas.setLayout(new DragLayout());
+
+//        JLabel test = new JLabel("HELLO WORLD!!");
+//        canvas.add(test);
+//        componentMover.registerComponent(test);
     }
 
     public void setDrawColor(Color c){
@@ -65,6 +74,25 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     public int getBrushSize(){
         return brushSize;
+    }
+
+    public ComponentMover getComponentMover(){
+        return componentMover;
+    }
+
+    public JPanel getCanvas(){
+        return canvas;
+    }
+
+    public void addText(String text, int x, int y){
+        System.out.println("TEXT: " + text);
+        JLabel l = new JLabel(text);
+        l.setFont(l.getFont().deriveFont((float)brushSize*3));
+        l.setForeground(drawColor);
+        canvas.add(l);
+        componentMover.registerComponent(l, x, y);
+        canvas.revalidate();
+
     }
 
     public void drawOnRootPane(ShapeWrapper s){
@@ -138,19 +166,20 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                     g2d.setColor(s.getColor());
                     g2d.draw(s.getShape());
                 } else {
-                    if (tool.equals(Listener.LisState.ERASE)) {
-                        int x = ((Double) s.getShape().getBounds().getX()).intValue();
-                        int y = ((Double) s.getShape().getBounds().getY()).intValue();
-                        g2d.clearRect(x, y, brushSize, brushSize);
-                    } else if (tool.equals(Listener.LisState.TEXT)) {
-                        System.out.println("Trying to show the string: " + s.getString());
-//                      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-//                      RenderingHints.VALUE_ANTIALIAS_ON);
-                        Font font = new Font("Serif", Font.PLAIN, 96);
-                        g2d.setFont(font);
-                        int x = ((Double) s.getShape().getBounds().getX()).intValue();
-                        int y = ((Double) s.getShape().getBounds().getY()).intValue();
-                        g2d.drawString(s.getString(), x, y);
+                    if(tool.equals(Listener.LisState.ERASE)) {
+                        g2d.setColor(getCanvasBG());
+                        g2d.fill(s.getShape());
+
+//                        g2d.clearRect(x, y, brushSize, brushSize);
+                    } else if(tool.equals(Listener.LisState.TEXT)){
+//                        System.out.println("Trying to show the string: " + s.getString());
+////                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+////                                RenderingHints.VALUE_ANTIALIAS_ON);
+//                        Font font = new Font("Serif", Font.PLAIN, 96);
+//                        g2d.setFont(font);
+//                        int x = ((Double)s.getShape().getBounds().getX()).intValue();
+//                        int y = ((Double)s.getShape().getBounds().getY()).intValue();
+//                        g2d.drawString(s.getString(), x, y);
                     }
                 }
             }//end for
