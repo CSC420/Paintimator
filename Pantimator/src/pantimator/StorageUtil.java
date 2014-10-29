@@ -2,20 +2,18 @@ package pantimator;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.io.*;
 
 
 /**
  * Created by Mark
- * Changes to push
- * I Cant push my file!
  */
 public class StorageUtil {
-    JOptionPane jDPopup;
-    JFileChooser fc;
-    Component compParent;
-    String strProjectsDir = System.getProperty("user.home") + "/paintmator/projects";
-
+    private JOptionPane jDPopup;
+    private JFileChooser fc;
+    private Component compParent;
+    private String strProjectsDir = System.getProperty("user.home") + "/Paintimator/projects";
+    private String strCurrentProject;
     /**
      *
      * @param parentIn
@@ -44,20 +42,87 @@ public class StorageUtil {
         fc = new JFileChooser(strProjectsDir);
         fc.showOpenDialog(compParent);
 
+        //System.out.println(fc.getSelectedFile());
+        try{
+            if(fc.getSelectedFile() != null){
+                this.strCurrentProject = fc.getSelectedFile().toString();
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fc.getSelectedFile()));
+                System.out.println(ois.readObject());
+                lstOut = (LayeredPanelList) ois.readObject();
+                System.out.println(lstOut.size());
+            }
+
+        }catch (IOException ioe){
+
+        }catch(ClassNotFoundException cnf){
+
+        }
         return lstOut;
     }
 
     public void saveProject(LayeredPanelList panelListIn){
-        fc = new JFileChooser(strProjectsDir);
-        fc.showSaveDialog(compParent);
+        //fc = new JFileChooser(strProjectsDir);
+        //fc.showSaveDialog(compParent);
 
+        try{
+            FileOutputStream fos = new FileOutputStream(strCurrentProject);
+            //FileOutputStream fos = new FileOutputStream(System.getProperty("user.home")+ "/testing" + "/projects/" + "test.pnt");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(System.getProperty("user.home")+ "/Paintimator" + "/projects");
+            oos.writeObject(panelListIn);
+            oos.close();
+
+
+        }catch(IOException ex){
+            System.err.print(ex);
+        }finally{
+
+
+        }
     }
 
     public void saveProjectAs(LayeredPanelList panelListIn){
         fc = new JFileChooser(strProjectsDir);
         fc.showSaveDialog(compParent);
 
+        try{
+            if(fc.getSelectedFile() != null){
+                this.strCurrentProject = fc.getSelectedFile().toString();
+                FileOutputStream fos = new FileOutputStream(fc.getSelectedFile());
+                //FileOutputStream fos = new FileOutputStream(System.getProperty("user.home")+ "/testing" + "/projects/" + "test.pnt");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+                oos.writeObject(System.getProperty("user.home")+ "/Paintimator" + "/projects");
+                oos.writeObject(panelListIn);
+                oos.close();
+            }
+
+        }catch(IOException ex){
+            System.err.print(ex);
+        }finally{
+
+        }
+
     }
+
+
+    /**
+     *
+     * @param strIn
+     */
+    private void setProjectName(String strIn){
+        this.strCurrentProject = strIn;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getProjectName(){
+        return strCurrentProject;
+    }
+
 
     /**
      *
@@ -68,7 +133,7 @@ public class StorageUtil {
 
         //get User's home directory
         strDirectory = System.getProperty("user.home");
-        strDirectory += "/paintmator";
+        strDirectory += "/Paintimator";
         return checkDirectory(strDirectory);
     }
 
@@ -81,7 +146,7 @@ public class StorageUtil {
 
         //get User's home directory
         strDirectory = System.getProperty("user.home");
-        strDirectory += "/paintmator/bin";
+        strDirectory += "/Paintimator/bin";
         return checkDirectory(strDirectory);
     }
 
@@ -94,7 +159,7 @@ public class StorageUtil {
 
         //get User's home directory
         strDirectory = System.getProperty("user.home");
-        strDirectory += "/paintmator/logs";
+        strDirectory += "/Paintimator/logs";
         return checkDirectory(strDirectory);
     }
 
@@ -107,7 +172,7 @@ public class StorageUtil {
 
         //get User's home directory
         strDirectory = System.getProperty("user.home");
-        strDirectory += "/paintmator/projects";
+        strDirectory += "/Paintimator/projects";
         return checkDirectory(strDirectory);
     }
 
@@ -133,7 +198,7 @@ public class StorageUtil {
 
             if(!(fDir.exists())){
                 jDPopup.showMessageDialog(compParent,
-                        "Could not find or create Paintimator " + strInput[strInput.length - 1] +" directory.",
+                        "Could not find or create testing " + strInput[strInput.length - 1] +" directory.",
                         "Primary Directory Error",
                         JOptionPane.ERROR_MESSAGE);
                 return false;

@@ -1,13 +1,15 @@
 package pantimator;
 
+import sun.plugin.javascript.navig4.Layer;
+
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import javax.swing.*;
 
 /**
  * Created by Mark Williams on 10/7/2014.
  */
-public class LayeredPanelList extends ArrayList<JPanel> implements Serializable{
+public class LayeredPanelList extends ArrayList<LayeredPanel> implements Serializable{
     private static final long serialVersionUID = 000006;
 
     private ArrayList<LayeredPanel> alLayeredPanels;
@@ -22,9 +24,12 @@ public class LayeredPanelList extends ArrayList<JPanel> implements Serializable{
 
     }
 
-    public void add(LayeredPanel panelIn){
+
+    public boolean add(LayeredPanel panelIn){
         this.alLayeredPanels.add(panelIn);
         this.intNumberOfPanels = this.alLayeredPanels.size();
+        this.intSelectedPanel = this.alLayeredPanels.size() -1;
+        return true;
     }
 
     /**
@@ -40,6 +45,44 @@ public class LayeredPanelList extends ArrayList<JPanel> implements Serializable{
      */
     public int getIntSelectedPanel(){
         return this.intSelectedPanel;
+    }
+
+    public LayeredPanel get(int index){
+        this.intSelectedPanel = index;
+        return this.alLayeredPanels.get(index);
+
+    }
+
+    public LayeredPanel getPrev(){
+        if(this.intSelectedPanel > 0){
+           return this.alLayeredPanels.get(this.intSelectedPanel);
+        }else{
+            this.intSelectedPanel --;
+            return this.alLayeredPanels.get(this.intSelectedPanel);
+        }
+    }
+
+    public LayeredPanel getNext(){
+        if(this.intSelectedPanel == (this.intNumberOfPanels - 1 )){
+            return this.alLayeredPanels.get(this.intSelectedPanel);
+        }else{
+            this.intNumberOfPanels ++;
+            return this.alLayeredPanels.get(this.intSelectedPanel);
+        }
+    }
+
+    public LayeredPanel getFirst(){
+        this.intSelectedPanel = 0;
+        return this.alLayeredPanels.get(this.intSelectedPanel);
+    }
+
+    public LayeredPanel getLast(){
+        this.intSelectedPanel = this.intNumberOfPanels - 1;
+        return this.alLayeredPanels.get(this.intSelectedPanel);
+    }
+
+    public LayeredPanel getSelected(){
+        return  this.alLayeredPanels.get(this.intSelectedPanel);
     }
 
 }
