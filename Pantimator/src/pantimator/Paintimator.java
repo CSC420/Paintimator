@@ -34,6 +34,8 @@ public class Paintimator extends JFrame{
 
     private Listener myListener;
 
+
+    private StorageUtil su;
     public Paintimator(){
         super();
         this.setLayout(new BorderLayout());
@@ -97,6 +99,7 @@ public class Paintimator extends JFrame{
         this.setContentPane(contentPane);
         this.pack();
         this.setVisible(true);
+        su = new StorageUtil(this);
     }
 
     public void setCanvasGlassPane(JPanel jp){
@@ -212,7 +215,10 @@ public class Paintimator extends JFrame{
         text.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FileDialog fd = new FileDialog(toolPanel);
+                //FileDialog fd = new FileDialog(toolPanel);
+                System.out.println("Shit Happened");
+                //StorageUtil su = new StorageUtil(toolPanel);
+                su.saveProject(new LayeredPanelList());
                 //canvas.setTool(Drawable.Text);
             }
         });
@@ -265,6 +271,49 @@ public class Paintimator extends JFrame{
 
         JMenu fileMenu = new JMenu("File");
         JMenu editMenu = new JMenu("Edit");
+
+        //Mark Williams
+        final JMenuItem jmSave, jmSaveAs, jmOpen;
+        jmSave = new JMenuItem("Save");
+        jmSaveAs = new JMenuItem("Save As...");
+        jmOpen = new JMenuItem("Open...");
+
+        jmSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //FileDialog fd = new FileDialog(toolPanel);
+                System.out.println("Shit Happened");
+                //StorageUtil su = new StorageUtil(jmSave);
+                su.saveProject(new LayeredPanelList());
+                //canvas.setTool(Drawable.Text);
+            }
+        });
+
+        jmSaveAs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //FileDialog fd = new FileDialog(jmSaveAs);
+                System.out.println("Shit Happened");
+                //StorageUtil su = new StorageUtil(jmSave);
+                su.saveProjectAs(new LayeredPanelList());
+                //canvas.setTool(Drawable.Text);
+            }
+        });
+
+        jmOpen.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //FileDialog fd = new FileDialog(jmOpen);
+                System.out.println("Shit Happened");
+                //StorageUtil su = new StorageUtil(jmOpen);
+                su.openProject();
+                //canvas.setTool(Drawable.Text);
+            }
+        });
+
+        fileMenu.add(jmOpen);
+        fileMenu.add(jmSave);
+        fileMenu.add(jmSaveAs);
 
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
