@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 
 /**
  *  This class allows you to move a Component by using a mouse. The Component
@@ -23,7 +24,7 @@ import java.awt.event.MouseEvent;
  * Adapted from: http://tips4java.wordpress.com/2009/06/14/moving-windows/
 
  */
-public class ComponentMover extends MouseAdapter
+public class ComponentMover extends MouseAdapter implements Serializable
 {
 	private Insets dragInsets = new Insets(0, 0, 0, 0);
 	private Dimension snapSize = new Dimension(1, 1);

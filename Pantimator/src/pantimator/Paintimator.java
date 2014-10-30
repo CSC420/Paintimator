@@ -37,6 +37,12 @@ public class Paintimator extends JFrame{
 
     private JFileChooser fc;
 
+<<<<<<< HEAD
+=======
+    private StorageUtil su = new StorageUtil(this);
+    private LayeredPanelList lp = new LayeredPanelList();
+
+>>>>>>> origin/Pres
     public Paintimator(){
         super();
         this.setLayout(new BorderLayout());
@@ -49,6 +55,7 @@ public class Paintimator extends JFrame{
         //create a contentPane
         contentPane = new JPanel(new BorderLayout());
         layeredPanel = new LayeredPanel();
+
 
         this.setPreferredSize(new Dimension(1200, 750));
         this.setTitle(FRAME_TITLE);
@@ -88,7 +95,9 @@ public class Paintimator extends JFrame{
         //add canvas to the canvasPanel so there appears to be a
         //
 //        canvasFrame.add(layeredPanel);
-        centerPanel.add(layeredPanel);
+        lp.add(layeredPanel);
+        //centerPanel.add(layeredPanel);
+        centerPanel.add(lp.getSelected());
         //centerPanel.add(bottomPanel);
         contentPane.add(centerPanel, BorderLayout.CENTER);
         contentPane.add(rightPanel, BorderLayout.WEST);
@@ -99,7 +108,12 @@ public class Paintimator extends JFrame{
         this.setContentPane(contentPane);
         this.pack();
         this.setVisible(true);
+<<<<<<< HEAD
         layeredPanel.clearRootPane();
+=======
+        //layeredPanel.clearRootPane();
+        lp.getSelected().clearRootPane();
+>>>>>>> origin/Pres
     }
 
     public void setCanvasGlassPane(JPanel jp){
@@ -162,6 +176,7 @@ public class Paintimator extends JFrame{
         //this will need to change to a color chooser
         fg_color = new JButton("Line Color");
         fg_color.addActionListener(new ActionListener() {
+<<<<<<< HEAD
             @Override
             public void actionPerformed(ActionEvent e) {
                 layeredPanel.setDrawColor(JColorChooser.showDialog(null, "Choose a color", layeredPanel.getDrawColor()));
@@ -174,6 +189,22 @@ public class Paintimator extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 layeredPanel.setCanvasBG(JColorChooser.showDialog(null, "Choose a color", layeredPanel.getCanvasBG()));
+=======
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //layeredPanel.setDrawColor(JColorChooser.showDialog(null, "Choose a color", layeredPanel.getDrawColor()));
+                lp.getSelected().setDrawColor(JColorChooser.showDialog(null, "Choose a color", lp.getSelected().getDrawColor()));
+
+            }
+        });
+
+        bg_color = new JButton("Background Color");
+        bg_color.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //layeredPanel.setCanvasBG(JColorChooser.showDialog(null, "Choose a color", layeredPanel.getCanvasBG()));
+                lp.getSelected().setCanvasBG(JColorChooser.showDialog(null, "Choose a color", lp.getSelected().getCanvasBG()));
+>>>>>>> origin/Pres
 
             }
         });
@@ -183,7 +214,12 @@ public class Paintimator extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 myListener.setLisState(LisState.CIRCLE);
+<<<<<<< HEAD
                 layeredPanel.setTool(LisState.CIRCLE);
+=======
+                //layeredPanel.setTool(LisState.CIRCLE);
+                lp.getSelected().setTool(LisState.CIRCLE);
+>>>>>>> origin/Pres
             }
         });
 
@@ -192,7 +228,12 @@ public class Paintimator extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 myListener.setLisState(LisState.SQUARE);
+<<<<<<< HEAD
                 layeredPanel.setTool(LisState.SQUARE);
+=======
+                //layeredPanel.setTool(LisState.SQUARE);
+                lp.getSelected().setTool(LisState.SQUARE);
+>>>>>>> origin/Pres
             }
         });
 
@@ -202,7 +243,12 @@ public class Paintimator extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 myListener.setLisState(LisState.TRIANGLE);
+<<<<<<< HEAD
                 layeredPanel.setTool(LisState.TRIANGLE);
+=======
+                //layeredPanel.setTool(LisState.TRIANGLE);
+                lp.getSelected().setTool(LisState.TRIANGLE);
+>>>>>>> origin/Pres
             }
         });
 
@@ -212,7 +258,12 @@ public class Paintimator extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 myListener.setLisState(LisState.DRAW);
+<<<<<<< HEAD
                 layeredPanel.setTool(LisState.DRAW);
+=======
+                //layeredPanel.setTool(LisState.DRAW);
+                lp.getSelected().setTool(LisState.DRAW);
+>>>>>>> origin/Pres
 
             }
         });
@@ -224,7 +275,12 @@ public class Paintimator extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 myListener.setLisState(LisState.TEXT);
+<<<<<<< HEAD
                 layeredPanel.setTool(LisState.TEXT);
+=======
+                //layeredPanel.setTool(LisState.TEXT);
+                lp.getSelected().setTool(LisState.TEXT);
+>>>>>>> origin/Pres
             }
         });
 
@@ -236,7 +292,12 @@ public class Paintimator extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 myListener.setLisState(LisState.ERASE);
+<<<<<<< HEAD
                 layeredPanel.setTool(LisState.ERASE);
+=======
+                //layeredPanel.setTool(LisState.ERASE);
+                lp.getSelected().setTool(LisState.ERASE);
+>>>>>>> origin/Pres
             }
         });
 
@@ -248,7 +309,8 @@ public class Paintimator extends JFrame{
         lineSize.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                layeredPanel.setBrushSize(lineSize.getValue());
+                //layeredPanel.setBrushSize(lineSize.getValue());
+                lp.getSelected().setBrushSize(lineSize.getValue());
                 lineSizeLabel.setText("Line Size: " + lineSize.getValue());
             }
         });
@@ -279,8 +341,16 @@ public class Paintimator extends JFrame{
 
         JMenu fileMenu = new JMenu("File");
         JMenu editMenu = new JMenu("Edit");
+<<<<<<< HEAD
         JMenuItem loadImg = new JMenuItem("Load Image");
         JMenuItem saveImg = new JMenuItem("Save Image");
+=======
+        JMenuItem loadImg = new JMenuItem("Import Image");
+        JMenuItem saveImg = new JMenuItem("Export Image");
+        JMenuItem saveProject = new JMenuItem("Save");
+        JMenuItem saveProjectAs = new JMenuItem("Save as...");
+        JMenuItem loadProject = new JMenuItem("Open");
+>>>>>>> origin/Pres
 
         loadImg.addActionListener(new ActionListener() {
             @Override
@@ -316,6 +386,47 @@ public class Paintimator extends JFrame{
             }
         });
 
+<<<<<<< HEAD
+=======
+
+        saveProject.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(su.getProjectName() !=null){
+                    su.saveProject(lp);
+                }else{
+                    su.saveProjectAs(lp);
+                }
+            }
+        });
+
+        saveProjectAs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                su.saveProjectAs(lp);
+            }
+        });
+
+        loadProject.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LayeredPanelList lpTemp;
+                lpTemp = su.openProject();
+
+                if(lpTemp != null){
+                    centerPanel.remove(lp.getSelected());
+                    centerPanel.add(lpTemp.getSelected());
+                    lp = lpTemp;
+                    centerPanel.validate();
+                    centerPanel.repaint();
+                }
+            }
+        });
+
+        fileMenu.add(loadProject);
+        fileMenu.add(saveProject);
+        fileMenu.add(saveProjectAs);
+>>>>>>> origin/Pres
         fileMenu.add(loadImg);
         fileMenu.add(saveImg);
 
