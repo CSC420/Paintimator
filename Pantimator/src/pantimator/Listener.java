@@ -1,10 +1,20 @@
 package pantimator;
 
+<<<<<<< HEAD
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+=======
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+>>>>>>> Pres
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -16,10 +26,15 @@ public class Listener implements MouseListener, MouseMotionListener  {
 	static final Logger LOG = Logger.getLogger(Listener.class.getName());
 
     private LisState currentState;
+<<<<<<< HEAD
     private LayeredPanel layeredPanel;
     private Point p1;
     private Point p2;
     private Point p3;
+=======
+    private static LayeredPanel layeredPanel;
+    private Point p1, p2, p3;
+>>>>>>> Pres
     private Vector<Integer> xDrawPoints;
     private Vector<Integer> yDrawPoints;
 
@@ -29,7 +44,10 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
         xDrawPoints = new Vector<Integer>();
         yDrawPoints = new Vector<Integer>();
+<<<<<<< HEAD
 
+=======
+>>>>>>> Pres
 	}
 	
 	public void setLisState(LisState s){
@@ -74,11 +92,20 @@ public class Listener implements MouseListener, MouseMotionListener  {
 	public static enum LisState {
 		LINE {
 			public void mousePressed(Listener l, MouseEvent e) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> Pres
                 l.p1 = e.getPoint();
 			}
 
 			public void mouseReleased(Listener l, MouseEvent e) {
+<<<<<<< HEAD
 				l.layeredPanel.clearGlassPane();
+=======
+
+                l.layeredPanel.clearGlassPane();
+>>>>>>> Pres
                 l.p2 = e.getPoint();
                 Line2D.Float line = new Line2D.Float(l.p1, l.p2);
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(line));
@@ -116,6 +143,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
             }
 
 			public void mouseDragged(Listener l, MouseEvent e) {
+<<<<<<< HEAD
 				l.layeredPanel.clearGlassPane();
                 l.xDrawPoints.add(e.getX());
                 l.yDrawPoints.add(e.getY());
@@ -123,10 +151,56 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p));
 				
 			}	
+=======
+                l.layeredPanel.clearGlassPane();
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
+
+                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
+
+                l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p));
+			}
+>>>>>>> Pres
 
 		},
+        TRIANGLE{
+            public void mousePressed(Listener l, MouseEvent e) {
+
+                l.p1 = e.getPoint();
+            }
+
+            public void mouseReleased(Listener l, MouseEvent e) {
+                l.layeredPanel.clearGlassPane();
+                int[] xs = new int[]{l.p1.x, l.p2.x, l.p3.x};
+                int[] ys = new int[]{l.p1.y, l.p2.y, l.p3.y};
+
+                Polygon p = new Polygon(xs, ys, xs.length);
+                l.layeredPanel.drawOnRootPane(new ShapeWrapper(p));
+            }
+
+            public void mouseDragged(Listener l, MouseEvent e) {
+                l.p2 = e.getPoint();
+                double rad3 = Math.sqrt(3);
+                l.layeredPanel.clearGlassPane();
+                int x1,y1,x2,y2,x3,y3;
+                x1 = ((Double)l.p1.getX()).intValue();
+                y1 = ((Double)l.p1.getY()).intValue();
+                x2 = e.getX();
+                y2 = e.getY();
+
+                x3 = ((Double)(0.5*(x2+x1)+rad3*(y2-y1))).intValue();
+                y3 = ((Double)(0.5*(y2+y1)+rad3*(x2-x1))).intValue();
+
+                l.p3 = new Point(x3,y3);
+
+                Polygon p = new Polygon(new int[]{x1,x2,x3}, new int[]{y1,y2,y3},3);
+                l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p));
+            }
+
+        },
 		ERASE {
 
+<<<<<<< HEAD
 			public void mousePressed(Listener l, MouseEvent e) {
 				Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(), 1, 1);
 
@@ -137,9 +211,16 @@ public class Listener implements MouseListener, MouseMotionListener  {
 				Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(), 1, 1);
 
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
+=======
+            public void mousePressed(Listener l, MouseEvent e) {
+                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
+                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
+>>>>>>> Pres
 
-			}	
+                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
+            }
 
+<<<<<<< HEAD
 		},
 		TRIANGLE{
 			public void mousePressed(Listener l, MouseEvent e) {
@@ -173,24 +254,49 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 Polygon p = new Polygon(new int[]{x1,x2,x3}, new int[]{y1,y2,y3},3);
                 l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p));
 			}
+=======
 
+            public void mouseDragged(Listener l, MouseEvent e) {
+                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
+                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
+>>>>>>> Pres
+
+                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
+            }
 		},
 		CIRCLE{
 			public void mousePressed(Listener l, MouseEvent e) {
+<<<<<<< HEAD
 				l.p1 = e.getPoint();
 			}
 			
 			public void mouseReleased(Listener l, MouseEvent e) {
 				l.p2 = e.getPoint();
+=======
+                l.p1 = e.getPoint();
+			}
+			
+			public void mouseReleased(Listener l, MouseEvent e) {
+
+                l.p2 = e.getPoint();
+>>>>>>> Pres
                 l.layeredPanel.clearGlassPane();
                 Ellipse2D.Float c = new Ellipse2D.Float((l.p1.x<l.p2.x?l.p1.x:l.p2.x),
                         (l.p1.y<l.p2.y?l.p1.y:l.p2.y), Math.abs(l.p1.x-l.p2.x), Math.abs(l.p1.y-l.p2.y));
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(c));
+<<<<<<< HEAD
 				
 			}
 			
 			public void mouseDragged(Listener l, MouseEvent e) {
 				l.layeredPanel.clearGlassPane();
+=======
+
+			}
+			
+			public void mouseDragged(Listener l, MouseEvent e) {
+                l.layeredPanel.clearGlassPane();
+>>>>>>> Pres
                 int x2 = e.getX();
                 int y2 = e.getY();
 
@@ -228,6 +334,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
 			}
 
 		},
+<<<<<<< HEAD
 		TEXT{
             public void mouseClicked(Listener l, MouseEvent e){
 //                System.out.println("Mouse Clicked......");
@@ -247,6 +354,18 @@ public class Listener implements MouseListener, MouseMotionListener  {
 //                Shape s = new Rectangle2D.Float(e.getX(),e.getY(),0,0);
 //
 //                l.layeredPanel.drawOnRootPane(new ShapeWrapper(s, ta.getText()));
+=======
+        TEXT{
+            public void mouseClicked(Listener l, MouseEvent e){
+                LOG.info("Text button clicked");
+                JTextArea ta = new JTextArea();
+                JScrollPane sp = new JScrollPane(ta);
+                sp.setPreferredSize(new Dimension(sp.getWidth(), 100));
+
+                JOptionPane.showOptionDialog(null, sp, "Enter text here", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
+
+                l.layeredPanel.addText(ta.getText(), e.getX(), e.getY());
+>>>>>>> Pres
 
             }
         },
@@ -263,6 +382,10 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
 	}
 
+    public LisState getCurrentState(){
+        return currentState;
+    }
+
     private static Path2D gimmeThePath(Vector<Integer> xs, Vector<Integer> ys){
         Path2D.Float path = new Path2D.Float();
         path.moveTo(xs.get(0), ys.get(0));
@@ -274,4 +397,20 @@ public class Listener implements MouseListener, MouseMotionListener  {
         return path;
     }
 
+<<<<<<< HEAD
 }
+=======
+    public static Shape generateShapeFromText(String s) {
+        Font f = layeredPanel.getFont().deriveFont(16f);
+
+
+        FontRenderContext frc = layeredPanel.getFontMetrics(f).getFontRenderContext();
+//        GlyphVector v = f.createGlyphVector(frc, s);
+//        return v.getOutline();
+
+        TextLayout tl = new TextLayout(s, f, frc);
+        return tl.getOutline(null);
+    }
+
+}
+>>>>>>> Pres

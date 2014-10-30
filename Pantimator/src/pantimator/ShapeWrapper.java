@@ -1,8 +1,19 @@
 package pantimator;
 
 import java.awt.*;
+<<<<<<< HEAD
 
 public class ShapeWrapper implements Comparable<ShapeWrapper>{
+=======
+import java.awt.image.BufferedImage;
+import java.io.Serializable;
+import java.nio.Buffer;
+
+/**
+ * Created by wilhelmi on 10/7/14.
+ */
+public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
+>>>>>>> Pres
     private Shape shape;
     private Color color;
     private int lineSize;
@@ -10,10 +21,27 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>{
     private boolean fill = false;
     private String string = "";
 
+<<<<<<< HEAD
+=======
+    private BufferedImage bi;
+    private boolean img = false;
+
+>>>>>>> Pres
     public ShapeWrapper(Shape s){
         shape = s;
     }
 
+<<<<<<< HEAD
+=======
+    /* added by Jeremy
+     * Constructor to create a ShapeWrapper as a Buffered Image
+     */
+    public ShapeWrapper(BufferedImage bi, boolean i) {
+        this.bi = bi;
+        img = i;
+    }
+
+>>>>>>> Pres
     public ShapeWrapper(Shape s, String st){
         this.shape = s;
         this.string = st;
@@ -82,6 +110,23 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>{
         this.fill = f;
     }
 
+<<<<<<< HEAD
+=======
+    /* added by Jeremy
+     * Buffered Image getter
+     */
+    public BufferedImage getImg () {
+        return bi;
+    }
+
+    /* added by Jeremy
+     * boolean to let paint method know that this ShapeWrapper object is an image
+     */
+    public boolean isImg() {
+        return img;
+    }
+
+>>>>>>> Pres
     public void setString(String s){
         this.string = s;
     }
@@ -92,7 +137,13 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>{
 
     @Override
     public int compareTo(ShapeWrapper o) {
+<<<<<<< HEAD
         return 1;
     	//return Long.compare(this.getTimeStamp(), o.getTimeStamp());
     }
 }
+=======
+        return Long.compare(this.getTimeStamp(), o.getTimeStamp());
+    }
+}
+>>>>>>> Pres
