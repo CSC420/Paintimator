@@ -149,6 +149,7 @@ public class Paintimator extends JFrame{
         toolPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
         JPanel undoRedoPanel = new JPanel();
+        undoRedoPanel.setBackground(new Color(255, 255, 196, 0));
         JButton undo = new JButton("undo");
         undo.addActionListener(new ActionListener() {
             @Override
@@ -166,7 +167,7 @@ public class Paintimator extends JFrame{
         undoRedoPanel.add(undo);
         undoRedoPanel.add(redo);
 
-        final JButton line, draw, text, erase, fg_color, bg_color, circle, square, triangle;
+        final JButton line, draw, text, erase, fg_color, bg_color, circle, square, triangle, magic;
 
         line = new JButton("Line");
         line.addActionListener(new ActionListener() {
@@ -234,6 +235,14 @@ public class Paintimator extends JFrame{
 
             }
         });
+        magic = new JButton("Magic Draw");
+        magic.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myListener.setLisState(LisState.MAGIC);
+                layeredPanel.setTool(LisState.MAGIC);
+            }
+        });
 
         //if we allow for a text area we should allow for the font
         //to be changed and font size
@@ -275,6 +284,7 @@ public class Paintimator extends JFrame{
         toolPanel.add(undoRedoPanel);
         toolPanel.add(line);
         toolPanel.add(draw);
+        toolPanel.add(magic);
         toolPanel.add(text);
         toolPanel.add(circle);
         toolPanel.add(square);

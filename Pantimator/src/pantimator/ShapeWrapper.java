@@ -11,7 +11,7 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>{
     private Color color;
     private int lineSize;
     private long timeStamp;
-    private boolean erase = false, text = false;
+    private boolean erase = false, text = false, magic = false;
     private String string = "";
 
     private BufferedImage bi;
@@ -96,6 +96,14 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>{
 
     public void setErase(boolean f){
         this.erase = f;
+    }
+
+    public boolean isMagic() {
+        return magic;
+    }
+
+    public void setMagic(boolean magic) {
+        this.magic = magic;
     }
 
     public boolean isText() {

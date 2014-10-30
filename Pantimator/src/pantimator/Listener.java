@@ -5,8 +5,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -280,6 +278,41 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
             }
         },
+        MAGIC{
+            public void mousePressed(Listener l, MouseEvent e) {
+                l.p1 = e.getPoint();
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
+
+            }
+
+            public void mouseReleased(Listener l, MouseEvent e) {
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
+
+                l.layeredPanel.clearGlassPane();
+                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
+                l.layeredPanel.clearGlassPane();
+                ShapeWrapper s = new ShapeWrapper(p);
+                s.setMagic(true);
+                l.layeredPanel.drawOnRootPane(s);
+                l.xDrawPoints.clear();
+                l.yDrawPoints.clear();
+
+            }
+
+            public void mouseDragged(Listener l, MouseEvent e) {
+                l.layeredPanel.clearGlassPane();
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
+
+                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
+                ShapeWrapper s = new ShapeWrapper(p);
+                s.setMagic(true);
+
+                l.layeredPanel.drawOnGlassPane(s);
+            }
+        },
 		NONE;
 		
 		//these are the possible methods each state can have
@@ -306,18 +339,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
         }
 
         return path;
-    }
-
-    public static Shape generateShapeFromText(String s) {
-        Font f = layeredPanel.getFont().deriveFont(16f);
-
-
-        FontRenderContext frc = layeredPanel.getFontMetrics(f).getFontRenderContext();
-//        GlyphVector v = f.createGlyphVector(frc, s);
-//        return v.getOutline();
-
-        TextLayout tl = new TextLayout(s, f, frc);
-        return tl.getOutline(null);
     }
 
 }

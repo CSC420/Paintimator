@@ -49,9 +49,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         componentMover.setAutoLayout(true);
         canvas.setLayout(new DragLayout());
 
-//        JLabel test = new JLabel("HELLO WORLD!!");
-//        canvas.add(test);
-//        componentMover.registerComponent(test);
     }
 
     public void undo(){
@@ -102,17 +99,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     public JPanel getCanvas(){
         return canvas;
     }
-
-//    public void addText(String text, int x, int y){
-//        System.out.println("TEXT: " + text);
-//        JLabel l = new JLabel(text);
-//        l.setFont(l.getFont().deriveFont((float)brushSize*3));
-//        l.setForeground(drawColor);
-//        canvas.add(l);
-//        componentMover.registerComponent(l, x, y);
-//        canvas.revalidate();
-//
-//    }
 
     public void drawOnRootPane(ShapeWrapper s){
         canvas.setBounds(0,0,getWidth(),getHeight());
@@ -193,6 +179,10 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     g2d.setColor(s.getColor());
                     g2d.fill(textShape);
+                }else if(s.isMagic()) {
+                    g2d.setStroke(new WobbleStroke(2f, 3f));
+                    g2d.setColor(s.getColor());
+                    g2d.draw(s.getShape());
                 }else {
 //                    g2d.setStroke(new WobbleStroke(2f, 2f));
                     g2d.setColor(s.getColor());
