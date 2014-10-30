@@ -5,8 +5,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
@@ -162,19 +160,51 @@ public class Listener implements MouseListener, MouseMotionListener  {
 		ERASE {
 
             public void mousePressed(Listener l, MouseEvent e) {
-                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
-                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
+                l.p1 = e.getPoint();
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
 
-                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
             }
 
+            public void mouseReleased(Listener l, MouseEvent e) {
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
+
+                l.layeredPanel.clearGlassPane();
+                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
+                l.layeredPanel.clearGlassPane();
+                l.layeredPanel.drawOnRootPane(new ShapeWrapper(p, true));
+                l.xDrawPoints.clear();
+                l.yDrawPoints.clear();
+
+            }
 
             public void mouseDragged(Listener l, MouseEvent e) {
-                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
-                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
+                l.layeredPanel.clearGlassPane();
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
 
-                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
+                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
+
+                l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p, true));
             }
+
+
+
+//            public void mousePressed(Listener l, MouseEvent e) {
+//                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
+//                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
+//
+//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
+//            }
+//
+//
+//            public void mouseDragged(Listener l, MouseEvent e) {
+//                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
+//                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
+//
+//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
+//            }
 		},
 		CIRCLE{
 			public void mousePressed(Listener l, MouseEvent e) {
@@ -232,15 +262,55 @@ public class Listener implements MouseListener, MouseMotionListener  {
 		},
         TEXT{
             public void mouseClicked(Listener l, MouseEvent e){
-                LOG.info("Text button clicked");
-                JTextArea ta = new JTextArea();
-                JScrollPane sp = new JScrollPane(ta);
-                sp.setPreferredSize(new Dimension(sp.getWidth(), 100));
+//                LOG.info("Text button clicked");
+//                JTextArea ta = new JTextArea();
+//
+//                JScrollPane sp = new JScrollPane(ta);
+//                sp.setPreferredSize(new Dimension(sp.getWidth(), 100));
+//
+//                JOptionPane.showOptionDialog(null, ta, "Enter text here", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
+//                ta.requestFocusInWindow();
+////                l.layeredPanel.addText(ta.getText(), e.getX(), e.getY());
+//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), ta.getText()));
 
-                JOptionPane.showOptionDialog(null, sp, "Enter text here", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
+                String s = JOptionPane.showInputDialog(null, "Enter text here:", "Text", JOptionPane.PLAIN_MESSAGE);
+                l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), s));
 
-                l.layeredPanel.addText(ta.getText(), e.getX(), e.getY());
+            }
+        },
+        MAGIC{
+            public void mousePressed(Listener l, MouseEvent e) {
+                l.p1 = e.getPoint();
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
 
+            }
+
+            public void mouseReleased(Listener l, MouseEvent e) {
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
+
+                l.layeredPanel.clearGlassPane();
+                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
+                l.layeredPanel.clearGlassPane();
+                ShapeWrapper s = new ShapeWrapper(p);
+                s.setMagic(true);
+                l.layeredPanel.drawOnRootPane(s);
+                l.xDrawPoints.clear();
+                l.yDrawPoints.clear();
+
+            }
+
+            public void mouseDragged(Listener l, MouseEvent e) {
+                l.layeredPanel.clearGlassPane();
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
+
+                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
+                ShapeWrapper s = new ShapeWrapper(p);
+                s.setMagic(true);
+
+                l.layeredPanel.drawOnGlassPane(s);
             }
         },
 		NONE;
@@ -269,18 +339,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
         }
 
         return path;
-    }
-
-    public static Shape generateShapeFromText(String s) {
-        Font f = layeredPanel.getFont().deriveFont(16f);
-
-
-        FontRenderContext frc = layeredPanel.getFontMetrics(f).getFontRenderContext();
-//        GlyphVector v = f.createGlyphVector(frc, s);
-//        return v.getOutline();
-
-        TextLayout tl = new TextLayout(s, f, frc);
-        return tl.getOutline(null);
     }
 
 }

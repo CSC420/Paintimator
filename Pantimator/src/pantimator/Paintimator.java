@@ -53,7 +53,6 @@ public class Paintimator extends JFrame{
         contentPane = new JPanel(new BorderLayout());
         layeredPanel = new LayeredPanel();
 
-
         this.setPreferredSize(new Dimension(1200, 750));
         this.setTitle(FRAME_TITLE);
 
@@ -93,8 +92,8 @@ public class Paintimator extends JFrame{
         //
 //        canvasFrame.add(layeredPanel);
         lp.add(layeredPanel);
-        //centerPanel.add(layeredPanel);
         centerPanel.add(lp.getSelected());
+        //centerPanel.add(layeredPanel);
         //centerPanel.add(bottomPanel);
         contentPane.add(centerPanel, BorderLayout.CENTER);
         contentPane.add(rightPanel, BorderLayout.WEST);
@@ -152,10 +151,31 @@ public class Paintimator extends JFrame{
     }
 
     private void createToolPanel(){
-        JPanel toolPanel = new JPanel(new GridLayout(6,2)); //this will need to be GridBag
+        JPanel toolPanel = new JPanel(new GridLayout(0,1)); //this will need to be GridBag
         toolPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
-        final JButton line, draw, text, erase, fg_color, bg_color, circle, square, triangle;
+        JPanel undoRedoPanel = new JPanel();
+        undoRedoPanel.setBackground(new Color(255, 255, 196, 0));
+        JButton undo = new JButton("undo");
+        undo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //layeredPanel.undo();
+                lp.getSelected().undo();
+            }
+        });
+        JButton redo = new JButton("redo");
+        redo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //layeredPanel.redo();
+                lp.getSelected().redo();
+            }
+        });
+        undoRedoPanel.add(undo);
+        undoRedoPanel.add(redo);
+
+        final JButton line, draw, text, erase, fg_color, bg_color, circle, square, triangle, magic;
 
         line = new JButton("Line");
         line.addActionListener(new ActionListener() {
@@ -229,6 +249,15 @@ public class Paintimator extends JFrame{
 
             }
         });
+        magic = new JButton("Magic Draw");
+        magic.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                myListener.setLisState(LisState.MAGIC);
+                //layeredPanel.setTool(LisState.MAGIC);
+                lp.getSelected().setTool(LisState.MAGIC);
+            }
+        });
 
         //if we allow for a text area we should allow for the font
         //to be changed and font size
@@ -270,8 +299,10 @@ public class Paintimator extends JFrame{
         });
 
         //add all the buttons/slider/label to the toolpane
+        toolPanel.add(undoRedoPanel);
         toolPanel.add(line);
         toolPanel.add(draw);
+        toolPanel.add(magic);
         toolPanel.add(text);
         toolPanel.add(circle);
         toolPanel.add(square);
@@ -295,8 +326,8 @@ public class Paintimator extends JFrame{
 
         JMenu fileMenu = new JMenu("File");
         JMenu editMenu = new JMenu("Edit");
-        JMenuItem loadImg = new JMenuItem("Import Image");
-        JMenuItem saveImg = new JMenuItem("Export Image");
+        JMenuItem loadImg = new JMenuItem("Load Image");
+        JMenuItem saveImg = new JMenuItem("Save Image");
         JMenuItem saveProject = new JMenuItem("Save");
         JMenuItem saveProjectAs = new JMenuItem("Save as...");
         JMenuItem loadProject = new JMenuItem("Open");
@@ -334,7 +365,6 @@ public class Paintimator extends JFrame{
                 }
             }
         });
-
 
         saveProject.addActionListener(new ActionListener() {
             @Override
