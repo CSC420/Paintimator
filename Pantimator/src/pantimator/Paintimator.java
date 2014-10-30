@@ -22,7 +22,7 @@ public class Paintimator extends JFrame{
     private JPanel centerPanel;
     private JPanel rightPanel;
     private JPanel bottomPanel;
-
+    private JInternalFrame canvasFrame;
     private LayeredPanel layeredPanel;
     private JPanel canvasBackground;
     private JMenuBar menuBar;
@@ -33,12 +33,12 @@ public class Paintimator extends JFrame{
         super();
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setPreferredSize(new Dimension(1200, 750));
+        this.setTitle(FRAME_TITLE);
+        
         //create a contentPane
         contentPane = new JPanel(new BorderLayout());
         layeredPanel = new LayeredPanel();
-
-        this.setPreferredSize(new Dimension(1200, 750));
-        this.setTitle(FRAME_TITLE);
 
         //drawing area
         layeredPanel.setCanvasBG(Color.BLUE);
@@ -55,6 +55,11 @@ public class Paintimator extends JFrame{
         centerPanel = new JPanel();
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         centerPanel.setBackground(Color.GREEN);
+        
+        //canvas frame
+        canvasFrame = new JInternalFrame();
+        canvasFrame.setAlignmentX(Component.CENTER_ALIGNMENT);
+        canvasFrame.setPreferredSize(new Dimension(700, 500));
 
         //bottom Panel
         bottomPanel = new JPanel();
@@ -71,9 +76,9 @@ public class Paintimator extends JFrame{
         layeredPanel.addMouseListener(myListener);
         layeredPanel.addMouseMotionListener(myListener);
         
-        canvasBackground.add(layeredPanel);
-        centerPanel.add(canvasBackground);
-      //  centerPanel.add(layeredPanel);
+       // canvasBackground.add(layeredPanel);
+       // centerPanel.add(canvasBackground);
+        centerPanel.add(layeredPanel);
         contentPane.add(centerPanel, BorderLayout.CENTER);
         contentPane.add(rightPanel, BorderLayout.WEST);
 
@@ -82,6 +87,15 @@ public class Paintimator extends JFrame{
         this.setContentPane(contentPane);
         this.pack();
         this.setVisible(true);
+        layeredPanel.clearRootPane();
+    }
+    
+    public void setCanvasGlassPane(JPanel jp){
+        canvasFrame.setGlassPane(jp);
+    }
+
+    public Component getCanvasGlassPane(){
+        return canvasFrame.getGlassPane();
     }
 
     public static void main(String[] args) {
@@ -124,7 +138,6 @@ public class Paintimator extends JFrame{
         line.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // canvas.setTool(State.LINE);
                 myListener.setLisState(LisState.LINE);
 
             }
@@ -135,7 +148,7 @@ public class Paintimator extends JFrame{
         color.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // canvas.setColor(Color.BLUE);
+            	layeredPanel.setDrawColor(JColorChooser.showDialog(null, "Choose a color", layeredPanel.getDrawColor()));
 
             }
         });
@@ -144,8 +157,8 @@ public class Paintimator extends JFrame{
         circle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // canvas.setTool(State.CIRCLE);
-                myListener.setLisState(LisState.CIRCLE);
+            	myListener.setLisState(LisState.CIRCLE);
+                layeredPanel.setTool(LisState.CIRCLE);
             }
         });
 
@@ -153,8 +166,8 @@ public class Paintimator extends JFrame{
         square.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //canvas.setTool(State.SQUARE);
-                myListener.setLisState(LisState.SQUARE);
+            	myListener.setLisState(LisState.SQUARE);
+                layeredPanel.setTool(LisState.SQUARE);
             }
         });
 
@@ -163,8 +176,8 @@ public class Paintimator extends JFrame{
         triangle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //canvas.setTool(State.TRIANGLE);
-                myListener.setLisState(LisState.TRIANGLE);
+            	myListener.setLisState(LisState.TRIANGLE);
+                layeredPanel.setTool(LisState.TRIANGLE);
             }
         });
 
@@ -173,31 +186,29 @@ public class Paintimator extends JFrame{
         draw.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //canvas.setTool(State.DRAW);
+            	layeredPanel.setTool(LisState.DRAW);
                 myListener.setLisState(LisState.DRAW);
 
             }
         });
 
-        //if we allow for a text area we should allow for the font
-        //to be changed and font size
+        //Text
         text = new JButton("Text");
         text.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //canvas.setTool(Drawable.Text);
+            	myListener.setLisState(LisState.TEXT);
+                layeredPanel.setTool(LisState.TEXT);
             }
         });
 
-        //uses the current background color of the canvas panel
-        //right now is just a circle like free drawing
-        //uses the same brush size as free drawing
+        //erasing
         erase = new JButton("Erase");
         erase.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //canvas.setTool(State.ERASE);
-                myListener.setLisState(LisState.ERASE);
+            	myListener.setLisState(LisState.ERASE);
+                layeredPanel.setTool(LisState.ERASE);
             }
         });
 
