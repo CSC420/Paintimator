@@ -2,7 +2,6 @@ package pantimator;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 
 /**
  * Created by wilhelmi on 10/7/14.
@@ -12,7 +11,7 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>{
     private Color color;
     private int lineSize;
     private long timeStamp;
-    private boolean fill = false;
+    private boolean erase = false, text = false;
     private String string = "";
 
     private BufferedImage bi;
@@ -33,11 +32,12 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>{
     public ShapeWrapper(Shape s, String st){
         this.shape = s;
         this.string = st;
+        text = true;
     }
 
-    public ShapeWrapper(Shape s, boolean f){
+    public ShapeWrapper(Shape s, boolean b){
         this.shape = s;
-        this.fill = f;
+        this.erase = b;
     }
 
     public ShapeWrapper(Shape s, Color c){
@@ -90,12 +90,20 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>{
         this.timeStamp = timeStamp;
     }
 
-    public boolean isFill(){
-        return fill;
+    public boolean isErase(){
+        return erase;
     }
 
-    public void setFill(boolean f){
-        this.fill = f;
+    public void setErase(boolean f){
+        this.erase = f;
+    }
+
+    public boolean isText() {
+        return text;
+    }
+
+    public void setText(boolean text) {
+        this.text = text;
     }
 
     /* added by Jeremy

@@ -232,14 +232,19 @@ public class Listener implements MouseListener, MouseMotionListener  {
 		},
         TEXT{
             public void mouseClicked(Listener l, MouseEvent e){
-                LOG.info("Text button clicked");
-                JTextArea ta = new JTextArea();
-                JScrollPane sp = new JScrollPane(ta);
-                sp.setPreferredSize(new Dimension(sp.getWidth(), 100));
+//                LOG.info("Text button clicked");
+//                JTextArea ta = new JTextArea();
+//
+//                JScrollPane sp = new JScrollPane(ta);
+//                sp.setPreferredSize(new Dimension(sp.getWidth(), 100));
+//
+//                JOptionPane.showOptionDialog(null, ta, "Enter text here", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
+//                ta.requestFocusInWindow();
+////                l.layeredPanel.addText(ta.getText(), e.getX(), e.getY());
+//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), ta.getText()));
 
-                JOptionPane.showOptionDialog(null, sp, "Enter text here", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
-
-                l.layeredPanel.addText(ta.getText(), e.getX(), e.getY());
+                String s = JOptionPane.showInputDialog(null, "Enter text here:", "Text", JOptionPane.PLAIN_MESSAGE);
+                l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), s));
 
             }
         },

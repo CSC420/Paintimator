@@ -2,6 +2,7 @@ package pantimator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.GlyphVector;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
@@ -24,6 +25,9 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     private Random random = new Random();
     private Color drawColor = new Color(0,0,0,0), canvasBG;
     private ComponentMover componentMover = new ComponentMover();
+
+    private Font font = getFont();
+    private GlyphVector glyphVector;
 
     private Listener.LisState tool = Listener.LisState.DRAW;
 
@@ -162,26 +166,52 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
                 if (s.isImg()) { // added by Jeremy; draws image to pane
                     g2d.drawImage(s.getImg(), 0, 0, null);
-                } else if (!s.isFill()) {
+                } else if (s.isErase()) {
+                    g2d.setColor(getCanvasBG());
+                    g2d.fill(s.getShape());
+
+                }else if(s.isText() && s.getString() != null) {
+                    //fixing the text tool...
+                    font = getFont().deriveFont((float)s.getLineSize() * 3);
+                    glyphVector = font.createGlyphVector(getFontMetrics(font).getFontRenderContext(), s.getString());
+                    Shape textShape = glyphVector.getOutline((float)s.getShape().getBounds().getX(),(float)s.getShape().getBounds().getY());
+                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2d.setColor(s.getColor());
+                    g2d.fill(textShape);
+                }else {
                     g2d.setColor(s.getColor());
                     g2d.draw(s.getShape());
-                } else {
-                    if(tool.equals(Listener.LisState.ERASE)) {
-                        g2d.setColor(getCanvasBG());
-                        g2d.fill(s.getShape());
-
-//                        g2d.clearRect(x, y, brushSize, brushSize);
-                    } else if(tool.equals(Listener.LisState.TEXT)){
-//                        System.out.println("Trying to show the string: " + s.getString());
-////                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-////                                RenderingHints.VALUE_ANTIALIAS_ON);
-//                        Font font = new Font("Serif", Font.PLAIN, 96);
-//                        g2d.setFont(font);
-//                        int x = ((Double)s.getShape().getBounds().getX()).intValue();
-//                        int y = ((Double)s.getShape().getBounds().getY()).intValue();
-//                        g2d.drawString(s.getString(), x, y);
-                    }
                 }
+//                else {
+//                    if(tool.equals(Listener.LisState.ERASE)) {
+//                        g2d.setColor(getCanvasBG());
+//                        g2d.fill(s.getShape());
+//
+////                        g2d.clearRect(x, y, brushSize, brushSize);
+//                    } else if(tool.equals(Listener.LisState.TEXT)){
+//                        //fixing the text tool...
+//                        font = getFont().deriveFont((float)s.getLineSize() * 2);
+//                        glyphVector = font.createGlyphVector(getFontMetrics(font).getFontRenderContext(), s.getString());
+//                        Shape textShape = glyphVector.getOutline((float)s.getShape().getBounds().getX(),(float)s.getShape().getBounds().getY());
+//
+//
+//                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+////                        g2d.translate(s.getShape().getBounds().getX(),s.getShape().getBounds().getY());
+////                        g2d.translate(100, 150);
+//                        g2d.setColor(s.getColor());
+//                        g2d.fill(textShape);
+//                        g2d.translate(0,0);
+//
+//                        System.out.println("Trying to show the string: " + s.getString());
+//////                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+//////                                RenderingHints.VALUE_ANTIALIAS_ON);
+////                        Font font = new Font("Serif", Font.PLAIN, 96);
+////                        g2d.setFont(font);
+////                        int x = ((Double)s.getShape().getBounds().getX()).intValue();
+////                        int y = ((Double)s.getShape().getBounds().getY()).intValue();
+////                        g2d.drawString(s.getString(), x, y);
+//                    }
+//                }
             }//end for
 
         }//end paintComponent
