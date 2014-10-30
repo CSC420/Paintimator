@@ -145,8 +145,26 @@ public class Paintimator extends JFrame{
     }
 
     private void createToolPanel(){
-        JPanel toolPanel = new JPanel(new GridLayout(6,2)); //this will need to be GridBag
+        JPanel toolPanel = new JPanel(new GridLayout(0,1)); //this will need to be GridBag
         toolPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+
+        JPanel undoRedoPanel = new JPanel();
+        JButton undo = new JButton("undo");
+        undo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                layeredPanel.undo();
+            }
+        });
+        JButton redo = new JButton("redo");
+        redo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                layeredPanel.redo();
+            }
+        });
+        undoRedoPanel.add(undo);
+        undoRedoPanel.add(redo);
 
         final JButton line, draw, text, erase, fg_color, bg_color, circle, square, triangle;
 
@@ -254,6 +272,7 @@ public class Paintimator extends JFrame{
         });
 
         //add all the buttons/slider/label to the toolpane
+        toolPanel.add(undoRedoPanel);
         toolPanel.add(line);
         toolPanel.add(draw);
         toolPanel.add(text);

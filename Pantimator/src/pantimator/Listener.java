@@ -162,19 +162,51 @@ public class Listener implements MouseListener, MouseMotionListener  {
 		ERASE {
 
             public void mousePressed(Listener l, MouseEvent e) {
-                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
-                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
+                l.p1 = e.getPoint();
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
 
-                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
             }
 
+            public void mouseReleased(Listener l, MouseEvent e) {
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
+
+                l.layeredPanel.clearGlassPane();
+                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
+                l.layeredPanel.clearGlassPane();
+                l.layeredPanel.drawOnRootPane(new ShapeWrapper(p, true));
+                l.xDrawPoints.clear();
+                l.yDrawPoints.clear();
+
+            }
 
             public void mouseDragged(Listener l, MouseEvent e) {
-                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
-                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
+                l.layeredPanel.clearGlassPane();
+                l.xDrawPoints.add(e.getX());
+                l.yDrawPoints.add(e.getY());
 
-                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
+                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
+
+                l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p, true));
             }
+
+
+
+//            public void mousePressed(Listener l, MouseEvent e) {
+//                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
+//                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
+//
+//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
+//            }
+//
+//
+//            public void mouseDragged(Listener l, MouseEvent e) {
+//                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
+//                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
+//
+//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
+//            }
 		},
 		CIRCLE{
 			public void mousePressed(Listener l, MouseEvent e) {

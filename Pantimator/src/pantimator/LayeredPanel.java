@@ -21,7 +21,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                 brushSize = 1;
 
     private JPanel canvas, glass;
-    private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass;
+    private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass, removedShapes;
     private Random random = new Random();
     private Color drawColor = new Color(0,0,0,0), canvasBG;
     private ComponentMover componentMover = new ComponentMover();
@@ -34,6 +34,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     public LayeredPanel(){
         toDrawOnCanvas = new ArrayList<ShapeWrapper>();
         toDrawOnGlass = new ArrayList<ShapeWrapper>();
+        removedShapes = new ArrayList<ShapeWrapper>();
 
         canvas = new Layer(toDrawOnCanvas);
         glass = new Layer(toDrawOnGlass);
@@ -51,6 +52,20 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 //        JLabel test = new JLabel("HELLO WORLD!!");
 //        canvas.add(test);
 //        componentMover.registerComponent(test);
+    }
+
+    public void undo(){
+        if (!toDrawOnCanvas.isEmpty()) {
+            removedShapes.add(toDrawOnCanvas.remove(toDrawOnCanvas.size()-1));
+            canvas.repaint();
+        }
+    }
+
+    public void redo(){
+        if (!removedShapes.isEmpty()) {
+            toDrawOnCanvas.add(removedShapes.remove(removedShapes.size()-1));
+            canvas.repaint();
+        }
     }
 
     public void setDrawColor(Color c){
@@ -88,16 +103,16 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         return canvas;
     }
 
-    public void addText(String text, int x, int y){
-        System.out.println("TEXT: " + text);
-        JLabel l = new JLabel(text);
-        l.setFont(l.getFont().deriveFont((float)brushSize*3));
-        l.setForeground(drawColor);
-        canvas.add(l);
-        componentMover.registerComponent(l, x, y);
-        canvas.revalidate();
-
-    }
+//    public void addText(String text, int x, int y){
+//        System.out.println("TEXT: " + text);
+//        JLabel l = new JLabel(text);
+//        l.setFont(l.getFont().deriveFont((float)brushSize*3));
+//        l.setForeground(drawColor);
+//        canvas.add(l);
+//        componentMover.registerComponent(l, x, y);
+//        canvas.revalidate();
+//
+//    }
 
     public void drawOnRootPane(ShapeWrapper s){
         canvas.setBounds(0,0,getWidth(),getHeight());
@@ -168,7 +183,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                     g2d.drawImage(s.getImg(), 0, 0, null);
                 } else if (s.isErase()) {
                     g2d.setColor(getCanvasBG());
-                    g2d.fill(s.getShape());
+                    g2d.draw(s.getShape());
 
                 }else if(s.isText() && s.getString() != null) {
                     //fixing the text tool...
@@ -179,6 +194,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                     g2d.setColor(s.getColor());
                     g2d.fill(textShape);
                 }else {
+//                    g2d.setStroke(new WobbleStroke(2f, 2f));
                     g2d.setColor(s.getColor());
                     g2d.draw(s.getShape());
                 }
