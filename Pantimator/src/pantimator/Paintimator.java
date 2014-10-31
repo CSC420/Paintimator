@@ -59,29 +59,21 @@ public class Paintimator extends JFrame{
         layeredPanel.setCanvasBG(canvasColor);
         layeredPanel.setDrawColor(Color.BLACK);
         layeredPanel.setPreferredSize(new Dimension(700,500));
-<<<<<<< HEAD
-//        canvas.setLayout(null);
-=======
 
         //background for canvas
         canvasFrame = new JInternalFrame();
         canvasFrame.setAlignmentX(Component.CENTER_ALIGNMENT);
         canvasFrame.setPreferredSize(new Dimension(700, 500));
->>>>>>> master
         
         //center panel
         centerPanel = new JPanel();
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-<<<<<<< HEAD
         centerPanel.setBackground(Color.GREEN);
         
         //canvas frame
         canvasFrame = new JInternalFrame();
         canvasFrame.setAlignmentX(Component.CENTER_ALIGNMENT);
         canvasFrame.setPreferredSize(new Dimension(700, 500));
-=======
-
->>>>>>> master
 
         //bottom Panel
         bottomPanel = new JPanel();
@@ -103,11 +95,6 @@ public class Paintimator extends JFrame{
         contentPane.add(centerPanel, BorderLayout.CENTER);
         contentPane.add(rightPanel, BorderLayout.WEST);
 
-<<<<<<< HEAD
-
-        //add the content pane to the frame
-=======
->>>>>>> master
         this.setContentPane(contentPane);
         this.pack();
         this.setVisible(true);
@@ -126,8 +113,6 @@ public class Paintimator extends JFrame{
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-<<<<<<< HEAD
-=======
         
 //				try {
 //					for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -149,7 +134,6 @@ public class Paintimator extends JFrame{
 //					e.printStackTrace();
 //					System.exit(1);
 //				}
->>>>>>> master
 
                 Paintimator frame = new Paintimator();
                 frame.setVisible(true);
@@ -411,22 +395,8 @@ public class Paintimator extends JFrame{
 
         this.setJMenuBar(menuBar);
     }
-<<<<<<< HEAD
 
-//	 private void createAnimationPanel(){
-//	        animationPanel = new JPanel(new GridLayout(1,0));
-//	        animationPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-//	        //TODO add animation controls, etc.
-//
-//	        if(DEBUG){
-//	            animationPanel.add(new JButton("Play"));
-//	            animationPanel.add(new JButton("Pause"));
-//	            animationPanel.add(new JButton("Stop"));
-//	        }//end if
-//
-//	        this.add(animationPanel, BorderLayout.PAGE_END);
-//	    }//end createAnimationPanel
 }
-=======
-}
->>>>>>> master
+
+
+

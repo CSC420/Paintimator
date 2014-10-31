@@ -1,30 +1,17 @@
 package pantimator;
 
-<<<<<<< HEAD
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.Shape;
-=======
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.GlyphVector;
->>>>>>> master
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
-
-<<<<<<< HEAD
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-=======
->>>>>>> master
 
 public class LayeredPanel extends JLayeredPane implements Serializable{
 
@@ -34,15 +21,9 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                 brushSize = 1;
 
     private JPanel canvas, glass;
-<<<<<<< HEAD
-    private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass;
-
-=======
     private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass, removedShapes;
->>>>>>> master
     private Random random = new Random();
     private Color drawColor = new Color(0,0,0,0), canvasBG;
-   // private ComponentMover componentMover = new ComponentMover();
 
     private Font font = getFont();
     private GlyphVector glyphVector;
@@ -118,7 +99,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         l.setFont(l.getFont().deriveFont((float)brushSize*3));
         l.setForeground(drawColor);
         canvas.add(l);
-       // componentMover.registerComponent(l, x, y);
         canvas.revalidate();
 
     }
@@ -245,12 +225,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
         }
 
-<<<<<<< HEAD
-        }
-
-    }
-
-=======
     }
 }
->>>>>>> master
+
