@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 public class LayeredPanelList extends ArrayList<LayeredPanel> implements Serializable{
     private static final long serialVersionUID = 000006;
 
