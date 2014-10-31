@@ -9,7 +9,7 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
     private Shape shape;
     private Color color;
     private int lineSize;
-    private long timeStamp;
+    private Long timeStamp;
     private boolean fill = false;
     private String string = "";
 
@@ -80,7 +80,7 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
         this.lineSize = lineSize;
     }
 
-    public long getTimeStamp() {
+    public Long getTimeStamp() {
         return timeStamp;
     }
 
@@ -120,7 +120,6 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
 
     @Override
     public int compareTo(ShapeWrapper o) {
-       return 1;
-    	// return Long.compare(this.getTimeStamp(), o.getTimeStamp());
+    	 return this.getTimeStamp().compareTo(o.getTimeStamp());
     }
 }
