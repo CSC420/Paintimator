@@ -43,10 +43,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         this.add(canvas, canvasLayerIndex);
         this.add(glass, glassLayerIndex);
 
-      //  componentMover.setEdgeInsets( new Insets(-100, -100, -100, -100) );
-       // componentMover.setAutoLayout(true);
-       // canvas.setLayout(new DragLayout());
-
     }
 
     public void undo(){
@@ -90,15 +86,11 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         return brushSize;
     }
 
-//    public ComponentMover getComponentMover(){
-//        return componentMover;
-//    }
 
     public JPanel getCanvas(){
         return canvas;
     }
 
-<<<<<<< HEAD
     public void addText(String text, int x, int y){
         System.out.println("TEXT: " + text);
         JLabel l = new JLabel(text);
@@ -110,8 +102,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     }
 
-=======
->>>>>>> Adam
     public void drawOnRootPane(ShapeWrapper s){
         canvas.setBounds(0,0,getWidth(),getHeight());
         if (!s.isImg()) {
@@ -200,9 +190,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                     g2d.setColor(s.getColor());
                     g2d.draw(s.getShape());
                 }
-<<<<<<< HEAD
-            }
-=======
 //                else {
 //                    if(tool.equals(Listener.LisState.ERASE)) {
 //                        g2d.setColor(getCanvasBG());
@@ -233,8 +220,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 ////                        g2d.drawString(s.getString(), x, y);
 //                    }
 //                }
-            }//end for
->>>>>>> Adam
+            }
 
         }
 

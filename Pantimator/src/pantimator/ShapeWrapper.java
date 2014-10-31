@@ -2,23 +2,16 @@ package pantimator;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-<<<<<<< HEAD
 import java.io.Serializable;
 import java.nio.Buffer;
-=======
->>>>>>> Adam
 
 public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
     private Shape shape;
     private Color color;
     private int lineSize;
-<<<<<<< HEAD
     private Long timeStamp;
     private boolean fill = false;
-=======
-    private long timeStamp;
     private boolean erase = false, text = false, magic = false;
->>>>>>> Adam
     private String string = "";
 
     private BufferedImage bi;
