@@ -116,26 +116,6 @@ public class Paintimator extends JFrame{
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-//				try {
-//					for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-//						if ("Nimbus".equals(info.getName())) {
-//							UIManager.setLookAndFeel(info.getClassName());
-//							break;
-//						}
-//					}
-//				} catch (ClassNotFoundException e) {
-//					e.printStackTrace();
-//					System.exit(1);
-//				} catch (UnsupportedLookAndFeelException e) {
-//					e.printStackTrace();
-//					JOptionPane.showMessageDialog(null, "Setting the Look and Feel to Nimbus failed - falling back to default.");
-//				} catch (InstantiationException e) {
-//					e.printStackTrace();
-//					System.exit(1);
-//				} catch (IllegalAccessException e) {
-//					e.printStackTrace();
-//					System.exit(1);
-//				}
 
                 Paintimator frame = new Paintimator();
                 frame.setVisible(true);
@@ -175,7 +155,7 @@ public class Paintimator extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //layeredPanel.setCanvasBG(JColorChooser.showDialog(null, "Choose a color", layeredPanel.getCanvasBG()));
                 lp.getSelected().setCanvasBG(JColorChooser.showDialog(null, "Choose a color", lp.getSelected().getCanvasBG()));
-
+            
             }
         });
 
