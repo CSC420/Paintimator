@@ -2,20 +2,10 @@ package pantimator;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-<<<<<<< HEAD
-=======
 import java.io.Serializable;
->>>>>>> origin/Pres
 import java.nio.Buffer;
 
-/**
- * Created by wilhelmi on 10/7/14.
- */
-<<<<<<< HEAD
-public class ShapeWrapper implements Comparable<ShapeWrapper>{
-=======
 public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
->>>>>>> origin/Pres
     private Shape shape;
     private Color color;
     private int lineSize;
@@ -130,6 +120,7 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
 
     @Override
     public int compareTo(ShapeWrapper o) {
-        return Long.compare(this.getTimeStamp(), o.getTimeStamp());
+       return 1;
+    	// return Long.compare(this.getTimeStamp(), o.getTimeStamp());
     }
 }

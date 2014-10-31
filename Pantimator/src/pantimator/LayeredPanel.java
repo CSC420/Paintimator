@@ -8,9 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by wilhelmi on 10/3/14.
- */
+
 public class LayeredPanel extends JLayeredPane implements Serializable{
 
     private BufferedImage img;
@@ -23,7 +21,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass;
     private Random random = new Random();
     private Color drawColor = new Color(0,0,0,0), canvasBG;
-    private ComponentMover componentMover = new ComponentMover();
+   // private ComponentMover componentMover = new ComponentMover();
 
     private Listener.LisState tool = Listener.LisState.DRAW;
 
@@ -40,9 +38,9 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         this.add(canvas, canvasLayerIndex);
         this.add(glass, glassLayerIndex);
 
-        componentMover.setEdgeInsets( new Insets(-100, -100, -100, -100) );
-        componentMover.setAutoLayout(true);
-        canvas.setLayout(new DragLayout());
+      //  componentMover.setEdgeInsets( new Insets(-100, -100, -100, -100) );
+       // componentMover.setAutoLayout(true);
+       // canvas.setLayout(new DragLayout());
 
 //        JLabel test = new JLabel("HELLO WORLD!!");
 //        canvas.add(test);
@@ -76,9 +74,9 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         return brushSize;
     }
 
-    public ComponentMover getComponentMover(){
-        return componentMover;
-    }
+//    public ComponentMover getComponentMover(){
+//        return componentMover;
+//    }
 
     public JPanel getCanvas(){
         return canvas;
@@ -90,7 +88,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         l.setFont(l.getFont().deriveFont((float)brushSize*3));
         l.setForeground(drawColor);
         canvas.add(l);
-        componentMover.registerComponent(l, x, y);
+       // componentMover.registerComponent(l, x, y);
         canvas.revalidate();
 
     }
@@ -150,7 +148,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
         public Layer(ArrayList<ShapeWrapper> shapes){
             this.shapes = shapes;
-        }//end constructor
+        }
 
         @Override public void paintComponent(Graphics g){
             super.paintComponent(g);
@@ -182,9 +180,9 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 //                        g2d.drawString(s.getString(), x, y);
                     }
                 }
-            }//end for
+            }
 
-        }//end paintComponent
+        }
 
-    }//end Layer
+    }
 }
