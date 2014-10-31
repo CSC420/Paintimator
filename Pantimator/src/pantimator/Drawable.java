@@ -1,8 +1,5 @@
 package pantimator;
 
-/**
- * Created by wilhelmi on 9/24/14.
- */
 public enum Drawable {
     Line(ShapeType.None),
     Draw(ShapeType.None),
