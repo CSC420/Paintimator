@@ -29,8 +29,26 @@ public class Listener implements MouseListener, MouseMotionListener  {
         yDrawPoints = new Vector<Integer>();
 	}
 	
-	public void setLisState(LisState s){
-		currentState = s;
+	public void setLisState(int num){
+		if(num == 1){
+			currentState = LisState.LINE;
+		}else if(num == 2){
+			currentState = LisState.DRAW;
+		}else if(num == 3){
+			currentState = LisState.TRIANGLE;
+		}else if(num == 4){
+			currentState = LisState.ERASE;
+		}else if(num == 5){
+			currentState = LisState.CIRCLE;
+		}else if(num == 6){
+			currentState = LisState.SQUARE;
+		}else if(num == 7){
+			currentState = LisState.TEXT;
+		}else if(num == 8){
+			currentState = LisState.MAGIC;
+		}else{
+			currentState = LisState.NONE;
+		}
 	}
 	
 	@Override
@@ -68,7 +86,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
 		currentState.mouseReleased(this, e);
 	}
 	
-	public static enum LisState {
+	private static enum LisState {
 		LINE {
 			public void mousePressed(Listener l, MouseEvent e) {
                 l.p1 = e.getPoint();
@@ -191,22 +209,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p, true));
             }
 
-
-
-//            public void mousePressed(Listener l, MouseEvent e) {
-//                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
-//                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
-//
-//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
-//            }
-//
-//
-//            public void mouseDragged(Listener l, MouseEvent e) {
-//                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
-//                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
-//
-//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
-//            }
 		},
 		CIRCLE{
 			public void mousePressed(Listener l, MouseEvent e) {
@@ -265,17 +267,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
         TEXT{
             public void mouseClicked(Listener l, MouseEvent e){
-//                LOG.info("Text button clicked");
-//                JTextArea ta = new JTextArea();
-//
-//                JScrollPane sp = new JScrollPane(ta);
-//                sp.setPreferredSize(new Dimension(sp.getWidth(), 100));
-//
-//                JOptionPane.showOptionDialog(null, ta, "Enter text here", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
-//                ta.requestFocusInWindow();
-////                l.layeredPanel.addText(ta.getText(), e.getX(), e.getY());
-//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), ta.getText()));
-
                 String s = JOptionPane.showInputDialog(null, "Enter text here:", "Text", JOptionPane.PLAIN_MESSAGE);
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), s));
 

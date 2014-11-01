@@ -28,7 +28,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     private Font font = getFont();
     private GlyphVector glyphVector;
 
-    private Listener.LisState tool = Listener.LisState.DRAW;
+//    private Listener.LisState tool = Listener.LisState.DRAW;
 
     public LayeredPanel(){
         toDrawOnCanvas = new ArrayList<ShapeWrapper>();
@@ -69,7 +69,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         canvasBG = c;
         canvas.setBackground(c);
         canvas.repaint();
-        System.out.println("Canvas BG: " + canvasBG);
     }
 
     public Color getDrawColor(){
@@ -139,9 +138,9 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         toDrawOnGlass.clear();
     }
     
-    public void setTool(Listener.LisState t){
-        this.tool = t;
-    }
+//    public void setTool(Listener.LisState t){
+//        this.tool = t;
+//    }
 
     /* added by Jeremy
      * method which imports an image to the root pane that can be "edited"

@@ -1,48 +1,48 @@
 package pantimator;
 
-import pantimator.Listener.LisState;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 public class Paintimator extends JFrame{
-    private final Logger LOG = Logger.getLogger(Paintimator.class.getName());
-    private final boolean DEBUG = true;
 
-    private final int GUI_WIDTH = 500, GUI_HEIGHT = 500;
     private final String FRAME_TITLE = "Paintimator!";
     private final Color canvasColor = new Color(132, 165, 165);
 
     private JPanel contentPane;
     private JPanel centerPanel;
-    private JPanel rightPanel;
     private JPanel bottomPanel;
     private LayeredPanel layeredPanel;
-
-    private static JInternalFrame canvasFrame;
-
+    private ToolPanel toolPanel;
     private JMenuBar menuBar;
-
     private Listener myListener;
-
     private JFileChooser fc;
-
     private StorageUtil su = new StorageUtil(this);
-    private LayeredPanelList lp = new LayeredPanelList();
+    private LayeredPanelList layeredPanelList = new LayeredPanelList();
 
-    public Paintimator(){
+    public Paintimator() throws IOException{
         super();
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setPreferredSize(new Dimension(1200, 750));
+        this.setTitle(FRAME_TITLE);
 
         fc = new JFileChooser();
         fc.addChoosableFileFilter(new ImageFilter());
@@ -52,37 +52,25 @@ public class Paintimator extends JFrame{
         contentPane = new JPanel(new BorderLayout());
         layeredPanel = new LayeredPanel();
 
-        this.setPreferredSize(new Dimension(1200, 750));
-        this.setTitle(FRAME_TITLE);
-
         //draw panel
         layeredPanel.setCanvasBG(canvasColor);
         layeredPanel.setDrawColor(Color.BLACK);
         layeredPanel.setPreferredSize(new Dimension(700,500));
-
-        //background for canvas
-        canvasFrame = new JInternalFrame();
-        canvasFrame.setAlignmentX(Component.CENTER_ALIGNMENT);
-        canvasFrame.setPreferredSize(new Dimension(700, 500));
         
         //center panel
         centerPanel = new JPanel();
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         centerPanel.setBackground(Color.GREEN);
         
-        //canvas frame
-        canvasFrame = new JInternalFrame();
-        canvasFrame.setAlignmentX(Component.CENTER_ALIGNMENT);
-        canvasFrame.setPreferredSize(new Dimension(700, 500));
-
         //bottom Panel
         bottomPanel = new JPanel();
         JButton button = new JButton();
         bottomPanel.add(button);
 
         //right panel
-        rightPanel = new JPanel();
-        createToolPanel();
+        toolPanel = new ToolPanel(this);
+        
+        //menu
         createMenu();
 
         //listener
@@ -90,219 +78,56 @@ public class Paintimator extends JFrame{
         layeredPanel.addMouseListener(myListener);
         layeredPanel.addMouseMotionListener(myListener);
 
-        lp.add(layeredPanel);
-        centerPanel.add(lp.getSelected());
+        //add everything to correct locations
+        layeredPanelList.add(layeredPanel);
+        centerPanel.add(layeredPanelList.getSelected());
         contentPane.add(centerPanel, BorderLayout.CENTER);
-        contentPane.add(rightPanel, BorderLayout.WEST);
+        contentPane.add(toolPanel, BorderLayout.WEST);
 
+        //set it and show it
         this.setContentPane(contentPane);
         this.pack();
         this.setVisible(true);
-        //layeredPanel.clearRootPane();
-        lp.getSelected().clearRootPane();
+        layeredPanelList.getSelected().clearRootPane();
     }
     
-    public void setCanvasGlassPane(JPanel jp){
-        canvasFrame.setGlassPane(jp);
-    }
-
-    public Component getCanvasGlassPane(){
-        return canvasFrame.getGlassPane();
-    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-        
-//				try {
-//					for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-//						if ("Nimbus".equals(info.getName())) {
-//							UIManager.setLookAndFeel(info.getClassName());
-//							break;
-//						}
-//					}
-//				} catch (ClassNotFoundException e) {
-//					e.printStackTrace();
-//					System.exit(1);
-//				} catch (UnsupportedLookAndFeelException e) {
-//					e.printStackTrace();
-//					JOptionPane.showMessageDialog(null, "Setting the Look and Feel to Nimbus failed - falling back to default.");
-//				} catch (InstantiationException e) {
-//					e.printStackTrace();
-//					System.exit(1);
-//				} catch (IllegalAccessException e) {
-//					e.printStackTrace();
-//					System.exit(1);
-//				}
-
-                Paintimator frame = new Paintimator();
-                frame.setVisible(true);
+                Paintimator frame;
+				try {
+					frame = new Paintimator();
+					frame.setVisible(true);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                
             }
         });
     }
-
-    private void createToolPanel(){
-        JPanel toolPanel = new JPanel(new GridLayout(0,1)); //this will need to be GridBag
-        toolPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-
-        JPanel undoRedoPanel = new JPanel();
-        undoRedoPanel.setBackground(new Color(255, 255, 196, 0));
-        JButton undo = new JButton("undo");
-        undo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                layeredPanel.undo();
-            }
-        });
-        JButton redo = new JButton("redo");
-        redo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                layeredPanel.redo();
-            }
-        });
-        undoRedoPanel.add(undo);
-        undoRedoPanel.add(redo);
-
-        final JButton line, draw, text, erase, fg_color, bg_color, circle, square, triangle, magic;
-
-        line = new JButton("Line");
-        line.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myListener.setLisState(LisState.LINE);
-
-            }
-        });
-
-        //this will need to change to a color chooser
-        fg_color = new JButton("Line Color");
-        fg_color.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //layeredPanel.setDrawColor(JColorChooser.showDialog(null, "Choose a color", layeredPanel.getDrawColor()));
-                lp.getSelected().setDrawColor(JColorChooser.showDialog(null, "Choose a color", lp.getSelected().getDrawColor()));
-
-            }
-        });
-
-        bg_color = new JButton("Background Color");
-        bg_color.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //layeredPanel.setCanvasBG(JColorChooser.showDialog(null, "Choose a color", layeredPanel.getCanvasBG()));
-                lp.getSelected().setCanvasBG(JColorChooser.showDialog(null, "Choose a color", lp.getSelected().getCanvasBG()));
-            
-            }
-        });
-
-        circle = new JButton("Circle");
-        circle.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myListener.setLisState(LisState.CIRCLE);
-                //layeredPanel.setTool(LisState.CIRCLE);
-                lp.getSelected().setTool(LisState.CIRCLE);
-            }
-        });
-
-        square = new JButton("Square");
-        square.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myListener.setLisState(LisState.SQUARE);
-                //layeredPanel.setTool(LisState.SQUARE);
-                lp.getSelected().setTool(LisState.SQUARE);
-            }
-        });
-
-
-        triangle = new JButton("Triangle");
-        triangle.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myListener.setLisState(LisState.TRIANGLE);
-                //layeredPanel.setTool(LisState.TRIANGLE);
-                lp.getSelected().setTool(LisState.TRIANGLE);
-            }
-        });
-
-        //Free drawing
-        draw = new JButton("Draw");
-        draw.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myListener.setLisState(LisState.DRAW);
-                //layeredPanel.setTool(LisState.DRAW);
-                lp.getSelected().setTool(LisState.DRAW);
-
-            }
-        });
-        magic = new JButton("Magic Draw");
-        magic.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myListener.setLisState(LisState.MAGIC);
-                layeredPanel.setTool(LisState.MAGIC);
-            }
-        });
-
-        //Text
-        text = new JButton("Text");
-        text.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myListener.setLisState(LisState.TEXT);
-                //layeredPanel.setTool(LisState.TEXT);
-                lp.getSelected().setTool(LisState.TEXT);
-
-            }
-        });
-
-        //erasing
-        erase = new JButton("Erase");
-        erase.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                myListener.setLisState(LisState.ERASE);
-                //layeredPanel.setTool(LisState.ERASE);
-                lp.getSelected().setTool(LisState.ERASE);
-            }
-        });
-
-
-        final JSlider lineSize = new JSlider(JSlider.HORIZONTAL, 1, 15, 1);
-        final JLabel lineSizeLabel = new JLabel("Line Size: " + lineSize.getValue());
-        lineSize.setPreferredSize(new Dimension(10, lineSize.getHeight()));
-        lineSize.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                //layeredPanel.setBrushSize(lineSize.getValue());
-                lp.getSelected().setBrushSize(lineSize.getValue());
-                lineSizeLabel.setText("Line Size: " + lineSize.getValue());
-            }
-        });
-
-        //add all the buttons/slider/label to the toolpane
-        toolPanel.add(undoRedoPanel);
-        toolPanel.add(line);
-        toolPanel.add(draw);
-        toolPanel.add(magic);
-        toolPanel.add(text);
-        toolPanel.add(circle);
-        toolPanel.add(square);
-        toolPanel.add(triangle);
-        toolPanel.add(erase);
-        toolPanel.add(fg_color);
-        toolPanel.add(bg_color);
-        toolPanel.add(lineSizeLabel);
-        toolPanel.add(lineSize);
-        toolPanel.setBackground(Color.RED);
-
-        //add the toolPanel to the rightPanel
-        rightPanel.add(toolPanel);
-
+    
+    public void undo(){
+    	layeredPanel.undo();
     }
+    
+    public void redo(){
+    	layeredPanel.redo();
+    }
+    
+    public void setListenerState(int num){
+    	myListener.setLisState(num);
+    }
+    
+    public void setPanelListTool(){
+    	
+    }
+    
+    public void setBrushSize(int size){
+    	layeredPanelList.getSelected().setBrushSize(size);
+    }
+
 
     private void createMenu(){
         menuBar = new JMenuBar();
@@ -354,9 +179,9 @@ public class Paintimator extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(su.getProjectName() !=null){
-                    su.saveProject(lp);
+                    su.saveProject(layeredPanelList);
                 }else{
-                    su.saveProjectAs(lp);
+                    su.saveProjectAs(layeredPanelList);
                 }
             }
         });
@@ -364,7 +189,7 @@ public class Paintimator extends JFrame{
         saveProjectAs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                su.saveProjectAs(lp);
+                su.saveProjectAs(layeredPanelList);
             }
         });
 
@@ -375,9 +200,9 @@ public class Paintimator extends JFrame{
                 lpTemp = su.openProject();
 
                 if(lpTemp != null){
-                    centerPanel.remove(lp.getSelected());
+                    centerPanel.remove(layeredPanelList.getSelected());
                     centerPanel.add(lpTemp.getSelected());
-                    lp = lpTemp;
+                    layeredPanelList = lpTemp;
                     centerPanel.validate();
                     centerPanel.repaint();
                 }
