@@ -18,10 +18,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 class RoundButton extends JButton {
-	 
-	public RoundButton() {
-	    this(null, null);
-	  }
+	protected Shape shape, base;
 	
 	public RoundButton(Icon icon) {
 	    this(null, icon);
@@ -30,12 +27,7 @@ class RoundButton extends JButton {
 	public RoundButton(String text) {
 	    this(text, null);
 	  }
-	
-	public RoundButton(Action a) {
-	    this();
-	    setAction(a);
-	  }
-	
+		
 	public RoundButton(String text, Icon icon) {
 	    setModel(new DefaultButtonModel());
 	    init(text, icon);
@@ -51,7 +43,7 @@ class RoundButton extends JButton {
 	    initShape();
 	  }
 	  
-	protected Shape shape, base;
+	
 	
 	protected void initShape() {
 	    if(!getBounds().equals(base)) {

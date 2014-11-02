@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -24,8 +27,6 @@ import javax.swing.WindowConstants;
 public class Paintimator extends JFrame{
 
     private final String FRAME_TITLE = "Paintimator!";
-    private final Color canvasColor = new Color(132, 165, 165);
-
     private JPanel contentPane;
     private JPanel centerPanel;
     private JPanel bottomPanel;
@@ -41,9 +42,15 @@ public class Paintimator extends JFrame{
         super();
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setPreferredSize(new Dimension(1200, 750));
+        //this.setResizable(false);
+        
         this.setTitle(FRAME_TITLE);
-
+        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setPreferredSize(screenSize);
+        int width = screenSize.width;
+        int height = screenSize.height;
+        
         fc = new JFileChooser();
         fc.addChoosableFileFilter(new ImageFilter());
         fc.setAcceptAllFileFilterUsed(false);
@@ -53,14 +60,14 @@ public class Paintimator extends JFrame{
         layeredPanel = new LayeredPanel();
 
         //draw panel
-        layeredPanel.setCanvasBG(canvasColor);
+        layeredPanel.setCanvasBG(Color.WHITE);
         layeredPanel.setDrawColor(Color.BLACK);
-        layeredPanel.setPreferredSize(new Dimension(700,500));
+        layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
         
         //center panel
         centerPanel = new JPanel();
         centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        centerPanel.setBackground(Color.GREEN);
+        centerPanel.setBackground(Color.LIGHT_GRAY);
         
         //bottom Panel
         bottomPanel = new JPanel();
@@ -120,12 +127,12 @@ public class Paintimator extends JFrame{
     	myListener.setLisState(num);
     }
     
-    public void setPanelListTool(){
-    	
-    }
-    
     public void setBrushSize(int size){
     	layeredPanelList.getSelected().setBrushSize(size);
+    }
+    
+    public void setDrawColor(Color c){
+    	layeredPanelList.getSelected().setDrawColor(c);
     }
 
 
