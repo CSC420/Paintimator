@@ -74,10 +74,6 @@ public class Paintimator extends JFrame{
         //animation panel
         animationPane = new AnimationPane();
 
-        //bottom Panel
-        bottomPanel = new JPanel();
-        bottomPanel.add(animationPane);
-
         //tool panel
         toolPanel = new ToolPanel(this);
 
@@ -91,10 +87,12 @@ public class Paintimator extends JFrame{
 
         //add everything to correct locations
         layeredPanelList.add(layeredPanel);
+        
         centerPanel.add(layeredPanelList.getSelected());
+        centerPanel.add(animationPane, BorderLayout.PAGE_END);
+        
         contentPane.add(centerPanel, BorderLayout.CENTER);
         contentPane.add(toolPanel, BorderLayout.WEST);
-        contentPane.add(bottomPanel, BorderLayout.PAGE_END);
 
         //set it and show it
         this.setContentPane(contentPane);
