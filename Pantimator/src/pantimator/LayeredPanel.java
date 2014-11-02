@@ -1,6 +1,13 @@
 package pantimator;
 
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import javax.swing.*;
 
 import java.awt.*;
@@ -30,12 +37,11 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     private Font font = getFont();
     private GlyphVector glyphVector;
 
-//    private Listener.LisState tool = Listener.LisState.DRAW;
-
     public LayeredPanel(){
         toDrawOnCanvas = new ArrayList<ShapeWrapper>();
         toDrawOnGlass = new ArrayList<ShapeWrapper>();
         removedShapes = new ArrayList<ShapeWrapper>();
+        
 
         canvas = new Layer(toDrawOnCanvas);
         glass = new Layer(toDrawOnGlass);
@@ -141,17 +147,30 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         }
     }
 
-    /*added by Jeremy
-           * helper method used for saving the root pane to an image file
-           */
-    public BufferedImage paneToImg() {
-        BufferedImage image = new BufferedImage(canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
+    /* added by Jeremy
+     * helper method used for saving the root pane to an image file
+     */
+    public BufferedImage paneToBufferedImg() {
+        BufferedImage bi;
+        if (canvas.getWidth() <= 0 || canvas.getHeight() <= 0) {
+            bi = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
+        } else {
+            bi = new BufferedImage(canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
+        }
 
-        canvas.paint(image.getGraphics());
+        canvas.paint(bi.getGraphics());
 
-        return image;
+        return bi;
     }
-
+    
+    /**
+     * Casts a Buffered Image to Image and returns it
+     * @return
+     */
+    public Image paneToImg() {
+    	return (Image) paneToBufferedImg();
+    }
+    
     private class Layer extends JPanel{
         ArrayList<ShapeWrapper> shapes;
 
@@ -163,15 +182,23 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         public void paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D)g;
+<<<<<<< HEAD
             g2d.setBackground(Color.white);
 
+=======
+            g2d.setBackground(Color.WHITE);
+>>>>>>> Jeremy
             for (ShapeWrapper s : shapes) {
                 g2d.setStroke(new BasicStroke(s.getLineSize(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
                 if (s.isImg()) { // added by Jeremy; draws image to pane
                     g2d.drawImage(s.getImg(), 0, 0, null);
                 } else if (s.isErase()) {
+<<<<<<< HEAD
                     g2d.setColor(Color.white);
+=======
+                    g2d.setColor(Color.WHITE);
+>>>>>>> Jeremy
                     g2d.draw(s.getShape());
 
                 }else if(s.isText() && s.getString() != null) {

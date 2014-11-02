@@ -18,6 +18,8 @@ public class MyMenu extends JMenuBar{
 
 		JMenu fileMenu = new JMenu("File");
 		JMenu editMenu = new JMenu("Edit");
+		JMenuItem newFrame = new JMenuItem("New Frame");
+		JMenuItem newProj = new JMenuItem("New Project");
 		JMenuItem loadImg = new JMenuItem("Import Image");
 		JMenuItem saveImg = new JMenuItem("Export Image");
 		JMenuItem saveProject = new JMenuItem("Save");
@@ -58,7 +60,27 @@ public class MyMenu extends JMenuBar{
 				master.loadProject();
 			}
 		});
+		
+		newFrame.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				master.newFrame();
+			}
+			
+		});
+		
+		newProj.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO set up new proj algos				
+			}
+			
+		});
+		
+		fileMenu.add(newFrame);
+		fileMenu.add(newProj);
 		fileMenu.add(loadProject);
 		fileMenu.add(saveProject);
 		fileMenu.add(saveProjectAs);

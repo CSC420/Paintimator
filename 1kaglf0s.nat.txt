@@ -1,0 +1,86 @@
+﻿Merge remote-tracking branch 'origin/Kelly2' into Jeremy
+
+Conflicts:
+	Pantimator/bin/pantimator/LayeredPanel$Layer.class
+	Pantimator/bin/pantimator/LayeredPanel.class
+	Pantimator/bin/pantimator/Paintimator.class
+	Pantimator/src/pantimator/LayeredPanel.java
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch Jeremy
+# Your branch is ahead of 'origin/Jeremy' by 12 commits.
+#   (use "git push" to publish your local commits)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   .idea/misc.xml
+#	modified:   .idea/workspace.xml
+#	modified:   Pantimator/Pantimator.iml
+#	deleted:    Pantimator/bin/.gitignore
+#	modified:   Pantimator/bin/pantimator/LayeredPanel$Layer.class
+#	modified:   Pantimator/bin/pantimator/LayeredPanel.class
+#	modified:   Pantimator/bin/pantimator/Listener$LisState$1.class
+#	modified:   Pantimator/bin/pantimator/Listener$LisState$2.class
+#	modified:   Pantimator/bin/pantimator/Listener$LisState$3.class
+#	modified:   Pantimator/bin/pantimator/Listener$LisState$5.class
+#	modified:   Pantimator/bin/pantimator/Listener$LisState$6.class
+#	modified:   Pantimator/bin/pantimator/Listener$LisState$7.class
+#	modified:   Pantimator/bin/pantimator/Listener$LisState.class
+#	modified:   Pantimator/bin/pantimator/Listener.class
+#	modified:   Pantimator/bin/pantimator/Paintimator.class
+#	modified:   Pantimator/bin/pantimator/ShapeWrapper.class
+#	renamed:    Pantimator/blueButton.png -> Pantimator/images/blueButton.png
+#	renamed:    Pantimator/drawBlue.png -> Pantimator/images/drawBlue.png
+#	renamed:    Pantimator/drawGreen.png -> Pantimator/images/drawGreen.png
+#	renamed:    Pantimator/drawRed.png -> Pantimator/images/drawRed.png
+#	renamed:    Pantimator/eraseBlue.png -> Pantimator/images/eraseBlue.png
+#	renamed:    Pantimator/eraseGreen.png -> Pantimator/images/eraseGreen.png
+#	renamed:    Pantimator/eraseRed.png -> Pantimator/images/eraseRed.png
+#	renamed:    Pantimator/greenButton.png -> Pantimator/images/greenButton.png
+#	renamed:    Pantimator/redButton.png -> Pantimator/images/redButton.png
+#	renamed:    Pantimator/redoBlue.png -> Pantimator/images/redoBlue.png
+#	renamed:    Pantimator/redoGreen.png -> Pantimator/images/redoGreen.png
+#	renamed:    Pantimator/redoRed.png -> Pantimator/images/redoRed.png
+#	renamed:    Pantimator/undoBlue.png -> Pantimator/images/undoBlue.png
+#	renamed:    Pantimator/undoGreen.png -> Pantimator/images/undoGreen.png
+#	renamed:    Pantimator/undoRed.png -> Pantimator/images/undoRed.png
+#	modified:   Pantimator/src/pantimator/AnimationPane.java
+#	modified:   Pantimator/src/pantimator/LayeredPanel.java
+#	modified:   Pantimator/src/pantimator/MyMenu.java
+#	modified:   Pantimator/src/pantimator/Paintimator.java
+#	modified:   Pantimator/src/pantimator/StorageUtil.java
+#	modified:   Pantimator/src/pantimator/ToolPanel.java
+#	deleted:    out/production/Pantimator/pantimator/ImageFilter.class
+#	deleted:    out/production/Pantimator/pantimator/LayeredPanel$Layer.class
+#	deleted:    out/production/Pantimator/pantimator/LayeredPanel.class
+#	deleted:    out/production/Pantimator/pantimator/LayeredPanelList.class
+#	deleted:    out/production/Pantimator/pantimator/Listener$1.class
+#	deleted:    out/production/Pantimator/pantimator/Listener$LisState$1.class
+#	deleted:    out/production/Pantimator/pantimator/Listener$LisState$2.class
+#	deleted:    out/production/Pantimator/pantimator/Listener$LisState$3.class
+#	deleted:    out/production/Pantimator/pantimator/Listener$LisState$4.class
+#	deleted:    out/production/Pantimator/pantimator/Listener$LisState$5.class
+#	deleted:    out/production/Pantimator/pantimator/Listener$LisState$6.class
+#	deleted:    out/production/Pantimator/pantimator/Listener$LisState$7.class
+#	deleted:    out/production/Pantimator/pantimator/Listener$LisState.class
+#	deleted:    out/production/Pantimator/pantimator/Listener.class
+#	deleted:    out/production/Pantimator/pantimator/Paintimator$1.class
+#	deleted:    out/production/Pantimator/pantimator/Paintimator$2.class
+#	deleted:    out/production/Pantimator/pantimator/Paintimator$3.class
+#	deleted:    out/production/Pantimator/pantimator/Paintimator$4.class
+#	deleted:    out/production/Pantimator/pantimator/Paintimator$5.class
+#	deleted:    out/production/Pantimator/pantimator/Paintimator$6.class
+#	deleted:    out/production/Pantimator/pantimator/Paintimator.class
+#	deleted:    out/production/Pantimator/pantimator/ShapeWrapper.class
+#	deleted:    out/production/Pantimator/pantimator/StorageUtil.class
+#	deleted:    out/production/Pantimator/pantimator/Utils.class
+#
+
