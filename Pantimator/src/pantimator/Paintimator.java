@@ -30,15 +30,13 @@ public class Paintimator extends JFrame{
 	private MyMenu menu;
 	private Listener myListener;
 	private JFileChooser fc;
-	private StorageUtil su = new StorageUtil(this);
-	private LayeredPanelList layeredPanelList = new LayeredPanelList();
+	private StorageUtil su;
+	private LayeredPanelList layeredPanelList;
 
 	public Paintimator() throws IOException{
 		super();
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		//this.setResizable(false);
-
 		this.setTitle(FRAME_TITLE);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -46,18 +44,21 @@ public class Paintimator extends JFrame{
 		int width = screenSize.width;
 		int height = screenSize.height;
 
+		su = new StorageUtil(this);
+		layeredPanelList = new LayeredPanelList();
 		fc = new JFileChooser();
 		fc.addChoosableFileFilter(new ImageFilter());
 		fc.setAcceptAllFileFilterUsed(false);
+		
 
 		//create a contentPane
 		contentPane = new JPanel(new BorderLayout());
 		layeredPanel = new LayeredPanel();
 
 		//draw panel
-		layeredPanel.setCanvasBG(Color.WHITE);
 		layeredPanel.setDrawColor(Color.BLACK);
 		layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
+		layeredPanelList.add(layeredPanel);
 
 		//center panel
 		centerPanel = new JPanel();
@@ -80,11 +81,10 @@ public class Paintimator extends JFrame{
 		layeredPanel.addMouseMotionListener(myListener);
 
 		//add everything to correct locations
-		layeredPanelList.add(layeredPanel);
-
 		centerPanel.add(layeredPanelList.getSelected());
 		centerPanel.add(animationPane, BorderLayout.PAGE_END);
 
+		//add panels to the content pane
 		contentPane.add(centerPanel, BorderLayout.CENTER);
 		contentPane.add(toolPanel, BorderLayout.WEST);
 
