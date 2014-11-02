@@ -114,9 +114,9 @@ public ToolPanel(Paintimator p) throws IOException{
      //Free drawing
      draw = new JButton("Draw");
      
-     BufferedImage buttonIcon = ImageIO.read(new File("redButton.png"));
-     RoundButton b = new RoundButton( new ImageIcon(buttonIcon));
-    // RoundButton b = new RoundButton();
+     //BufferedImage buttonIcon = ImageIO.read(new File("redButton.png"));
+     //RoundButton b = new RoundButton( new ImageIcon(buttonIcon));
+     RoundButton b = new RoundButton();
 
      
      b.addActionListener(new ActionListener() {
@@ -127,8 +127,6 @@ public ToolPanel(Paintimator p) throws IOException{
 
          }
      });
-     
-     
      
      magic = new JButton("Magic Draw");
      magic.addActionListener(new ActionListener() {

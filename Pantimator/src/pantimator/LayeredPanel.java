@@ -1,43 +1,64 @@
 package pantimator;
 
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.GlyphVector;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
-/**
- * Created by wilhelmi on 10/3/14.
- */
 public class LayeredPanel extends JLayeredPane implements Serializable{
 
     private BufferedImage img;
-
     private int canvasLayerIndex = 1,
-                glassLayerIndex = 0,
-                brushSize = 1;
+            glassLayerIndex = 0,
+            brushSize = 1;
 
     private JPanel canvas, glass;
-    private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass;
+    private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass, removedShapes;
     private Random random = new Random();
     private Color drawColor = new Color(0,0,0,0), canvasBG;
 
-    private Listener.LisState tool = Listener.LisState.DRAW;
+    private Font font = getFont();
+    private GlyphVector glyphVector;
+
+//    private Listener.LisState tool = Listener.LisState.DRAW;
 
     public LayeredPanel(){
         toDrawOnCanvas = new ArrayList<ShapeWrapper>();
         toDrawOnGlass = new ArrayList<ShapeWrapper>();
+        removedShapes = new ArrayList<ShapeWrapper>();
 
         canvas = new Layer(toDrawOnCanvas);
         glass = new Layer(toDrawOnGlass);
 
+        drawColor = Color.BLACK;
         glass.setBackground(new Color(0, 0, 0, 0));
         canvas.setBackground(new Color(0,0,0,0));
 
         this.add(canvas, canvasLayerIndex);
         this.add(glass, glassLayerIndex);
+
+    }
+
+    public void undo(){
+        if (!toDrawOnCanvas.isEmpty()) {
+            removedShapes.add(toDrawOnCanvas.remove(toDrawOnCanvas.size()-1));
+            canvas.repaint();
+        }
+    }
+
+    public void redo(){
+        if (!removedShapes.isEmpty()) {
+            toDrawOnCanvas.add(removedShapes.remove(removedShapes.size()-1));
+            canvas.repaint();
+        }
     }
 
     public void setDrawColor(Color c){
@@ -48,7 +69,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         canvasBG = c;
         canvas.setBackground(c);
         canvas.repaint();
-        System.out.println("Canvas BG: " + canvasBG);
     }
 
     public Color getDrawColor(){
@@ -65,6 +85,21 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     public int getBrushSize(){
         return brushSize;
+    }
+
+
+    public JPanel getCanvas(){
+        return canvas;
+    }
+
+    public void addText(String text, int x, int y){
+        System.out.println("TEXT: " + text);
+        JLabel l = new JLabel(text);
+        l.setFont(l.getFont().deriveFont((float)brushSize*3));
+        l.setForeground(drawColor);
+        canvas.add(l);
+        canvas.revalidate();
+
     }
 
     public void drawOnRootPane(ShapeWrapper s){
@@ -103,6 +138,10 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         toDrawOnGlass.clear();
     }
 
+//    public void setTool(Listener.LisState t){
+//        this.tool = t;
+//    }
+
     /* added by Jeremy
      * method which imports an image to the root pane that can be "edited"
      */
@@ -114,8 +153,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     }
 
     /*added by Jeremy
-     * helper method used for saving the root pane to an image file
-     */
+           * helper method used for saving the root pane to an image file
+           */
     public BufferedImage paneToImg() {
         BufferedImage image = new BufferedImage(canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
 
@@ -124,18 +163,15 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         return image;
     }
 
-    public void setTool(Listener.LisState t){
-        this.tool = t;
-    }
-
     private class Layer extends JPanel{
         ArrayList<ShapeWrapper> shapes;
 
         public Layer(ArrayList<ShapeWrapper> shapes){
             this.shapes = shapes;
-        }//end constructor
+        }
 
-        @Override public void paintComponent(Graphics g){
+        @Override
+        public void paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D)g;
             g2d.setBackground(canvasBG);
@@ -145,28 +181,60 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
                 if (s.isImg()) { // added by Jeremy; draws image to pane
                     g2d.drawImage(s.getImg(), 0, 0, null);
-                } else if (!s.isFill()) {
+                } else if (s.isErase()) {
+                    g2d.setColor(getCanvasBG());
+                    g2d.draw(s.getShape());
+
+                }else if(s.isText() && s.getString() != null) {
+                    //fixing the text tool...
+                    font = getFont().deriveFont((float)s.getLineSize() * 3);
+                    glyphVector = font.createGlyphVector(getFontMetrics(font).getFontRenderContext(), s.getString());
+                    Shape textShape = glyphVector.getOutline((float)s.getShape().getBounds().getX(),(float)s.getShape().getBounds().getY());
+                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2d.setColor(s.getColor());
+                    g2d.fill(textShape);
+                }else if(s.isMagic()) {
+                    g2d.setStroke(new WobbleStroke(2f, 3f));
                     g2d.setColor(s.getColor());
                     g2d.draw(s.getShape());
-                } else {
-                    if (tool.equals(Listener.LisState.ERASE)) {
-                        int x = ((Double) s.getShape().getBounds().getX()).intValue();
-                        int y = ((Double) s.getShape().getBounds().getY()).intValue();
-                        g2d.clearRect(x, y, brushSize, brushSize);
-                    } else if (tool.equals(Listener.LisState.TEXT)) {
-                        System.out.println("Trying to show the string: " + s.getString());
-//                      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-//                      RenderingHints.VALUE_ANTIALIAS_ON);
-                        Font font = new Font("Serif", Font.PLAIN, 96);
-                        g2d.setFont(font);
-                        int x = ((Double) s.getShape().getBounds().getX()).intValue();
-                        int y = ((Double) s.getShape().getBounds().getY()).intValue();
-                        g2d.drawString(s.getString(), x, y);
-                    }
+                }else {
+//                    g2d.setStroke(new WobbleStroke(2f, 2f));
+                    g2d.setColor(s.getColor());
+                    g2d.draw(s.getShape());
                 }
-            }//end for
+//                else {
+//                    if(tool.equals(Listener.LisState.ERASE)) {
+//                        g2d.setColor(getCanvasBG());
+//                        g2d.fill(s.getShape());
+//
+////                        g2d.clearRect(x, y, brushSize, brushSize);
+//                    } else if(tool.equals(Listener.LisState.TEXT)){
+//                        //fixing the text tool...
+//                        font = getFont().deriveFont((float)s.getLineSize() * 2);
+//                        glyphVector = font.createGlyphVector(getFontMetrics(font).getFontRenderContext(), s.getString());
+//                        Shape textShape = glyphVector.getOutline((float)s.getShape().getBounds().getX(),(float)s.getShape().getBounds().getY());
+//
+//
+//                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+////                        g2d.translate(s.getShape().getBounds().getX(),s.getShape().getBounds().getY());
+////                        g2d.translate(100, 150);
+//                        g2d.setColor(s.getColor());
+//                        g2d.fill(textShape);
+//                        g2d.translate(0,0);
+//
+//                        System.out.println("Trying to show the string: " + s.getString());
+//////                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+//////                                RenderingHints.VALUE_ANTIALIAS_ON);
+////                        Font font = new Font("Serif", Font.PLAIN, 96);
+////                        g2d.setFont(font);
+////                        int x = ((Double)s.getShape().getBounds().getX()).intValue();
+////                        int y = ((Double)s.getShape().getBounds().getY()).intValue();
+////                        g2d.drawString(s.getString(), x, y);
+//                    }
+//                }
+            }
 
-        }//end paintComponent
+        }
 
-    }//end Layer
+    }
 }
