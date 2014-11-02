@@ -20,7 +20,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     private BufferedImage img;
     private int canvasLayerIndex = 1,
             glassLayerIndex = 0,
-            brushSize = 1;
+            brushSize = 2;
 
     private JPanel canvas, glass;
     private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass, removedShapes;
@@ -42,7 +42,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
         drawColor = Color.BLACK;
         glass.setBackground(new Color(0, 0, 0, 0));
-        canvas.setBackground(new Color(0,0,0,0));
 
         this.add(canvas, canvasLayerIndex);
         this.add(glass, glassLayerIndex);
@@ -131,10 +130,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         repaint();
         toDrawOnGlass.clear();
     }
-
-//    public void setTool(Listener.LisState t){
-//        this.tool = t;
-//    }
 
     /* added by Jeremy
      * method which imports an image to the root pane that can be "edited"
