@@ -36,9 +36,9 @@ public class ToolPanel extends JPanel {
 		//super();
 		master = p;
 
-		BufferedImage buttonIcon = ImageIO.read(new File("undoBlue.png"));
+		BufferedImage buttonIcon = ImageIO.read(new File("images/undoBlue.png"));
 		undo = new RoundButton(new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("undoGreen.png"));
+		buttonIcon = ImageIO.read(new File("images/undoGreen.png"));
 		undo.setPressedIcon(new ImageIcon(buttonIcon));
 		undo.addActionListener(new ActionListener() {
 			@Override
@@ -50,9 +50,9 @@ public class ToolPanel extends JPanel {
 			}
 		});
 
-		buttonIcon = ImageIO.read(new File("redoBlue.png"));
+		buttonIcon = ImageIO.read(new File("images/redoBlue.png"));
 		redo = new RoundButton(new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("redoGreen.png"));
+		buttonIcon = ImageIO.read(new File("images/redoGreen.png"));
 		redo.setPressedIcon(new ImageIcon(buttonIcon));
 		redo.addActionListener(new ActionListener() {
 			@Override
@@ -66,9 +66,9 @@ public class ToolPanel extends JPanel {
 
 
 		//Line
-		buttonIcon = ImageIO.read(new File("blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
 		line = new RoundButton(new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
 		line.setSelectedIcon(new ImageIcon(buttonIcon));
 		line.addActionListener(new ActionListener() {
 			@Override
@@ -317,9 +317,9 @@ public class ToolPanel extends JPanel {
 		colors.setBackground(Color.DARK_GRAY);
 
 		//Circle
-		buttonIcon = ImageIO.read(new File("blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
 		circle = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
 		circle.setSelectedIcon(new ImageIcon(buttonIcon));
 		circle.addActionListener(new ActionListener() {
 			@Override
@@ -331,9 +331,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Square
-		buttonIcon = ImageIO.read(new File("blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
 		square = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
 		square.setSelectedIcon(new ImageIcon(buttonIcon));
 		square.addActionListener(new ActionListener() {
 			@Override
@@ -345,9 +345,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//triangle
-		buttonIcon = ImageIO.read(new File("blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
 		triangle = new RoundButton( new ImageIcon(buttonIcon));  
-		buttonIcon = ImageIO.read(new File("greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
 		triangle.setSelectedIcon(new ImageIcon(buttonIcon));
 		triangle.addActionListener(new ActionListener() {
 			@Override
@@ -359,9 +359,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Draw
-		buttonIcon = ImageIO.read(new File("drawBlue.png"));
+		buttonIcon = ImageIO.read(new File("images/drawBlue.png"));
 		draw = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("drawGreen.png"));
+		buttonIcon = ImageIO.read(new File("images/drawGreen.png"));
 		draw.setSelectedIcon(new ImageIcon(buttonIcon));
 		draw.setPressedIcon(new ImageIcon(buttonIcon));
 		draw.addActionListener(new ActionListener() {
@@ -374,9 +374,9 @@ public class ToolPanel extends JPanel {
 		});  
 
 		//Magic 
-		buttonIcon = ImageIO.read(new File("blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
 		magic = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
 		magic.setSelectedIcon(new ImageIcon(buttonIcon));
 		magic.addActionListener(new ActionListener() {
 			@Override
@@ -388,9 +388,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Text
-		buttonIcon = ImageIO.read(new File("blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
 		text = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
 		text.setSelectedIcon(new ImageIcon(buttonIcon));
 		text.addActionListener(new ActionListener() {
 			@Override
@@ -402,9 +402,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//erasing
-		buttonIcon = ImageIO.read(new File("eraseBlue.png"));
+		buttonIcon = ImageIO.read(new File("images/eraseBlue.png"));
 		erase = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("eraseGreen.png"));
+		buttonIcon = ImageIO.read(new File("images/eraseGreen.png"));
 		erase.setSelectedIcon(new ImageIcon(buttonIcon));
 		erase.setPressedIcon(new ImageIcon(buttonIcon));
 		erase.addActionListener(new ActionListener() {
