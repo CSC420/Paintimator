@@ -85,6 +85,7 @@ public class Paintimator extends JFrame{
         //add everything to correct locations
         layeredPanelList.add(layeredPanel);
         centerPanel.add(layeredPanelList.getSelected());
+        animationPane.updateAnimation(layeredPanelList.getSelected(), true);
         contentPane.add(centerPanel, BorderLayout.CENTER);
         contentPane.add(toolPanel, BorderLayout.WEST);
         contentPane.add(bottomPanel, BorderLayout.PAGE_END);
@@ -218,9 +219,12 @@ public class Paintimator extends JFrame{
                 if(lpTemp != null){
                     centerPanel.remove(layeredPanelList.getSelected());
                     centerPanel.add(lpTemp.getSelected());
+                    animationPane.updateAnimation(lpTemp.getSelected(), false);
                     layeredPanelList = lpTemp;
                     centerPanel.validate();
                     centerPanel.repaint();
+                    bottomPanel.validate();
+                    bottomPanel.repaint();
                 }
             }
         });

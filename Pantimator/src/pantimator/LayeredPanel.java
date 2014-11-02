@@ -156,7 +156,12 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
            * helper method used for saving the root pane to an image file
            */
     public BufferedImage paneToImg() {
-        BufferedImage image = new BufferedImage(canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage image;
+        if (canvas.getWidth() <= 0 || canvas.getHeight() <= 0) {
+            image = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
+        } else {
+            image = new BufferedImage(canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
+        }
 
         canvas.paint(image.getGraphics());
 
