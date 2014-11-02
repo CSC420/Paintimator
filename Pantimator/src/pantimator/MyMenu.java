@@ -9,11 +9,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 public class MyMenu extends JMenuBar{
+
+	private static final long serialVersionUID = 1L;
 	Paintimator master;
 
 	public MyMenu(Paintimator p){
 		super();
 		master = p;
+		@SuppressWarnings("unused")
 		final BufferedImage[] img = new BufferedImage[1];
 
 		JMenu fileMenu = new JMenu("File");

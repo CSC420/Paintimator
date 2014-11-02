@@ -236,11 +236,13 @@ public class Paintimator extends JFrame{
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
 				
+				
 				refreshDrawPanel(layeredPanelList.getSelected());
 				break;
 			default :
 				break;
 		}
+		layeredPanelList.getSelected().clearRootPane();
 	}
 	
 	public void newProj() {

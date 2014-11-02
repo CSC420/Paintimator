@@ -82,7 +82,8 @@ public class AnimationPane extends JPanel {
         }
     }
 
-    private void defaultFrameHolder() {
+    @SuppressWarnings("unused")
+	private void defaultFrameHolder() {
         newThumb(null, 1);
     }
     
@@ -143,6 +144,7 @@ public class AnimationPane extends JPanel {
 		 */
 		private static final long serialVersionUID = 3670839323703410770L;
 
+		@SuppressWarnings("unused")
 		public void ThumbPane() {}
     	
 	    @Override

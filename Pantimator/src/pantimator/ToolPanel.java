@@ -24,6 +24,7 @@ import javax.swing.event.ChangeListener;
 
 public class ToolPanel extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
 	private Paintimator master;
 	private RoundButton line, draw, text, erase, circle, square, triangle, magic, undo, redo;
 	private RoundButton selectedButton;
