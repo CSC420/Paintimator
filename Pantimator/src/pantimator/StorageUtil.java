@@ -47,7 +47,9 @@ public class StorageUtil {
             if(fc.getSelectedFile() != null){
                 this.strCurrentProject = fc.getSelectedFile().toString();
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fc.getSelectedFile()));
+                System.out.println(ois.readObject());
                 lstOut = (LayeredPanelList) ois.readObject();
+                System.out.println(lstOut.size());
             }
 
         }catch (IOException ioe){
@@ -183,12 +185,15 @@ public class StorageUtil {
         File fDir;
         String[] strInput = strDirectory.split("/");
         fDir = new File(strDirectory);
+        System.out.println(strInput[strInput.length - 1]);
 
         if(fDir.exists() && fDir.isDirectory()){
             //directory exists
+            System.out.println("Found Directory");
 
         }else{
             //Directory Does not exist
+            System.out.println("Directory does not exist");
             fDir.mkdir();
 
             if(!(fDir.exists())){

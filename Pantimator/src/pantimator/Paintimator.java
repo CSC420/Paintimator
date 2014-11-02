@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -20,35 +22,44 @@ import javax.swing.WindowConstants;
 
 public class Paintimator extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9178351480074121591L;
+	
 	private final String FRAME_TITLE = "Paintimator!";
 	private JPanel contentPane;
 	private JPanel centerPanel;
-	private JPanel bottomPanel;
 	private AnimationPane animationPane;
 	private LayeredPanel layeredPanel;
 	private ToolPanel toolPanel;
 	private MyMenu menu;
 	private Listener myListener;
 	private JFileChooser fc;
-	private StorageUtil su = new StorageUtil(this);
-	private LayeredPanelList layeredPanelList = new LayeredPanelList();
+	private StorageUtil su;
+	private LayeredPanelList layeredPanelList;
+	
+	private GridBagConstraints gbc;
+	
+	private int height, width;
 
 	public Paintimator() throws IOException{
 		super();
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		//this.setResizable(false);
-
 		this.setTitle(FRAME_TITLE);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setPreferredSize(screenSize);
-		int width = screenSize.width;
-		int height = screenSize.height;
+		width = screenSize.width;
+		height = screenSize.height;
 
+		su = new StorageUtil(this);
+		layeredPanelList = new LayeredPanelList();
 		fc = new JFileChooser();
 		fc.addChoosableFileFilter(new ImageFilter());
 		fc.setAcceptAllFileFilterUsed(false);
+		
 
 		//create a contentPane
 		contentPane = new JPanel(new BorderLayout());
@@ -57,9 +68,10 @@ public class Paintimator extends JFrame{
 		//draw panel
 		layeredPanel.setDrawColor(Color.BLACK);
 		layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
+		layeredPanelList.add(layeredPanel);
 
 		//center panel
-		centerPanel = new JPanel();
+		centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerPanel.setBackground(Color.LIGHT_GRAY);
 
@@ -74,16 +86,22 @@ public class Paintimator extends JFrame{
 		this.setJMenuBar(menu);
 
 		//listener
-		myListener = new Listener(layeredPanel);
-		layeredPanel.addMouseListener(myListener);
-		layeredPanel.addMouseMotionListener(myListener);
+		addListeners(layeredPanel);
 
 		//add everything to correct locations
-		layeredPanelList.add(layeredPanel);
+		gbc = new GridBagConstraints();
+		//gbc.fill = GridBagConstraints.BOTH;
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		centerPanel.add(layeredPanelList.getSelected(), gbc);
+		
+		gbc.gridy = 1;
+		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
+		centerPanel.add(animationPane, gbc);
 
-		centerPanel.add(layeredPanelList.getSelected());
-		centerPanel.add(animationPane, BorderLayout.PAGE_END);
-
+		//add panels to the content pane
 		contentPane.add(centerPanel, BorderLayout.CENTER);
 		contentPane.add(toolPanel, BorderLayout.WEST);
 
@@ -92,6 +110,15 @@ public class Paintimator extends JFrame{
 		this.pack();
 		this.setVisible(true);
 		layeredPanelList.getSelected().clearRootPane();
+	}
+	
+	/*
+	 * Method to easily add/update listeners
+	 */
+	private void addListeners(LayeredPanel lp) {
+		myListener = new Listener(lp);
+		lp.addMouseListener(myListener);
+		lp.addMouseMotionListener(myListener);
 	}
 
 	public void undo(){
@@ -140,7 +167,7 @@ public class Paintimator extends JFrame{
 			ImageFilter imgfltr = new ImageFilter();
 			if (imgfltr.accept(savedPane)) {
 				try {
-					BufferedImage bi = layeredPanel.paneToImg();
+					BufferedImage bi = layeredPanel.paneToBufferedImg();
 					ImageIO.write(bi, ext, savedPane);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(new JPanel(), "Image could not be saved.",
@@ -172,12 +199,71 @@ public class Paintimator extends JFrame{
 
 		if(lpTemp != null){
 			centerPanel.remove(layeredPanelList.getSelected());
-			centerPanel.add(lpTemp.getSelected());
+			animationPane.updateAnimation(lpTemp.getSelected(), true);
+			refreshDrawPanel(lpTemp.getSelected());
 			layeredPanelList = lpTemp;
-			centerPanel.validate();
-			centerPanel.repaint();
 		}
 	}
+	
+	/**
+	 * Method for adding a new frame to the project
+	 * Gives a dialog for the user to save or discard the current frame
+	 * TODO will work on this after layeredpanellist returns an array larger than 0
+	 */
+	public void newFrame() {
+		int i = JOptionPane.showConfirmDialog(new JPanel(), 
+				"Do you want to save this frame?", "Save Frame", 
+				JOptionPane.YES_NO_CANCEL_OPTION);
+		
+		switch (i) {
+			case JOptionPane.YES_OPTION :
+				animationPane.updateAnimation(layeredPanelList.getSelected(), false);	
+				centerPanel.remove(layeredPanelList.getSelected());
+				
+				layeredPanel = new LayeredPanel();
+				
+				//draw panel
+				layeredPanel.setDrawColor(Color.BLACK);
+				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
+				layeredPanelList.add(layeredPanel);
+				
+				refreshDrawPanel(layeredPanelList.getSelected());
+				break;
+			case JOptionPane.NO_OPTION :
+				centerPanel.remove(layeredPanelList.getSelected());
+				layeredPanelList.remove(layeredPanelList.getSelected());
+				
+				layeredPanel = new LayeredPanel();
+				
+				//draw panel
+				layeredPanel.setDrawColor(Color.BLACK);
+				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
+				layeredPanelList.add(layeredPanel);
+				
+				refreshDrawPanel(layeredPanelList.getSelected());
+				break;
+			default :
+				break;
+		}
+	}
+	
+	public void newProj() {
+		//TODO set up method to start a new proj
+	}
+	
+	/*
+	 * Method to easily refresh the drawing panel
+	 */
+	private void refreshDrawPanel(LayeredPanel lp) {
+		gbc.gridy = 0;
+		
+		addListeners(lp);
+		
+		centerPanel.add(lp, gbc);
+		centerPanel.validate();
+		centerPanel.repaint();
+	}
+	
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
