@@ -182,23 +182,15 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         public void paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D)g;
-<<<<<<< HEAD
-            g2d.setBackground(Color.white);
 
-=======
             g2d.setBackground(Color.WHITE);
->>>>>>> Jeremy
             for (ShapeWrapper s : shapes) {
                 g2d.setStroke(new BasicStroke(s.getLineSize(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
                 if (s.isImg()) { // added by Jeremy; draws image to pane
                     g2d.drawImage(s.getImg(), 0, 0, null);
                 } else if (s.isErase()) {
-<<<<<<< HEAD
-                    g2d.setColor(Color.white);
-=======
                     g2d.setColor(Color.WHITE);
->>>>>>> Jeremy
                     g2d.draw(s.getShape());
 
                 }else if(s.isText() && s.getString() != null) {

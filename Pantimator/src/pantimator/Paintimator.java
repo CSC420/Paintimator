@@ -21,10 +21,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 public class Paintimator extends JFrame{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -9178351480074121591L;
 	
 	private final String FRAME_TITLE = "Paintimator!";
@@ -38,13 +34,10 @@ public class Paintimator extends JFrame{
 	private JFileChooser fc;
 	private StorageUtil su;
 	private LayeredPanelList layeredPanelList;
-<<<<<<< HEAD
-=======
 	
 	private GridBagConstraints gbc;
 	
 	private int height, width;
->>>>>>> Jeremy
 
 	public Paintimator() throws IOException{
 		super();
@@ -92,10 +85,6 @@ public class Paintimator extends JFrame{
 		addListeners(layeredPanel);
 
 		//add everything to correct locations
-<<<<<<< HEAD
-		centerPanel.add(layeredPanelList.getSelected());
-		centerPanel.add(animationPane, BorderLayout.PAGE_END);
-=======
 		gbc = new GridBagConstraints();
 		//gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 0.50;
@@ -107,7 +96,6 @@ public class Paintimator extends JFrame{
 		gbc.gridy = 1;
 		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
 		centerPanel.add(animationPane, gbc);
->>>>>>> Jeremy
 
 		//add panels to the content pane
 		contentPane.add(centerPanel, BorderLayout.CENTER);
