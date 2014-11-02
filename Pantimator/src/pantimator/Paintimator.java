@@ -55,7 +55,6 @@ public class Paintimator extends JFrame{
 		layeredPanel = new LayeredPanel();
 
 		//draw panel
-		layeredPanel.setCanvasBG(Color.WHITE);
 		layeredPanel.setDrawColor(Color.BLACK);
 		layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 
