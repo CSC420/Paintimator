@@ -56,8 +56,11 @@ class RoundButton extends JButton {
 	  public Dimension getPreferredSize() {
 	    Icon icon = getIcon();
 	    Insets i = getInsets();
-	    int iw = Math.max(icon.getIconWidth(), icon.getIconHeight());
-	    return new Dimension(iw+i.right+i.left, iw+i.top+i.bottom);
+        if (icon != null) {
+            int iw = Math.max(icon.getIconWidth(), icon.getIconHeight());
+            return new Dimension(iw + i.right + i.left, iw + i.top + i.bottom);
+        }
+        return new Dimension (10, 10);
 	  }
 	  @Override 
 	  protected void paintBorder(Graphics g) {

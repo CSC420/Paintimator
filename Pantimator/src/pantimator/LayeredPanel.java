@@ -17,8 +17,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     private BufferedImage img;
     private int canvasLayerIndex = 1,
-                glassLayerIndex = 0,
-                brushSize = 1;
+            glassLayerIndex = 0,
+            brushSize = 1;
 
     private JPanel canvas, glass;
     private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass, removedShapes;
@@ -37,8 +37,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
         canvas = new Layer(toDrawOnCanvas);
         glass = new Layer(toDrawOnGlass);
-        
-        drawColor = Color.BLACK; 
+
+        drawColor = Color.BLACK;
         glass.setBackground(new Color(0, 0, 0, 0));
         canvas.setBackground(new Color(0,0,0,0));
 
@@ -137,7 +137,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         repaint();
         toDrawOnGlass.clear();
     }
-    
+
 //    public void setTool(Listener.LisState t){
 //        this.tool = t;
 //    }
@@ -152,6 +152,17 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         }
     }
 
+    /*added by Jeremy
+           * helper method used for saving the root pane to an image file
+           */
+    public BufferedImage paneToImg() {
+        BufferedImage image = new BufferedImage(canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        canvas.paint(image.getGraphics());
+
+        return image;
+    }
+
     private class Layer extends JPanel{
         ArrayList<ShapeWrapper> shapes;
 
@@ -159,7 +170,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
             this.shapes = shapes;
         }
 
-        @Override public void paintComponent(Graphics g){
+        @Override
+        public void paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D)g;
             g2d.setBackground(canvasBG);
@@ -226,4 +238,3 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     }
 }
-

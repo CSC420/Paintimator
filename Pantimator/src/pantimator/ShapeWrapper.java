@@ -138,7 +138,6 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
 
     @Override
     public int compareTo(ShapeWrapper o) {
-    	 return this.getTimeStamp().compareTo(o.getTimeStamp());
+        return this.getTimeStamp().compareTo(o.getTimeStamp());
     }
 }
-
