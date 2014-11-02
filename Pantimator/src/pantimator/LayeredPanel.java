@@ -1,14 +1,20 @@
 package pantimator;
 
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.font.GlyphVector;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
+
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -23,17 +29,16 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     private JPanel canvas, glass;
     private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass, removedShapes;
     private Random random = new Random();
-    private Color drawColor = new Color(0,0,0,0), canvasBG;
+    private Color drawColor = new Color(0,0,0,0);
 
     private Font font = getFont();
     private GlyphVector glyphVector;
-
-//    private Listener.LisState tool = Listener.LisState.DRAW;
 
     public LayeredPanel(){
         toDrawOnCanvas = new ArrayList<ShapeWrapper>();
         toDrawOnGlass = new ArrayList<ShapeWrapper>();
         removedShapes = new ArrayList<ShapeWrapper>();
+        
 
         canvas = new Layer(toDrawOnCanvas);
         glass = new Layer(toDrawOnGlass);
@@ -44,6 +49,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
         this.add(canvas, canvasLayerIndex);
         this.add(glass, glassLayerIndex);
+        canvas.setBackground(Color.white);
+        canvas.repaint();
 
     }
 
@@ -65,18 +72,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         drawColor = c;
     }
 
-    public void setCanvasBG(Color c){
-        canvasBG = c;
-        canvas.setBackground(c);
-        canvas.repaint();
-    }
-
     public Color getDrawColor(){
         return drawColor;
-    }
-
-    public Color getCanvasBG(){
-        return canvasBG;
     }
 
     public void setBrushSize(int b){
@@ -179,7 +176,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         public void paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D)g;
-            g2d.setBackground(canvasBG);
 
             for (ShapeWrapper s : shapes) {
                 g2d.setStroke(new BasicStroke(s.getLineSize(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
@@ -187,7 +183,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                 if (s.isImg()) { // added by Jeremy; draws image to pane
                     g2d.drawImage(s.getImg(), 0, 0, null);
                 } else if (s.isErase()) {
-                    g2d.setColor(getCanvasBG());
+                    g2d.setColor(Color.WHITE);
                     g2d.draw(s.getShape());
 
                 }else if(s.isText() && s.getString() != null) {
