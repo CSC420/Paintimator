@@ -13,7 +13,7 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 public class Listener implements MouseListener, MouseMotionListener  {
-	static final Logger LOG = Logger.getLogger(Listener.class.getName());
+    static final Logger LOG = Logger.getLogger(Listener.class.getName());
 
     private LisState currentState;
     private static LayeredPanel layeredPanel;
@@ -21,61 +21,78 @@ public class Listener implements MouseListener, MouseMotionListener  {
     private Vector<Integer> xDrawPoints;
     private Vector<Integer> yDrawPoints;
 
-	public Listener(LayeredPanel lp){
+    public Listener(LayeredPanel lp){
         layeredPanel = lp;
-		currentState = LisState.NONE;
+        currentState = LisState.NONE;
 
         xDrawPoints = new Vector<Integer>();
         yDrawPoints = new Vector<Integer>();
-	}
-	
-	public void setLisState(LisState s){
-		currentState = s;
-	}
-	
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		currentState.mouseDragged(this, e);
-	}
+    }
 
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		currentState.mouseMoved(this, e);
-	}
+    public void setLisState(int num){
+        if(num == 1){
+            currentState = LisState.LINE;
+        }else if(num == 2){
+            currentState = LisState.DRAW;
+        }else if(num == 3){
+            currentState = LisState.TRIANGLE;
+        }else if(num == 4){
+            currentState = LisState.ERASE;
+        }else if(num == 5){
+            currentState = LisState.CIRCLE;
+        }else if(num == 6){
+            currentState = LisState.SQUARE;
+        }else if(num == 7){
+            currentState = LisState.TEXT;
+        }else if(num == 8){
+            currentState = LisState.MAGIC;
+        }else{
+            currentState = LisState.NONE;
+        }
+    }
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		currentState.mouseClicked(this, e);
-	}
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        currentState.mouseDragged(this, e);
+    }
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		currentState.mouseEntered(this, e);
-	}
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        currentState.mouseMoved(this, e);
+    }
 
-	@Override
-	public void mouseExited(MouseEvent e) {
-		currentState.mouseExited(this, e);
-	}
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        currentState.mouseClicked(this, e);
+    }
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		currentState.mousePressed(this, e);
-	}
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        currentState.mouseEntered(this, e);
+    }
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		currentState.mouseReleased(this, e);
-	}
-	
-	public static enum LisState {
-		LINE {
-			public void mousePressed(Listener l, MouseEvent e) {
+    @Override
+    public void mouseExited(MouseEvent e) {
+        currentState.mouseExited(this, e);
+    }
 
+    @Override
+    public void mousePressed(MouseEvent e) {
+        currentState.mousePressed(this, e);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        currentState.mouseReleased(this, e);
+    }
+
+    private static enum LisState {
+        LINE {
+            public void mousePressed(Listener l, MouseEvent e) {
                 l.p1 = e.getPoint();
-			}
+            }
 
-			public void mouseReleased(Listener l, MouseEvent e) {
+            public void mouseReleased(Listener l, MouseEvent e) {
 
                 l.layeredPanel.clearGlassPane();
                 l.p2 = e.getPoint();
@@ -83,20 +100,23 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(line));
             }
 
-			public void mouseDragged(Listener l, MouseEvent e) {
+            public void mouseDragged(Listener l, MouseEvent e) {
                 l.layeredPanel.clearGlassPane();
                 Line2D.Float line = new Line2D.Float(l.p1, e.getPoint());
                 l.layeredPanel.drawOnGlassPane(new ShapeWrapper(line));
-			}
-			
-		},
-		DRAW{
-			public void mousePressed(Listener l, MouseEvent e) {
+            }
+
+        },
+        DRAW{
+            Path2D.Float path2 = new Path2D.Float();
+            boolean dragging = false;
+
+            public void mousePressed(Listener l, MouseEvent e) {
                 l.p1 = e.getPoint();
                 l.xDrawPoints.add(e.getX());
                 l.yDrawPoints.add(e.getY());
-				
-			}
+
+            }
 
             public void mouseReleased(Listener l, MouseEvent e) {
                 l.xDrawPoints.add(e.getX());
@@ -111,7 +131,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
             }
 
-			public void mouseDragged(Listener l, MouseEvent e) {
+            public void mouseDragged(Listener l, MouseEvent e) {
                 l.layeredPanel.clearGlassPane();
                 l.xDrawPoints.add(e.getX());
                 l.yDrawPoints.add(e.getY());
@@ -119,9 +139,9 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
 
                 l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p));
-			}
+            }
 
-		},
+        },
         TRIANGLE{
             public void mousePressed(Listener l, MouseEvent e) {
 
@@ -157,7 +177,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
             }
 
         },
-		ERASE {
+        ERASE {
 
             public void mousePressed(Listener l, MouseEvent e) {
                 l.p1 = e.getPoint();
@@ -189,29 +209,13 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p, true));
             }
 
-
-
-//            public void mousePressed(Listener l, MouseEvent e) {
-//                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
-//                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
-//
-//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
-//            }
-//
-//
-//            public void mouseDragged(Listener l, MouseEvent e) {
-//                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
-//                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
-//
-//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
-//            }
-		},
-		CIRCLE{
-			public void mousePressed(Listener l, MouseEvent e) {
+        },
+        CIRCLE{
+            public void mousePressed(Listener l, MouseEvent e) {
                 l.p1 = e.getPoint();
-			}
-			
-			public void mouseReleased(Listener l, MouseEvent e) {
+            }
+
+            public void mouseReleased(Listener l, MouseEvent e) {
 
                 l.p2 = e.getPoint();
                 l.layeredPanel.clearGlassPane();
@@ -219,9 +223,9 @@ public class Listener implements MouseListener, MouseMotionListener  {
                         (l.p1.y<l.p2.y?l.p1.y:l.p2.y), Math.abs(l.p1.x-l.p2.x), Math.abs(l.p1.y-l.p2.y));
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(c));
 
-			}
-			
-			public void mouseDragged(Listener l, MouseEvent e) {
+            }
+
+            public void mouseDragged(Listener l, MouseEvent e) {
                 l.layeredPanel.clearGlassPane();
                 int x2 = e.getX();
                 int y2 = e.getY();
@@ -229,15 +233,15 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 Ellipse2D.Float c = new Ellipse2D.Float((l.p1.x<x2?l.p1.x:x2),
                         (l.p1.y<y2?l.p1.y:y2), Math.abs(l.p1.x-x2), Math.abs(l.p1.y-y2));
                 l.layeredPanel.drawOnGlassPane(new ShapeWrapper(c));
-			}
+            }
 
-		},
-		SQUARE{
-			public void mousePressed(Listener l, MouseEvent e) {
+        },
+        SQUARE{
+            public void mousePressed(Listener l, MouseEvent e) {
                 l.p1 = e.getPoint();
-			}
-			
-			public void mouseReleased(Listener l, MouseEvent e) {
+            }
+
+            public void mouseReleased(Listener l, MouseEvent e) {
 
                 l.p2 = e.getPoint();
 
@@ -246,10 +250,10 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
                 l.layeredPanel.clearGlassPane();
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(r));
-				
-			}
-			
-			public void mouseDragged(Listener l, MouseEvent e) {
+
+            }
+
+            public void mouseDragged(Listener l, MouseEvent e) {
                 l.layeredPanel.clearGlassPane();
                 int x2 = e.getX();
                 int y2 = e.getY();
@@ -257,22 +261,12 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 Rectangle2D.Float r = new Rectangle2D.Float((l.p1.x<x2?l.p1.x:x2),
                         (l.p1.y<y2?l.p1.y:y2),Math.abs(l.p1.x-x2), Math.abs(l.p1.y-y2));
                 l.layeredPanel.drawOnGlassPane(new ShapeWrapper(r));
-			}
+            }
 
-		},
+        },
+
         TEXT{
             public void mouseClicked(Listener l, MouseEvent e){
-//                LOG.info("Text button clicked");
-//                JTextArea ta = new JTextArea();
-//
-//                JScrollPane sp = new JScrollPane(ta);
-//                sp.setPreferredSize(new Dimension(sp.getWidth(), 100));
-//
-//                JOptionPane.showOptionDialog(null, ta, "Enter text here", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
-//                ta.requestFocusInWindow();
-////                l.layeredPanel.addText(ta.getText(), e.getX(), e.getY());
-//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), ta.getText()));
-
                 String s = JOptionPane.showInputDialog(null, "Enter text here:", "Text", JOptionPane.PLAIN_MESSAGE);
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), s));
 
@@ -313,18 +307,18 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 l.layeredPanel.drawOnGlassPane(s);
             }
         },
-		NONE;
-		
-		//these are the possible methods each state can have
-		public void mouseDragged(Listener l, MouseEvent e) {}
-		public void mouseMoved(Listener l, MouseEvent e) {}
-		public void mouseClicked(Listener l, MouseEvent e) {}
-		public void mouseEntered(Listener l, MouseEvent e) {}
-		public void mouseExited(Listener l, MouseEvent e) {}
-		public void mousePressed(Listener l, MouseEvent e) {}
-		public void mouseReleased(Listener l, MouseEvent e) {}
+        NONE;
 
-	}
+        //these are the possible methods each state can have
+        public void mouseDragged(Listener l, MouseEvent e) {}
+        public void mouseMoved(Listener l, MouseEvent e) {}
+        public void mouseClicked(Listener l, MouseEvent e) {}
+        public void mouseEntered(Listener l, MouseEvent e) {}
+        public void mouseExited(Listener l, MouseEvent e) {}
+        public void mousePressed(Listener l, MouseEvent e) {}
+        public void mouseReleased(Listener l, MouseEvent e) {}
+
+    }
 
     public LisState getCurrentState(){
         return currentState;
