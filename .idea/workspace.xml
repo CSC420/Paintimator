@@ -46,8 +46,8 @@
       <file leaf-file-name="Paintimator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Pantimator/src/pantimator/Paintimator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="952" max-vertical-offset="7769">
-              <caret line="56" column="42" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="884" max-vertical-offset="7361">
+              <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -56,8 +56,8 @@
       <file leaf-file-name="Listener.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Pantimator/src/pantimator/Listener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2788" max-vertical-offset="4964">
-              <caret line="164" column="17" selection-start-line="164" selection-start-column="17" selection-end-line="164" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2958" max-vertical-offset="5950">
+              <caret line="174" column="17" selection-start-line="174" selection-start-column="17" selection-end-line="174" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -593,8 +593,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Pantimator/src/pantimator/Listener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2788" max-vertical-offset="4964">
-          <caret line="164" column="17" selection-start-line="164" selection-start-column="17" selection-end-line="164" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2958" max-vertical-offset="5950">
+          <caret line="174" column="17" selection-start-line="174" selection-start-column="17" selection-end-line="174" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -630,8 +630,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Pantimator/src/pantimator/Paintimator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="952" max-vertical-offset="7769">
-          <caret line="56" column="42" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="884" max-vertical-offset="7361">
+          <caret line="52" column="42" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
           <folding />
         </state>
       </provider>
