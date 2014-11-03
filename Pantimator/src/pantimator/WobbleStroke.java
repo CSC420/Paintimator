@@ -39,7 +39,12 @@ public class WobbleStroke implements Stroke {
         float lastX = 0, lastY = 0;
         float thisX = 0, thisY = 0;
         int type = 0;
+<<<<<<< HEAD
         boolean first = false;
+=======
+        @SuppressWarnings("unused")
+		boolean first = false;
+>>>>>>> origin/Kelly2
         float next = 0;
 
         while ( !it.isDone() ) {
@@ -66,7 +71,11 @@ public class WobbleStroke implements Stroke {
                     float distance = (float)Math.sqrt( dx*dx + dy*dy );
                     if ( distance >= next ) {
                         float r = 1.0f/distance;
+<<<<<<< HEAD
                         float angle = (float)Math.atan2( dy, dx );
+=======
+                        //float angle = (float)Math.atan2( dy, dx );
+>>>>>>> origin/Kelly2
                         while ( distance >= next ) {
                             float x = lastX + next*dx*r;
                             float y = lastY + next*dy*r;

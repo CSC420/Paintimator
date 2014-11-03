@@ -1,14 +1,9 @@
 package pantimator;
 
-import sun.plugin.javascript.navig4.Layer;
-
 import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by Mark Williams on 10/7/2014.
- */
 public class LayeredPanelList extends ArrayList<LayeredPanel> implements Serializable{
     private static final long serialVersionUID = 000006;
 
