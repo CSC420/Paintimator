@@ -2,7 +2,6 @@ package pantimator;
 
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.font.GlyphVector;
 import java.awt.geom.Rectangle2D;
@@ -10,10 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
-
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 public class LayeredPanel extends JLayeredPane implements Serializable{
 
@@ -29,8 +24,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     private Font font = getFont();
     private GlyphVector glyphVector;
-
-//    private Listener.LisState tool = Listener.LisState.DRAW;
 
     public LayeredPanel(){
         toDrawOnCanvas = new ArrayList<ShapeWrapper>();
