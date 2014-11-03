@@ -24,6 +24,7 @@ import javax.swing.event.ChangeListener;
 
 public class ToolPanel extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
 	private Paintimator master;
 	private RoundButton line, draw, text, erase, circle, square, triangle, magic, undo, redo;
 	private RoundButton selectedButton;
@@ -314,7 +315,7 @@ public class ToolPanel extends JPanel {
 		colors.add(pink);
 		colors.add(brown);
 		colors.add(rosie);
-		colors.setBackground(Color.DARK_GRAY);
+		colors.setOpaque(false);
 
 		//Circle
 		buttonIcon = ImageIO.read(new File("images/blueButton.png"));

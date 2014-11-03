@@ -16,6 +16,8 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 
 class RoundButton extends JButton {
+
+	private static final long serialVersionUID = 1L;
 	protected Shape shape, base;
 
 	public RoundButton(Icon icon) {
