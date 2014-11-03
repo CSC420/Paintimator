@@ -315,7 +315,7 @@ public class ToolPanel extends JPanel {
 		colors.add(pink);
 		colors.add(brown);
 		colors.add(rosie);
-		colors.setBackground(Color.DARK_GRAY);
+		colors.setOpaque(false);
 
 		//Circle
 		buttonIcon = ImageIO.read(new File("images/blueButton.png"));

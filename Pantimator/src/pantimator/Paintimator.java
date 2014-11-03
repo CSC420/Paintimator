@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
@@ -13,8 +14,10 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -24,8 +27,9 @@ public class Paintimator extends JFrame{
 	private static final long serialVersionUID = -9178351480074121591L;
 	
 	private final String FRAME_TITLE = "Paintimator!";
-	private JPanel contentPane;
+	private BackgroundPanel contentPane;
 	private JPanel centerPanel;
+	//private BackgroundPanel background;
 	private AnimationPane animationPane;
 	private LayeredPanel layeredPanel;
 	private ToolPanel toolPanel;
@@ -45,11 +49,7 @@ public class Paintimator extends JFrame{
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setTitle(FRAME_TITLE);
 
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setPreferredSize(screenSize);
-		width = screenSize.width;
-		height = screenSize.height;
-
+		
 		su = new StorageUtil(this);
 		layeredPanelList = new LayeredPanelList();
 		fc = new JFileChooser();
@@ -58,10 +58,19 @@ public class Paintimator extends JFrame{
 		
 
 		//create a contentPane
-		contentPane = new JPanel(new BorderLayout());
-		layeredPanel = new LayeredPanel();
+       // contentPane = new BackgroundPanel("images/Background.png");
+		contentPane = new BackgroundPanel();
+        contentPane.setLayout(new BorderLayout());
 
-		//draw panel
+        
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setPreferredSize(screenSize);
+		width = screenSize.width;
+		height = screenSize.height;
+        
+        
+        //canvas panel
+		layeredPanel = new LayeredPanel();
 		layeredPanel.setDrawColor(Color.BLACK);
 		layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 		layeredPanelList.add(layeredPanel);
@@ -70,14 +79,16 @@ public class Paintimator extends JFrame{
 		centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerPanel.setBackground(Color.LIGHT_GRAY);
+		//centerPanel.setOpaque(false);
 
 		//animation panel
 		animationPane = new AnimationPane();
 
 		//tool panel
 		toolPanel = new ToolPanel(this);
+		//toolPanel.setOpaque(false);
 
-		//menu
+		//menu bar
 		menu = new MyMenu(this);
 		this.setJMenuBar(menu);
 
@@ -92,7 +103,6 @@ public class Paintimator extends JFrame{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
-		
 		gbc.gridy = 1;
 		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
 		centerPanel.add(animationPane, gbc);
@@ -105,11 +115,15 @@ public class Paintimator extends JFrame{
 		this.setContentPane(contentPane);
 		this.pack();
 		this.setVisible(true);
+		setSize(50,50) ;
+		setSize(width,height); 
 		layeredPanelList.getSelected().clearRootPane();
+		
 	}
 	
+	
 	/*
-	 * Method to easily add/update listeners
+	 * Method to easily add/update listeners and canvas
 	 */
 	private void addListeners(LayeredPanel lp) {
 		myListener = new Listener(lp);
@@ -137,6 +151,7 @@ public class Paintimator extends JFrame{
 		layeredPanelList.getSelected().setDrawColor(c);
 	}
 
+	//methods to load and save canvas
 	public void loadImage(){
 		int returnVal = fc.showOpenDialog(Paintimator.this);
 		BufferedImage[] img = new BufferedImage[1];
