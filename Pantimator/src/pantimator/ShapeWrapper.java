@@ -11,11 +11,7 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
 	private Shape shape;
     private Color color;
     private int lineSize;
-<<<<<<< HEAD
-    private long timeStamp;
-=======
     private Long timeStamp;
->>>>>>> origin/Kelly2
     private boolean erase = false, text = false, magic = false;
     private String string = "";
 
@@ -97,7 +93,6 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
 
     public boolean isErase(){
         return erase;
-<<<<<<< HEAD
     }
 
     public void setErase(boolean f){
@@ -116,26 +111,6 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
         return text;
     }
 
-=======
-    }
-
-    public void setErase(boolean f){
-        this.erase = f;
-    }
-
-    public boolean isMagic() {
-        return magic;
-    }
-
-    public void setMagic(boolean magic) {
-        this.magic = magic;
-    }
-
-    public boolean isText() {
-        return text;
-    }
-
->>>>>>> origin/Kelly2
     public void setText(boolean text) {
         this.text = text;
     }

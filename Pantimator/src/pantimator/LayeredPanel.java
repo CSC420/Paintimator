@@ -36,20 +36,12 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     private Font font = getFont();
     private GlyphVector glyphVector;
-<<<<<<< HEAD
-
-    private Listener.LisState tool = Listener.LisState.DRAW;
-=======
->>>>>>> origin/Kelly2
 
     public LayeredPanel(){
         toDrawOnCanvas = new ArrayList<ShapeWrapper>();
         toDrawOnGlass = new ArrayList<ShapeWrapper>();
         removedShapes = new ArrayList<ShapeWrapper>();
-<<<<<<< HEAD
-=======
         
->>>>>>> origin/Kelly2
 
         canvas = new Layer(toDrawOnCanvas);
         glass = new Layer(toDrawOnGlass);
@@ -64,26 +56,11 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     }
 
-<<<<<<< HEAD
-    }
-
-=======
->>>>>>> origin/Kelly2
     public void undo(){
         if (!toDrawOnCanvas.isEmpty()) {
             removedShapes.add(toDrawOnCanvas.remove(toDrawOnCanvas.size()-1));
             canvas.repaint();
         }
-<<<<<<< HEAD
-    }
-
-    public void redo(){
-        if (!removedShapes.isEmpty()) {
-            toDrawOnCanvas.add(removedShapes.remove(removedShapes.size()-1));
-            canvas.repaint();
-        }
-=======
->>>>>>> origin/Kelly2
     }
 
     public void redo(){
@@ -114,8 +91,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         return canvas;
     }
 
-<<<<<<< HEAD
-=======
     public void addText(String text, int x, int y){
         System.out.println("TEXT: " + text);
         JLabel l = new JLabel(text);
@@ -126,7 +101,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     }
 
->>>>>>> origin/Kelly2
     public void drawOnRootPane(ShapeWrapper s){
         canvas.setBounds(0,0,getWidth(),getHeight());
         if (!s.isImg()) {
@@ -216,11 +190,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                 if (s.isImg()) { // added by Jeremy; draws image to pane
                     g2d.drawImage(s.getImg(), 0, 0, null);
                 } else if (s.isErase()) {
-<<<<<<< HEAD
-                    g2d.setColor(getCanvasBG());
-=======
                     g2d.setColor(Color.WHITE);
->>>>>>> origin/Kelly2
                     g2d.draw(s.getShape());
 
                 }else if(s.isText() && s.getString() != null) {
@@ -270,11 +240,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 ////                        g2d.drawString(s.getString(), x, y);
 //                    }
 //                }
-<<<<<<< HEAD
-            }//end for
-=======
             }
->>>>>>> origin/Kelly2
 
         }
 

@@ -203,33 +203,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 l.layeredPanel.clearGlassPane();
                 l.xDrawPoints.add(e.getX());
                 l.yDrawPoints.add(e.getY());
-<<<<<<< HEAD
-
-                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
-
-                l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p, true));
-            }
-
-
-
-//            public void mousePressed(Listener l, MouseEvent e) {
-//                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
-//                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
-//
-//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
-//            }
-//
-//
-//            public void mouseDragged(Listener l, MouseEvent e) {
-//                Rectangle2D.Float r = new Rectangle2D.Float(e.getX(), e.getY(),
-//                        l.layeredPanel.getBrushSize(), l.layeredPanel.getBrushSize());
-//
-//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(r, true));
-//            }
-		},
-		CIRCLE{
-			public void mousePressed(Listener l, MouseEvent e) {
-=======
 
                 Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
 
@@ -239,7 +212,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
         },
         CIRCLE{
             public void mousePressed(Listener l, MouseEvent e) {
->>>>>>> origin/Kelly2
                 l.p1 = e.getPoint();
             }
 
@@ -295,20 +267,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
         TEXT{
             public void mouseClicked(Listener l, MouseEvent e){
-<<<<<<< HEAD
-//                LOG.info("Text button clicked");
-//                JTextArea ta = new JTextArea();
-//
-//                JScrollPane sp = new JScrollPane(ta);
-//                sp.setPreferredSize(new Dimension(sp.getWidth(), 100));
-//
-//                JOptionPane.showOptionDialog(null, ta, "Enter text here", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, 0);
-//                ta.requestFocusInWindow();
-////                l.layeredPanel.addText(ta.getText(), e.getX(), e.getY());
-//                l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), ta.getText()));
-
-=======
->>>>>>> origin/Kelly2
                 String s = JOptionPane.showInputDialog(null, "Enter text here:", "Text", JOptionPane.PLAIN_MESSAGE);
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), s));
 
@@ -319,7 +277,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 l.p1 = e.getPoint();
                 l.xDrawPoints.add(e.getX());
                 l.yDrawPoints.add(e.getY());
-<<<<<<< HEAD
 
             }
 
@@ -338,26 +295,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
             }
 
-=======
-
-            }
-
-            public void mouseReleased(Listener l, MouseEvent e) {
-                l.xDrawPoints.add(e.getX());
-                l.yDrawPoints.add(e.getY());
-
-                l.layeredPanel.clearGlassPane();
-                Path2D p = gimmeThePath(l.xDrawPoints, l.yDrawPoints);
-                l.layeredPanel.clearGlassPane();
-                ShapeWrapper s = new ShapeWrapper(p);
-                s.setMagic(true);
-                l.layeredPanel.drawOnRootPane(s);
-                l.xDrawPoints.clear();
-                l.yDrawPoints.clear();
-
-            }
-
->>>>>>> origin/Kelly2
             public void mouseDragged(Listener l, MouseEvent e) {
                 l.layeredPanel.clearGlassPane();
                 l.xDrawPoints.add(e.getX());
@@ -398,8 +335,4 @@ public class Listener implements MouseListener, MouseMotionListener  {
         return path;
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/Kelly2
