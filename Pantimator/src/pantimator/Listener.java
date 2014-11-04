@@ -17,7 +17,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
     private LisState currentState;
     private static LayeredPanel layeredPanel;
-    private Point p1, p2, p3;
+    private Point p1, p2, p3, p4;
     private Vector<Integer> xDrawPoints;
     private Vector<Integer> yDrawPoints;
 
@@ -150,8 +150,8 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
             public void mouseReleased(Listener l, MouseEvent e) {
                 l.layeredPanel.clearGlassPane();
-                int[] xs = new int[]{l.p1.x, l.p2.x, l.p3.x};
-                int[] ys = new int[]{l.p1.y, l.p2.y, l.p3.y};
+                int[] xs = new int[]{l.p1.x, l.p3.x, l.p2.x};
+                int[] ys = new int[]{l.p2.y, l.p3.y, l.p2.y};
 
                 Polygon p = new Polygon(xs, ys, xs.length);
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(p));
@@ -159,20 +159,21 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
             public void mouseDragged(Listener l, MouseEvent e) {
                 l.p2 = e.getPoint();
-                double rad3 = Math.sqrt(3);
+
                 l.layeredPanel.clearGlassPane();
-                int x1,y1,x2,y2,x3,y3;
-                x1 = ((Double)l.p1.getX()).intValue();
-                y1 = ((Double)l.p1.getY()).intValue();
-                x2 = e.getX();
-                y2 = e.getY();
 
-                x3 = ((Double)(0.5*(x2+x1)+rad3*(y2-y1))).intValue();
-                y3 = ((Double)(0.5*(y2+y1)+rad3*(x2-x1))).intValue();
+                int x1,y1,x2,y2,midx,midy;
 
-                l.p3 = new Point(x3,y3);
+                x1 = l.p1.x;
+                y1 = l.p1.y;
+                x2 = l.p2.x;
+                y2 = l.p2.y;
+                midx = (x1+(x2-x1)/2);
+                midy = y1;
 
-                Polygon p = new Polygon(new int[]{x1,x2,x3}, new int[]{y1,y2,y3},3);
+                l.p3 = new Point(midx,midy);
+
+                Polygon p = new Polygon(new int[]{x1,midx,x2}, new int[]{y2,midy,y2},3);
                 l.layeredPanel.drawOnGlassPane(new ShapeWrapper(p));
             }
 
