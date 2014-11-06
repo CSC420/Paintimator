@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -37,9 +38,9 @@ public class ToolPanel extends JPanel {
 		//super();
 		master = p;
 
-		BufferedImage buttonIcon = ImageIO.read(new File("images/undoBlue.png"));
+		BufferedImage buttonIcon = ImageIO.read(new File("images/undowhiteButton.png"));
 		undo = new RoundButton(new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/undoGreen.png"));
+		buttonIcon = ImageIO.read(new File("images/undogreenButton.png"));
 		undo.setPressedIcon(new ImageIcon(buttonIcon));
 		undo.addActionListener(new ActionListener() {
 			@Override
@@ -51,9 +52,9 @@ public class ToolPanel extends JPanel {
 			}
 		});
 
-		buttonIcon = ImageIO.read(new File("images/redoBlue.png"));
+		buttonIcon = ImageIO.read(new File("images/redowhiteButton.png"));
 		redo = new RoundButton(new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/redoGreen.png"));
+		buttonIcon = ImageIO.read(new File("images/redogreenButton.png"));
 		redo.setPressedIcon(new ImageIcon(buttonIcon));
 		redo.addActionListener(new ActionListener() {
 			@Override
@@ -67,9 +68,9 @@ public class ToolPanel extends JPanel {
 
 
 		//Line
-		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
 		line = new RoundButton(new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
 		line.setSelectedIcon(new ImageIcon(buttonIcon));
 		line.addActionListener(new ActionListener() {
 			@Override
@@ -82,14 +83,44 @@ public class ToolPanel extends JPanel {
 
 		//Color Chooser
 		JPanel colors = new JPanel(new GridLayout(0,2));
-		colors.setPreferredSize(new Dimension(50,150));
+		colors.setPreferredSize(new Dimension(50,200));
 		final JButton red = new JButton(), black = new JButton(), white = new JButton(),
 				grey = new JButton(), ltgrey = new JButton(), orange = new JButton(),
 				brown = new JButton(), yellow = new JButton(), green = new JButton(), 
 				ltgreen = new JButton(), blue = new JButton(), ltblue = new JButton(), 
 				purple = new JButton(), pink = new JButton(), ltbrown = new JButton(), 
-				rosie = new JButton();
+				rosie = new JButton(), other = new JButton(), plus = new JButton();
 
+		other.setBackground(Color.WHITE);
+		other.setOpaque(true);
+		other.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		other.setBorderPainted(false);
+		other.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				newColor = other;
+				changeSelectedColor();
+				master.setDrawColor(other.getBackground());
+			} 
+		});
+		
+		plus.setBackground(Color.LIGHT_GRAY);
+		buttonIcon = ImageIO.read(new File("images/plus-sign.png"));
+		plus.setIcon(new ImageIcon(buttonIcon));
+		plus.setOpaque(true);
+		plus.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		plus.setBorderPainted(false);
+		plus.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Color selected = JColorChooser.showDialog(master, "Select a Color", Color.WHITE);
+				other.setBackground(selected);
+				newColor = other;
+				changeSelectedColor();
+				master.setDrawColor(selected);
+			} 
+		});
+		
 		red.setBackground(Color.red);
 		red.setOpaque(true);
 		red.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -315,12 +346,14 @@ public class ToolPanel extends JPanel {
 		colors.add(pink);
 		colors.add(brown);
 		colors.add(rosie);
+		colors.add(other);
+		colors.add(plus);
 		colors.setOpaque(false);
 
 		//Circle
-		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
 		circle = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
 		circle.setSelectedIcon(new ImageIcon(buttonIcon));
 		circle.addActionListener(new ActionListener() {
 			@Override
@@ -332,9 +365,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Square
-		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
 		square = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
 		square.setSelectedIcon(new ImageIcon(buttonIcon));
 		square.addActionListener(new ActionListener() {
 			@Override
@@ -346,9 +379,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//triangle
-		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
 		triangle = new RoundButton( new ImageIcon(buttonIcon));  
-		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
 		triangle.setSelectedIcon(new ImageIcon(buttonIcon));
 		triangle.addActionListener(new ActionListener() {
 			@Override
@@ -360,9 +393,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Draw
-		buttonIcon = ImageIO.read(new File("images/drawBlue.png"));
+		buttonIcon = ImageIO.read(new File("images/drawwhiteButton.png"));
 		draw = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/drawGreen.png"));
+		buttonIcon = ImageIO.read(new File("images/drawgreenButton.png"));
 		draw.setSelectedIcon(new ImageIcon(buttonIcon));
 		draw.setPressedIcon(new ImageIcon(buttonIcon));
 		draw.addActionListener(new ActionListener() {
@@ -375,9 +408,9 @@ public class ToolPanel extends JPanel {
 		});  
 
 		//Magic 
-		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
 		magic = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
 		magic.setSelectedIcon(new ImageIcon(buttonIcon));
 		magic.addActionListener(new ActionListener() {
 			@Override
@@ -389,9 +422,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Text
-		buttonIcon = ImageIO.read(new File("images/blueButton.png"));
+		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
 		text = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/greenButton.png"));
+		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
 		text.setSelectedIcon(new ImageIcon(buttonIcon));
 		text.addActionListener(new ActionListener() {
 			@Override
@@ -403,9 +436,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//erasing
-		buttonIcon = ImageIO.read(new File("images/eraseBlue.png"));
+		buttonIcon = ImageIO.read(new File("images/erasewhiteButton.png"));
 		erase = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/eraseGreen.png"));
+		buttonIcon = ImageIO.read(new File("images/erasegreenButton.png"));
 		erase.setSelectedIcon(new ImageIcon(buttonIcon));
 		erase.setPressedIcon(new ImageIcon(buttonIcon));
 		erase.addActionListener(new ActionListener() {
@@ -419,9 +452,9 @@ public class ToolPanel extends JPanel {
 
 
 
-		final JSlider lineSize = new JSlider(JSlider.HORIZONTAL, 1, 15, 1);
+		final JSlider lineSize = new JSlider(JSlider.HORIZONTAL, 1, 100, 1);
 		final JLabel lineSizeLabel = new JLabel("Line Size: " + lineSize.getValue());
-		lineSize.setPreferredSize(new Dimension(10, lineSize.getHeight()));
+		lineSize.setPreferredSize(new Dimension(100,40));
 		lineSize.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -436,51 +469,60 @@ public class ToolPanel extends JPanel {
 		c.fill = GridBagConstraints.VERTICAL;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(2,5,2,2);
+		c.insets = new Insets(2,8,2,2);
 		this.add(undo, c);
 
 		c.gridx = 1;
 		c.gridy = 0;
-		c.insets = new Insets(2,2,2,5);
+		c.insets = new Insets(2,2,2,8);
 		this.add(redo, c);
 
-		c.insets = new Insets(2,2,2,15);
+		c.insets = new Insets(2,10,2,10);
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 2;
 		this.add(draw, c);
 
-		c.insets = new Insets(2,20,2,2);
+		//c.insets = new Insets(2,20,2,5);
 		c.gridy = 2;
 		this.add(line, c);
 
 		c.gridy = 3;
-		c.insets = new Insets(2,2,2,20);
+		//c.insets = new Insets(2,2,2,20);
 		this.add(magic,c);
 
 		c.gridy = 4;
-		c.insets = new Insets(2,20,2,2);
+		//c.insets = new Insets(2,20,2,5);
 		this.add(text,c);
 
 		c.gridy = 5;
-		c.insets = new Insets(2,2,2,20);
+		//c.insets = new Insets(2,2,2,20);
 		this.add(circle,c);
 
 		c.gridy = 6;
-		c.insets = new Insets(2,20,2,2);
+		//c.insets = new Insets(2,20,2,5);
 		this.add(square,c);
 
 		c.gridy = 7;
-		c.insets = new Insets(2,2,2,20);
+		//c.insets = new Insets(2,2,2,20);
 		this.add(triangle,c);
 
 		c.gridy = 8;
-		c.insets = new Insets(2,20,2,2);
+		//c.insets = new Insets(2,20,2,5);
 		this.add(erase,c);
+		
+		
+		c.gridy = 9;
+		c.insets = new Insets(2,0,0,0);
+		this.add(lineSize, c);
+		
+		c.insets = new Insets(0,0,0,0);
+		c.gridy = 10;
+		this.add(lineSizeLabel,c);
 
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridy = 9;
+		c.gridy = 11;
 		c.weighty = 1;
 		c.insets = new Insets(10,10,8,10);
 		this.add(colors, c);
