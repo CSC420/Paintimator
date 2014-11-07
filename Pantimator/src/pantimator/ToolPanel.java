@@ -452,7 +452,7 @@ public class ToolPanel extends JPanel {
 
 
 
-		final JSlider lineSize = new JSlider(JSlider.HORIZONTAL, 1, 100, 1);
+		final JSlider lineSize = new JSlider(JSlider.HORIZONTAL, 1, 150, 1);
 		final JLabel lineSizeLabel = new JLabel("Line Size: " + lineSize.getValue());
 		lineSize.setPreferredSize(new Dimension(100,40));
 		lineSize.addChangeListener(new ChangeListener() {
