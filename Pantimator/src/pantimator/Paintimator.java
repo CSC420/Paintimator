@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
@@ -29,7 +31,6 @@ public class Paintimator extends JFrame{
 	private final String FRAME_TITLE = "Paintimator!";
 	private BackgroundPanel contentPane;
 	private JPanel centerPanel;
-	//private BackgroundPanel background;
 	private AnimationPane animationPane;
 	private LayeredPanel layeredPanel;
 	private ToolPanel toolPanel;
@@ -57,17 +58,23 @@ public class Paintimator extends JFrame{
 		fc.setAcceptAllFileFilterUsed(false);
 		
 
-		//create a contentPane
+		//create a contentPane that can hold an image
        // contentPane = new BackgroundPanel("images/Background.png");
 		contentPane = new BackgroundPanel();
         contentPane.setLayout(new BorderLayout());
 
-        
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setPreferredSize(screenSize);
-		width = screenSize.width;
-		height = screenSize.height;
-        
+        //one way but apparently doesnt work on multiple screens
+		//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		//width = screenSize.width;
+		//height = screenSize.height;
+		//this.setPreferredSize(screenSize);
+		
+		//second way seeing if this works with multiple screens
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		int width = gd.getDisplayMode().getWidth();
+		int height = gd.getDisplayMode().getHeight();
+		this.setPreferredSize(new Dimension(width, height));
+		
         
         //canvas panel
 		layeredPanel = new LayeredPanel();

@@ -6,6 +6,8 @@
 .mtj.tmp/
 
 .idea
+*.classpath
+*.project
 .settings
 *.iml
 
