@@ -31,9 +31,12 @@ public class Paintimator extends JFrame{
 	private final String FRAME_TITLE = "Paintimator!";
 	private BackgroundPanel contentPane;
 	private JPanel centerPanel;
+	private JPanel sidePanel;
 	private AnimationPane animationPane;
 	private LayeredPanel layeredPanel;
 	private ToolPanel toolPanel;
+	private OptionsPanel optionsPanel;
+	private ColorWheelPanel cwPanel;
 	private MyMenu menu;
 	private Listener myListener;
 	private JFileChooser fc;
@@ -73,6 +76,8 @@ public class Paintimator extends JFrame{
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		int width = gd.getDisplayMode().getWidth();
 		int height = gd.getDisplayMode().getHeight();
+//		int width = 800;
+//		int height = 600;
 		this.setPreferredSize(new Dimension(width, height));
 		
         
@@ -91,8 +96,11 @@ public class Paintimator extends JFrame{
 		//animation panel
 		animationPane = new AnimationPane();
 
-		//tool panel
-		toolPanel = new ToolPanel(this);
+		//side panel
+		sidePanel = new JPanel(new GridBagLayout());
+		optionsPanel = new OptionsPanel(this);
+		toolPanel = new ToolPanel(this, optionsPanel);
+		cwPanel = new ColorWheelPanel(this);
 		//toolPanel.setOpaque(false);
 
 		//menu bar
@@ -113,10 +121,35 @@ public class Paintimator extends JFrame{
 		gbc.gridy = 1;
 		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
 		centerPanel.add(animationPane, gbc);
-
+		
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		toolPanel.setPreferredSize(new Dimension(100,750));
+		sidePanel.add(toolPanel, gbc);
+		
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		optionsPanel.setPreferredSize(new Dimension(100,750));
+		sidePanel.add(optionsPanel, gbc);
+		
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.BOTH;
+		sidePanel.add(cwPanel, gbc);
+		
+		sidePanel.setPreferredSize(new Dimension(200,950));
+		sidePanel.setBackground(Color.GRAY);
+		
 		//add panels to the content pane
 		contentPane.add(centerPanel, BorderLayout.CENTER);
-		contentPane.add(toolPanel, BorderLayout.WEST);
+		contentPane.add(sidePanel, BorderLayout.WEST);
 
 		//set it and show it
 		this.setContentPane(contentPane);
@@ -156,6 +189,11 @@ public class Paintimator extends JFrame{
 
 	public void setDrawColor(Color c){
 		layeredPanelList.getSelected().setDrawColor(c);
+		this.setSidePanelColor(c);
+	}
+	
+	private void setSidePanelColor(Color c){
+		sidePanel.setBackground(c);
 	}
 
 	//methods to load and save canvas
