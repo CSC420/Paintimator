@@ -283,7 +283,6 @@ public class ToolPanel extends JPanel {
 		//c.insets = new Insets(2,20,2,5);
 		this.add(erase,c);
 	
-		this.setOpaque(false);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 	}
 

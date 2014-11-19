@@ -62,7 +62,7 @@ public class Paintimator extends JFrame{
 		
 
 		//create a contentPane that can hold an image
-       // contentPane = new BackgroundPanel("images/Background.png");
+        //contentPane = new BackgroundPanel("images/tempBackground.png");
 		contentPane = new BackgroundPanel();
         contentPane.setLayout(new BorderLayout());
 
@@ -90,8 +90,7 @@ public class Paintimator extends JFrame{
 		//center panel
 		centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		centerPanel.setBackground(Color.LIGHT_GRAY);
-		//centerPanel.setOpaque(false);
+		centerPanel.setOpaque(false);
 
 		//animation panel
 		animationPane = new AnimationPane();
@@ -101,7 +100,10 @@ public class Paintimator extends JFrame{
 		optionsPanel = new OptionsPanel(this);
 		toolPanel = new ToolPanel(this, optionsPanel);
 		cwPanel = new ColorWheelPanel(this);
-		//toolPanel.setOpaque(false);
+		toolPanel.setOpaque(false);
+		optionsPanel.setOpaque(false);
+		cwPanel.setOpaque(false);
+		sidePanel.setOpaque(false);
 
 		//menu bar
 		menu = new MyMenu(this);
@@ -146,6 +148,7 @@ public class Paintimator extends JFrame{
 		
 		sidePanel.setPreferredSize(new Dimension(200,950));
 		sidePanel.setBackground(Color.GRAY);
+		
 		
 		//add panels to the content pane
 		contentPane.add(centerPanel, BorderLayout.CENTER);

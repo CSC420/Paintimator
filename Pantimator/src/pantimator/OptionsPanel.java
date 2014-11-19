@@ -54,8 +54,6 @@ public class OptionsPanel extends JPanel{
 		this.add(opPanel);
 		opPanel.setVisible(false);
 	
-		
-		this.setOpaque(false);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 	}
 
