@@ -43,12 +43,8 @@ public class AnimationPane extends JPanel {
      * @param panelList
      * @throws IOException 
      */
-<<<<<<< HEAD
-    public AnimationPane(LayeredPanelList panelList) {
-    	lpl = panelList;
-=======
+
     public AnimationPane(LayeredPanelList panelList) throws IOException {
->>>>>>> Kelly
         init();
     }
 
@@ -87,12 +83,10 @@ public class AnimationPane extends JPanel {
 		});
         this.add(play);
 	}
-<<<<<<< HEAD
-=======
 
 	private void sampleFrameHolder() {    	
         for (int i = 0; i < 50; i++) {
-            thumbPanel = new JPanel();
+          //  thumbPanel = new JPanel();
             thumbPanel.setToolTipText("Frame " + (i + 1));
             thumbPanel.setPreferredSize(new Dimension(25,25));
             thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -104,7 +98,6 @@ public class AnimationPane extends JPanel {
 	private void defaultFrameHolder() {
         newThumb(null, 1);
     }
->>>>>>> Kelly
     
     /*
      * Iterates through an array list of images to set the thumbnail frame
@@ -141,11 +134,11 @@ public class AnimationPane extends JPanel {
      * Public method for updating the animation frame
      * @param lp
      */
-<<<<<<< HEAD
+
     public void updateAnimation(LayeredPanelList lpl) { 
         loadedFrameHolder(lpl);
-=======
-    private class ThumbPane extends JPanel {
+    }
+       private class ThumbPane extends JPanel {
 		/**
 		 * 
 		 */
@@ -158,8 +151,8 @@ public class AnimationPane extends JPanel {
 	    public void paintComponent(Graphics g) {
 	        super.paintComponent(g);
 	
-	        g.drawImage(img, 0, 0, null);
+	     //   g.drawImage(img, 0, 0, null);
 	    }
->>>>>>> Kelly
+
     }
 }

@@ -18,11 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-<<<<<<< HEAD
-import javax.swing.JButton;
-=======
 import javax.swing.ImageIcon;
->>>>>>> Kelly
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -66,17 +62,11 @@ public class Paintimator extends JFrame{
 		fc.addChoosableFileFilter(new ImageFilter());
 		fc.setAcceptAllFileFilterUsed(false);
 		
-<<<<<<< HEAD
-		//create a contentPane
-		contentPane = new JPanel(new BorderLayout());
-		layeredPanel = new LayeredPanel();
-=======
 
 		//create a contentPane that can hold an image
         //contentPane = new BackgroundPanel("images/tempBackground.png");
 		contentPane = new BackgroundPanel();
         contentPane.setLayout(new BorderLayout());
->>>>>>> Kelly
 
         //one way but apparently doesnt work on multiple screens
 		//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -132,11 +122,6 @@ public class Paintimator extends JFrame{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
-<<<<<<< HEAD
-		
-		gbc.gridy = 0;
-=======
->>>>>>> Kelly
 		gbc.gridy = 1;
 		animationPane.updateAnimation(layeredPanelList);
 		centerPanel.add(animationPane, gbc);
@@ -180,12 +165,6 @@ public class Paintimator extends JFrame{
 		layeredPanelList.getSelected().clearRootPane();
 		
 	}
-<<<<<<< HEAD
-
-=======
-	
-	
->>>>>>> Kelly
 	/*
 	 * Method to easily add/update listeners and canvas
 	 */
