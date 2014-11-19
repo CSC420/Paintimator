@@ -182,6 +182,7 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         public void paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D)g;
+
             g2d.setBackground(Color.WHITE);
             for (ShapeWrapper s : shapes) {
                 g2d.setStroke(new BasicStroke(s.getLineSize(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));

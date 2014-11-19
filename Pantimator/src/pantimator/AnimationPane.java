@@ -1,9 +1,15 @@
 package pantimator;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AnimationPane extends JPanel {	
@@ -25,8 +31,9 @@ public class AnimationPane extends JPanel {
     
     /**
      * This is a constructor
+     * @throws IOException 
      */
-    public AnimationPane() {
+    public AnimationPane() throws IOException {
         init();
     }
     
@@ -34,13 +41,18 @@ public class AnimationPane extends JPanel {
      * Constructor that will be able to take a LayeredPanelList and parse through it for
      * frames
      * @param panelList
+     * @throws IOException 
      */
+<<<<<<< HEAD
     public AnimationPane(LayeredPanelList panelList) {
     	lpl = panelList;
+=======
+    public AnimationPane(LayeredPanelList panelList) throws IOException {
+>>>>>>> Kelly
         init();
     }
 
-    private void init() {
+    private void init() throws IOException {
         this.setBorder(new BevelBorder(BevelBorder.LOWERED));
         
         // make frame holder
@@ -59,13 +71,40 @@ public class AnimationPane extends JPanel {
         playButton();
     }
 
-    private void playButton() {
+    private void playButton() throws IOException {
 		// TODO Add play button functionality
-    	JButton play = new JButton();
-        play.setPreferredSize(new Dimension(75, 25));
-        play.setText("Play");
+    	RoundButton play;
+		BufferedImage buttonIcon = ImageIO.read(new File("images/white-Button.png"));
+		play = new RoundButton( new ImageIcon(buttonIcon));
+		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		play.setSelectedIcon(new ImageIcon(buttonIcon));
+		play.setPressedIcon(new ImageIcon(buttonIcon));
+		play.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//do whatever here
+			}
+		});
         this.add(play);
 	}
+<<<<<<< HEAD
+=======
+
+	private void sampleFrameHolder() {    	
+        for (int i = 0; i < 50; i++) {
+            thumbPanel = new JPanel();
+            thumbPanel.setToolTipText("Frame " + (i + 1));
+            thumbPanel.setPreferredSize(new Dimension(25,25));
+            thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
+            frameHolder.add(thumbPanel);
+        }
+    }
+
+    @SuppressWarnings("unused")
+	private void defaultFrameHolder() {
+        newThumb(null, 1);
+    }
+>>>>>>> Kelly
     
     /*
      * Iterates through an array list of images to set the thumbnail frame
@@ -102,7 +141,25 @@ public class AnimationPane extends JPanel {
      * Public method for updating the animation frame
      * @param lp
      */
+<<<<<<< HEAD
     public void updateAnimation(LayeredPanelList lpl) { 
         loadedFrameHolder(lpl);
+=======
+    private class ThumbPane extends JPanel {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3670839323703410770L;
+
+		@SuppressWarnings("unused")
+		public void ThumbPane() {}
+    	
+	    @Override
+	    public void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	
+	        g.drawImage(img, 0, 0, null);
+	    }
+>>>>>>> Kelly
     }
 }

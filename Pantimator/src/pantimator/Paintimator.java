@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
@@ -15,27 +18,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+<<<<<<< HEAD
 import javax.swing.JButton;
+=======
+import javax.swing.ImageIcon;
+>>>>>>> Kelly
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 public class Paintimator extends JFrame{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -9178351480074121591L;
 	
 	private final String FRAME_TITLE = "Paintimator!";
-	private JPanel contentPane;
+	private BackgroundPanel contentPane;
 	private JPanel centerPanel;
+	private JPanel sidePanel;
 	private AnimationPane animationPane;
 	private LayeredPanel layeredPanel;
 	private ToolPanel toolPanel;
+	private OptionsPanel optionsPanel;
+	private ColorWheelPanel cwPanel;
 	private MyMenu menu;
 	private Listener myListener;
 	private JFileChooser fc;
@@ -52,22 +59,42 @@ public class Paintimator extends JFrame{
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setTitle(FRAME_TITLE);
 
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		this.setPreferredSize(screenSize);
-		width = screenSize.width;
-		height = screenSize.height;
-
+		
 		su = new StorageUtil(this);
 		layeredPanelList = new LayeredPanelList();
 		fc = new JFileChooser();
 		fc.addChoosableFileFilter(new ImageFilter());
 		fc.setAcceptAllFileFilterUsed(false);
 		
+<<<<<<< HEAD
 		//create a contentPane
 		contentPane = new JPanel(new BorderLayout());
 		layeredPanel = new LayeredPanel();
+=======
 
-		//draw panel
+		//create a contentPane that can hold an image
+        //contentPane = new BackgroundPanel("images/tempBackground.png");
+		contentPane = new BackgroundPanel();
+        contentPane.setLayout(new BorderLayout());
+>>>>>>> Kelly
+
+        //one way but apparently doesnt work on multiple screens
+		//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		//width = screenSize.width;
+		//height = screenSize.height;
+		//this.setPreferredSize(screenSize);
+		
+		//second way seeing if this works with multiple screens
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		int width = gd.getDisplayMode().getWidth();
+		int height = gd.getDisplayMode().getHeight();
+//		int width = 800;
+//		int height = 600;
+		this.setPreferredSize(new Dimension(width, height));
+		
+        
+        //canvas panel
+		layeredPanel = new LayeredPanel();
 		layeredPanel.setDrawColor(Color.BLACK);
 		layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 		layeredPanelList.add(layeredPanel);
@@ -75,15 +102,22 @@ public class Paintimator extends JFrame{
 		//center panel
 		centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		centerPanel.setBackground(Color.LIGHT_GRAY);
+		centerPanel.setOpaque(false);
 
 		//animation panel
 		animationPane = new AnimationPane();
 
-		//tool panel
-		toolPanel = new ToolPanel(this);
+		//side panel
+		sidePanel = new JPanel(new GridBagLayout());
+		optionsPanel = new OptionsPanel(this);
+		toolPanel = new ToolPanel(this, optionsPanel);
+		cwPanel = new ColorWheelPanel(this);
+		toolPanel.setOpaque(false);
+		optionsPanel.setOpaque(false);
+		cwPanel.setOpaque(false);
+		//sidePanel.setOpaque(false);
 
-		//menu
+		//menu bar
 		menu = new MyMenu(this);
 		this.setJMenuBar(menu);
 
@@ -98,25 +132,62 @@ public class Paintimator extends JFrame{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
+<<<<<<< HEAD
 		
 		gbc.gridy = 0;
+=======
+>>>>>>> Kelly
 		gbc.gridy = 1;
 		animationPane.updateAnimation(layeredPanelList);
 		centerPanel.add(animationPane, gbc);
-
+		
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		toolPanel.setPreferredSize(new Dimension(100,750));
+		sidePanel.add(toolPanel, gbc);
+		
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		optionsPanel.setPreferredSize(new Dimension(100,750));
+		sidePanel.add(optionsPanel, gbc);
+		
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.BOTH;
+		sidePanel.add(cwPanel, gbc);
+		
+		sidePanel.setPreferredSize(new Dimension(200,950));
+		sidePanel.setBackground(Color.GRAY);
+		
+		
 		//add panels to the content pane
 		contentPane.add(centerPanel, BorderLayout.CENTER);
-		contentPane.add(toolPanel, BorderLayout.WEST);
+		contentPane.add(sidePanel, BorderLayout.WEST);
 
 		//set it and show it
 		this.setContentPane(contentPane);
 		this.pack();
 		this.setVisible(true);
+		setSize(50,50) ;
+		setSize(width,height); 
 		layeredPanelList.getSelected().clearRootPane();
+		
 	}
+<<<<<<< HEAD
 
+=======
+	
+	
+>>>>>>> Kelly
 	/*
-	 * Method to easily add/update listeners
+	 * Method to easily add/update listeners and canvas
 	 */
 	private void addListeners(LayeredPanel lp) {
 		myListener = new Listener(lp);
@@ -142,8 +213,14 @@ public class Paintimator extends JFrame{
 
 	public void setDrawColor(Color c){
 		layeredPanelList.getSelected().setDrawColor(c);
+		this.setSidePanelColor(c);
+	}
+	
+	private void setSidePanelColor(Color c){
+		sidePanel.setBackground(c);
 	}
 
+	//methods to load and save canvas
 	public void loadImage(){
 		int returnVal = fc.showOpenDialog(Paintimator.this);
 		BufferedImage[] img = new BufferedImage[1];
@@ -244,11 +321,13 @@ public class Paintimator extends JFrame{
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
 				
+				
 				refreshDrawPanel(layeredPanelList.getSelected());
 				break;
 			default :
 				break;
 		}
+		layeredPanelList.getSelected().clearRootPane();
 	}
 	
 	public void newProj() {

@@ -8,32 +8,23 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultButtonModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
 
-class RoundButton extends JButton {
+public class RecButton extends JButton {
 
 	private static final long serialVersionUID = 1L;
 	protected Shape shape, base;
+	int h;
 
-	public RoundButton(Icon icon) {
-		this(null, icon);
-	}
 
-	public RoundButton(String text) {
-		this(text, null);
-	}
-
-	public RoundButton(String text, Icon icon) {
+	public RecButton(int height) {
 		setModel(new DefaultButtonModel());
-		init(text, icon);
-		if(icon==null) {
-			return;
-		}
+		h = height;
 		setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 		setBackground(Color.BLACK);
 		setContentAreaFilled(false);
@@ -46,19 +37,17 @@ class RoundButton extends JButton {
 		if(!getBounds().equals(base)) {
 			Dimension s = getPreferredSize();
 			base = getBounds();
-			shape = new Ellipse2D.Float(0, 0, s.width-1, s.height-1);
+		//	shape = new Ellipse2D.Float(0, 0, d.width-1, d.height-1);
+			shape = new Rectangle2D.Float(0, 0, s.width-1, s.height-1);
 		}
 	}
+	
 	@Override 
 	public Dimension getPreferredSize() {
-		Icon icon = getIcon();
 		Insets i = getInsets();
-		if (icon != null) {
-			int iw = Math.max(icon.getIconWidth(), icon.getIconHeight());
-			return new Dimension(iw + i.right + i.left, iw + i.top + i.bottom);
-		}
-		return new Dimension (10, 10);
+		return new Dimension(80 + i.right + i.left, h + i.top + i.bottom);
 	}
+
 	@Override 
 	protected void paintBorder(Graphics g) {
 		initShape();
