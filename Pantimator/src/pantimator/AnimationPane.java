@@ -17,7 +17,7 @@ public class AnimationPane extends JPanel {
     JScrollPane scrollframeHolder;
 
     JPanel frameHolder;
-    ThumbPane thumbPanel;
+    Thumb thumbPanel;
 
     ArrayList<Image> thumbs;
 
@@ -77,7 +77,7 @@ public class AnimationPane extends JPanel {
         for (LayeredPanel lp : lpl.getArray()) {        	
         	//Image img = lp.paneToImg().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         	//thumbPanel = ThumbPane.newInstance(img);
-        	thumbPanel = new ThumbPane();
+        	thumbPanel = new Thumb();
         	thumbPanel.add(lp);
             thumbPanel.setToolTipText("Frame #" + (index + 1));
             thumbPanel.setPreferredSize(new Dimension(25, 25));
@@ -91,7 +91,7 @@ public class AnimationPane extends JPanel {
      * Creates a new thumbnail frame and adds it to the frame holder
      */
     private void newThumb(Image img, int index) {
-        thumbPanel = ThumbPane.newInstance(img);
+        thumbPanel = Thumb.newInstance(img);
         thumbPanel.setToolTipText("Frame #" + index);
         thumbPanel.setPreferredSize(new Dimension(25, 25));
         thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
