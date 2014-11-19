@@ -1,13 +1,6 @@
 package pantimator;
 
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.GlyphVector;
@@ -15,7 +8,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class LayeredPanel extends JLayeredPane implements Serializable{
 
@@ -26,17 +18,33 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     private JPanel canvas, glass;
     private ArrayList<ShapeWrapper> toDrawOnCanvas, toDrawOnGlass, removedShapes;
-    private Random random = new Random();
     private Color drawColor = new Color(0,0,0,0);
 
     private Font font = getFont();
     private GlyphVector glyphVector;
 
+    private CanvasCursor canvasCursor = CanvasCursor.DEFAULT;
+
+    public void clearLayeredPanel(){
+        toDrawOnCanvas.clear();
+        toDrawOnGlass.clear();
+        removedShapes.clear();
+        canvas.repaint();
+    }
+
     public LayeredPanel(){
         toDrawOnCanvas = new ArrayList<ShapeWrapper>();
         toDrawOnGlass = new ArrayList<ShapeWrapper>();
         removedShapes = new ArrayList<ShapeWrapper>();
-        
+
+        //test code for changing the cursor:
+//        Toolkit toolkit = Toolkit.getDefaultToolkit();
+//        Image pencil = toolkit.getImage("images/pencil.png");
+//        Point hotspot = new Point(0,0);
+//        Cursor cursor = toolkit.createCustomCursor(pencil,hotspot,"Pencil");
+//        setCursor(cursor);
+
+
 
         canvas = new Layer(toDrawOnCanvas);
         glass = new Layer(toDrawOnGlass);
@@ -132,9 +140,18 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         toDrawOnGlass.clear();
     }
 
+    public CanvasCursor getCanvasCursor() {
+        return canvasCursor;
+    }
+
+    public void setCanvasCursor(CanvasCursor canvasCursor) {
+        this.canvasCursor = canvasCursor;
+        setCursor(canvasCursor.getCursor());
+    }
+
     /* added by Jeremy
-     * method which imports an image to the root pane that can be "edited"
-     */
+         * method which imports an image to the root pane that can be "edited"
+         */
     public void importImgToPane(BufferedImage img) {
         if (this.img != img) {
             this.img = img;
@@ -197,47 +214,16 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                     g2d.setColor(s.getColor());
                     g2d.fill(textShape);
                 }else if(s.isMagic()) {
-                    g2d.setStroke(new WobbleStroke(2f, 3f));
+                    g2d.setStroke(new WobbleStroke(s.getLineSize()/2f, s.getLineSize()/2f));
                     g2d.setColor(s.getColor());
                     g2d.draw(s.getShape());
                 }else {
-//                    g2d.setStroke(new WobbleStroke(2f, 2f));
                     g2d.setColor(s.getColor());
                     g2d.draw(s.getShape());
                 }
-//                else {
-//                    if(tool.equals(Listener.LisState.ERASE)) {
-//                        g2d.setColor(getCanvasBG());
-//                        g2d.fill(s.getShape());
-//
-////                        g2d.clearRect(x, y, brushSize, brushSize);
-//                    } else if(tool.equals(Listener.LisState.TEXT)){
-//                        //fixing the text tool...
-//                        font = getFont().deriveFont((float)s.getLineSize() * 2);
-//                        glyphVector = font.createGlyphVector(getFontMetrics(font).getFontRenderContext(), s.getString());
-//                        Shape textShape = glyphVector.getOutline((float)s.getShape().getBounds().getX(),(float)s.getShape().getBounds().getY());
-//
-//
-//                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-////                        g2d.translate(s.getShape().getBounds().getX(),s.getShape().getBounds().getY());
-////                        g2d.translate(100, 150);
-//                        g2d.setColor(s.getColor());
-//                        g2d.fill(textShape);
-//                        g2d.translate(0,0);
-//
-//                        System.out.println("Trying to show the string: " + s.getString());
-//////                        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-//////                                RenderingHints.VALUE_ANTIALIAS_ON);
-////                        Font font = new Font("Serif", Font.PLAIN, 96);
-////                        g2d.setFont(font);
-////                        int x = ((Double)s.getShape().getBounds().getX()).intValue();
-////                        int y = ((Double)s.getShape().getBounds().getY()).intValue();
-////                        g2d.drawString(s.getString(), x, y);
-//                    }
-//                }
-            }
+            }//end for:shapes
 
-        }
+        }//end paintComponent
 
-    }
-}
+    }//end Layer
+}//end LayeredPanel
