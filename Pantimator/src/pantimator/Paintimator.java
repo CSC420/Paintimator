@@ -103,7 +103,7 @@ public class Paintimator extends JFrame{
 		toolPanel.setOpaque(false);
 		optionsPanel.setOpaque(false);
 		cwPanel.setOpaque(false);
-		sidePanel.setOpaque(false);
+		//sidePanel.setOpaque(false);
 
 		//menu bar
 		menu = new MyMenu(this);
