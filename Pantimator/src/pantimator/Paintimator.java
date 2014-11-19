@@ -8,11 +8,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -60,7 +63,6 @@ public class Paintimator extends JFrame{
 		fc.addChoosableFileFilter(new ImageFilter());
 		fc.setAcceptAllFileFilterUsed(false);
 		
-
 		//create a contentPane
 		contentPane = new JPanel(new BorderLayout());
 		layeredPanel = new LayeredPanel();
@@ -97,8 +99,9 @@ public class Paintimator extends JFrame{
 		gbc.gridy = 0;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
 		
+		gbc.gridy = 0;
 		gbc.gridy = 1;
-		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
+		animationPane.updateAnimation(layeredPanelList);
 		centerPanel.add(animationPane, gbc);
 
 		//add panels to the content pane
@@ -111,7 +114,7 @@ public class Paintimator extends JFrame{
 		this.setVisible(true);
 		layeredPanelList.getSelected().clearRootPane();
 	}
-	
+
 	/*
 	 * Method to easily add/update listeners
 	 */
@@ -199,7 +202,7 @@ public class Paintimator extends JFrame{
 
 		if(lpTemp != null){
 			centerPanel.remove(layeredPanelList.getSelected());
-			animationPane.updateAnimation(lpTemp.getSelected(), true);
+			animationPane.updateAnimation(lpTemp);
 			refreshDrawPanel(lpTemp.getSelected());
 			layeredPanelList = lpTemp;
 		}
@@ -216,9 +219,10 @@ public class Paintimator extends JFrame{
 				JOptionPane.YES_NO_CANCEL_OPTION);
 		
 		switch (i) {
-			case JOptionPane.YES_OPTION :
-				animationPane.updateAnimation(layeredPanelList.getSelected(), false);	
+			case JOptionPane.YES_OPTION :	
 				centerPanel.remove(layeredPanelList.getSelected());
+				
+				animationPane.updateAnimation(layeredPanelList);
 				
 				layeredPanel = new LayeredPanel();
 				
