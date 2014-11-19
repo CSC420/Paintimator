@@ -52,12 +52,12 @@ public class AnimationPane extends JPanel {
         
         // make frame holder
         frameHolder = new JPanel(new FlowLayout());
-        frameHolder.setMaximumSize(new Dimension(800, 25));
+        frameHolder.setMaximumSize(new Dimension(800, 125));
         
         // make scroll frame
         scrollframeHolder = new JScrollPane(frameHolder);
         scrollframeHolder.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        scrollframeHolder.setPreferredSize(new Dimension(825, 60));
+        scrollframeHolder.setPreferredSize(new Dimension(825, 110));
         scrollframeHolder.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         thumbs = new ArrayList<Image>();
@@ -93,7 +93,7 @@ public class AnimationPane extends JPanel {
         for (int i = 0; i < 50; i++) {
             thumbPanel = new JPanel();
             thumbPanel.setToolTipText("Frame " + (i + 1));
-            thumbPanel.setPreferredSize(new Dimension(25,25));
+            thumbPanel.setPreferredSize(new Dimension(75,75));
             thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
             frameHolder.add(thumbPanel);
         }
@@ -124,7 +124,7 @@ public class AnimationPane extends JPanel {
     private void newThumb(Image img, int index) {
         thumbPanel = new ThumbPane();
         thumbPanel.setToolTipText("Frame #" + index);
-        thumbPanel.setPreferredSize(new Dimension(25, 25));
+        thumbPanel.setPreferredSize(new Dimension(75, 75));
         thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
         if (img != null) {
             thumbPanel.repaint();
@@ -141,7 +141,7 @@ public class AnimationPane extends JPanel {
      * @param isNewProj
      */
     public void updateAnimation(LayeredPanel lp, boolean isNewProj) {
-        img = lp.paneToImg().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         
         if (!isNewProj) {
             thumbs.add(img);
