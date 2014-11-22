@@ -1,27 +1,15 @@
 package pantimator;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class ToolPanel extends JPanel {
 	
@@ -30,8 +18,8 @@ public class ToolPanel extends JPanel {
 	private RoundButton line, draw, text, erase, circle, square, triangle, magic, undo, redo;
 	private RoundButton selectedButton;
 	private RoundButton newSelectedButton;
-	private JButton currentColor;
-	private JButton newColor;
+//	private JButton currentColor;
+//	private JButton newColor;
 
 	public ToolPanel(Paintimator p) throws IOException{
 		super(new GridBagLayout());
@@ -82,13 +70,17 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Color Chooser
+		JPanel colors = new ColorSelectorPanel(master, "images/color_wheel.png");
+
+
+		/* Commenting out all this to make room for the new circular color picker...
 		JPanel colors = new JPanel(new GridLayout(0,2));
 		colors.setPreferredSize(new Dimension(50,200));
 		final JButton red = new JButton(), black = new JButton(), white = new JButton(),
 				grey = new JButton(), ltgrey = new JButton(), orange = new JButton(),
-				brown = new JButton(), yellow = new JButton(), green = new JButton(), 
-				ltgreen = new JButton(), blue = new JButton(), ltblue = new JButton(), 
-				purple = new JButton(), pink = new JButton(), ltbrown = new JButton(), 
+				brown = new JButton(), yellow = new JButton(), green = new JButton(),
+				ltgreen = new JButton(), blue = new JButton(), ltblue = new JButton(),
+				purple = new JButton(), pink = new JButton(), ltbrown = new JButton(),
 				rosie = new JButton(), other = new JButton(), plus = new JButton();
 
 		other.setBackground(Color.WHITE);
@@ -348,7 +340,7 @@ public class ToolPanel extends JPanel {
 		colors.add(rosie);
 		colors.add(other);
 		colors.add(plus);
-		colors.setOpaque(false);
+		colors.setOpaque(false);*/
 
 		//Circle
 		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
@@ -539,13 +531,13 @@ public class ToolPanel extends JPanel {
 
 	}
 
-	public void changeSelectedColor(){
-		if(currentColor!= null){
-			currentColor.setBorderPainted(false);
-		}
-		newColor.setBorderPainted(true);
-		currentColor = newColor;
-
-	}
+//	public void changeSelectedColor(){
+//		if(currentColor!= null){
+//			currentColor.setBorderPainted(false);
+//		}
+//		newColor.setBorderPainted(true);
+//		currentColor = newColor;
+//
+//	}
 
 }
