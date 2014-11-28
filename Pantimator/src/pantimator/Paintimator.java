@@ -62,22 +62,14 @@ public class Paintimator extends JFrame{
 		
 
 		//create a contentPane that can hold an image
-        //contentPane = new BackgroundPanel("images/tempBackground.png");
-		contentPane = new BackgroundPanel();
+        contentPane = new BackgroundPanel("images/background.jpg");
+		//contentPane = new BackgroundPanel();
         contentPane.setLayout(new BorderLayout());
-
-        //one way but apparently doesnt work on multiple screens
-		//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		//width = screenSize.width;
-		//height = screenSize.height;
-		//this.setPreferredSize(screenSize);
 		
 		//second way seeing if this works with multiple screens
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		int width = gd.getDisplayMode().getWidth();
-		int height = gd.getDisplayMode().getHeight();
-//		int width = 800;
-//		int height = 600;
+		width = gd.getDisplayMode().getWidth();
+		height = gd.getDisplayMode().getHeight();
 		this.setPreferredSize(new Dimension(width, height));
 		
         
@@ -88,7 +80,9 @@ public class Paintimator extends JFrame{
 		layeredPanelList.add(layeredPanel);
 
 		//center panel
+		//centerPanel = new BackgroundPanel("images/background.jpg");
 		centerPanel = new JPanel(new GridBagLayout());
+		//centerPanel.setLayout(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		//centerPanel.setOpaque(false);
 
@@ -103,7 +97,7 @@ public class Paintimator extends JFrame{
 		toolPanel.setOpaque(false);
 		optionsPanel.setOpaque(false);
 		cwPanel.setOpaque(false);
-		//sidePanel.setOpaque(false);
+		sidePanel.setOpaque(false);
 
 		//menu bar
 		menu = new MyMenu(this);
@@ -282,7 +276,6 @@ public class Paintimator extends JFrame{
 				layeredPanel = new LayeredPanel();
 				
 				//draw panel
-				layeredPanel.setDrawColor(Color.BLACK);
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
 				
