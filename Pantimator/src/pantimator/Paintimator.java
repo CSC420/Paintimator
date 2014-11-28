@@ -31,9 +31,12 @@ public class Paintimator extends JFrame{
 	private final String FRAME_TITLE = "Paintimator!";
 	private BackgroundPanel contentPane;
 	private JPanel centerPanel;
+	private JPanel sidePanel;
 	private AnimationPane animationPane;
 	private LayeredPanel layeredPanel;
 	private ToolPanel toolPanel;
+	private OptionsPanel optionsPanel;
+	private ColorWheelPanel cwPanel;
 	private MyMenu menu;
 	private Listener myListener;
 	private JFileChooser fc;
@@ -59,20 +62,14 @@ public class Paintimator extends JFrame{
 		
 
 		//create a contentPane that can hold an image
-       // contentPane = new BackgroundPanel("images/Background.png");
-		contentPane = new BackgroundPanel();
+        contentPane = new BackgroundPanel("images/background.jpg");
+		//contentPane = new BackgroundPanel();
         contentPane.setLayout(new BorderLayout());
-
-        //one way but apparently doesnt work on multiple screens
-		//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		//width = screenSize.width;
-		//height = screenSize.height;
-		//this.setPreferredSize(screenSize);
 		
 		//second way seeing if this works with multiple screens
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		int width = gd.getDisplayMode().getWidth();
-		int height = gd.getDisplayMode().getHeight();
+		width = gd.getDisplayMode().getWidth();
+		height = gd.getDisplayMode().getHeight();
 		this.setPreferredSize(new Dimension(width, height));
 		
         
@@ -83,17 +80,24 @@ public class Paintimator extends JFrame{
 		layeredPanelList.add(layeredPanel);
 
 		//center panel
+		//centerPanel = new BackgroundPanel("images/background.jpg");
 		centerPanel = new JPanel(new GridBagLayout());
+		//centerPanel.setLayout(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		centerPanel.setBackground(Color.LIGHT_GRAY);
-		//centerPanel.setOpaque(false);
+		centerPanel.setOpaque(false);
 
 		//animation panel
 		animationPane = new AnimationPane();
 
-		//tool panel
-		toolPanel = new ToolPanel(this);
-		//toolPanel.setOpaque(false);
+		//side panel
+		sidePanel = new JPanel(new GridBagLayout());
+		optionsPanel = new OptionsPanel(this);
+		toolPanel = new ToolPanel(this, optionsPanel);
+		cwPanel = new ColorWheelPanel(this);
+		toolPanel.setOpaque(false);
+		optionsPanel.setOpaque(false);
+		cwPanel.setOpaque(false);
+		sidePanel.setOpaque(false);
 
 		//menu bar
 		menu = new MyMenu(this);
@@ -113,10 +117,36 @@ public class Paintimator extends JFrame{
 		gbc.gridy = 1;
 		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
 		centerPanel.add(animationPane, gbc);
-
+		
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		toolPanel.setPreferredSize(new Dimension(100,750));
+		sidePanel.add(toolPanel, gbc);
+		
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		optionsPanel.setPreferredSize(new Dimension(100,750));
+		sidePanel.add(optionsPanel, gbc);
+		
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.BOTH;
+		sidePanel.add(cwPanel, gbc);
+		
+		sidePanel.setPreferredSize(new Dimension(200,950));
+		sidePanel.setBackground(Color.GRAY);
+		
+		
 		//add panels to the content pane
 		contentPane.add(centerPanel, BorderLayout.CENTER);
-		contentPane.add(toolPanel, BorderLayout.WEST);
+		contentPane.add(sidePanel, BorderLayout.WEST);
 
 		//set it and show it
 		this.setContentPane(contentPane);
@@ -156,6 +186,11 @@ public class Paintimator extends JFrame{
 
 	public void setDrawColor(Color c){
 		layeredPanelList.getSelected().setDrawColor(c);
+		this.setSidePanelColor(c);
+	}
+	
+	private void setSidePanelColor(Color c){
+		sidePanel.setBackground(c);
 	}
 
 	//methods to load and save canvas
@@ -241,7 +276,6 @@ public class Paintimator extends JFrame{
 				layeredPanel = new LayeredPanel();
 				
 				//draw panel
-				layeredPanel.setDrawColor(Color.BLACK);
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
 				

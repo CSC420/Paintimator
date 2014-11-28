@@ -1,9 +1,15 @@
 package pantimator;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AnimationPane extends JPanel {
@@ -25,8 +31,9 @@ public class AnimationPane extends JPanel {
     
     /**
      * This is a constructor
+     * @throws IOException 
      */
-    public AnimationPane() {
+    public AnimationPane() throws IOException {
         init();
     }
     
@@ -34,22 +41,23 @@ public class AnimationPane extends JPanel {
      * Constructor that will be able to take a LayeredPanelList and parse through it for
      * frames
      * @param panelList
+     * @throws IOException 
      */
-    public AnimationPane(LayeredPanelList panelList) {
+    public AnimationPane(LayeredPanelList panelList) throws IOException {
         init();
     }
 
-    private void init() {
+    private void init() throws IOException {
         this.setBorder(new BevelBorder(BevelBorder.LOWERED));
         
         // make frame holder
         frameHolder = new JPanel(new FlowLayout());
-        frameHolder.setMaximumSize(new Dimension(800, 25));
+        frameHolder.setMaximumSize(new Dimension(800, 125));
         
         // make scroll frame
         scrollframeHolder = new JScrollPane(frameHolder);
         scrollframeHolder.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        scrollframeHolder.setPreferredSize(new Dimension(825, 60));
+        scrollframeHolder.setPreferredSize(new Dimension(825, 110));
         scrollframeHolder.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         thumbs = new ArrayList<Image>();
@@ -64,11 +72,20 @@ public class AnimationPane extends JPanel {
         playButton();
     }
 
-    private void playButton() {
+    private void playButton() throws IOException {
 		// TODO Add play button functionality
-    	JButton play = new JButton();
-        play.setPreferredSize(new Dimension(75, 25));
-        play.setText("Play");
+    	RoundButton play;
+		BufferedImage buttonIcon = ImageIO.read(new File("images/white-Button.png"));
+		play = new RoundButton( new ImageIcon(buttonIcon));
+		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		play.setSelectedIcon(new ImageIcon(buttonIcon));
+		play.setPressedIcon(new ImageIcon(buttonIcon));
+		play.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//do whatever here
+			}
+		});
         this.add(play);
 	}
 
@@ -76,7 +93,7 @@ public class AnimationPane extends JPanel {
         for (int i = 0; i < 50; i++) {
             thumbPanel = new JPanel();
             thumbPanel.setToolTipText("Frame " + (i + 1));
-            thumbPanel.setPreferredSize(new Dimension(25,25));
+            thumbPanel.setPreferredSize(new Dimension(75,75));
             thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
             frameHolder.add(thumbPanel);
         }
@@ -107,7 +124,7 @@ public class AnimationPane extends JPanel {
     private void newThumb(Image img, int index) {
         thumbPanel = new ThumbPane();
         thumbPanel.setToolTipText("Frame #" + index);
-        thumbPanel.setPreferredSize(new Dimension(25, 25));
+        thumbPanel.setPreferredSize(new Dimension(75, 75));
         thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
         if (img != null) {
             thumbPanel.repaint();
@@ -124,7 +141,7 @@ public class AnimationPane extends JPanel {
      * @param isNewProj
      */
     public void updateAnimation(LayeredPanel lp, boolean isNewProj) {
-        img = lp.paneToImg().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         
         if (!isNewProj) {
             thumbs.add(img);
