@@ -196,7 +196,6 @@ public class ToolPanel extends JPanel {
 			}
 		});
 
-<<<<<<< HEAD
 		//Bucket
 		buttonIcon = ImageIO.read(new File("images/bucketwhite-Button.png"));
 		bucket = new RoundButton( new ImageIcon(buttonIcon));
@@ -220,13 +219,6 @@ public class ToolPanel extends JPanel {
 		stamp.setSelectedIcon(new ImageIcon(buttonIcon));
 		stamp.setPressedIcon(new ImageIcon(buttonIcon));
 		stamp.addActionListener(new ActionListener() {
-=======
-
-		final JSlider lineSize = new JSlider(JSlider.HORIZONTAL, 1, 150, 1);
-		final JLabel lineSizeLabel = new JLabel("Line Size: " + lineSize.getValue());
-		lineSize.setPreferredSize(new Dimension(100,40));
-		lineSize.addChangeListener(new ChangeListener() {
->>>>>>> Adam
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				newSelectedButton = stamp;
@@ -235,6 +227,7 @@ public class ToolPanel extends JPanel {
 				//op.setState(OptionsPanel.State.PAINT);
 			}
 		});
+	
 
 
 		GridBagConstraints c = new GridBagConstraints();

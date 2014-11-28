@@ -29,8 +29,8 @@ public class Listener implements MouseListener, MouseMotionListener  {
         layeredPanel = lp;
         currentState = LisState.NONE;
 
-        xDrawPoints = new Vector<>();
-        yDrawPoints = new Vector<>();
+       // xDrawPoints = new Vector<>();
+       // yDrawPoints = new Vector<>();
 
         registerShiftListener();
     }
