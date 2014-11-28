@@ -297,7 +297,7 @@ public class ColorWheelPanel extends JPanel {
 		this.add(colors);
 
 		this.setOpaque(false);
-		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		//this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 	}
 
 	public void changeSelectedColor(){
