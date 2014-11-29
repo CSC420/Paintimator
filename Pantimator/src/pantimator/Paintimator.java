@@ -11,9 +11,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -122,8 +124,12 @@ public class Paintimator extends JFrame{
 		gbc.gridy = 0;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
 		gbc.gridy = 1;
+<<<<<<< HEAD
 		gbc.fill = GridBagConstraints.VERTICAL;
 		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
+=======
+		animationPane.updateAnimation(layeredPanelList);
+>>>>>>> Jeremy
 		centerPanel.add(animationPane, gbc);
 
 		
@@ -165,8 +171,6 @@ public class Paintimator extends JFrame{
 		layeredPanelList.getSelected().clearRootPane();
 		
 	}
-	
-	
 	/*
 	 * Method to easily add/update listeners and canvas
 	 */
@@ -260,7 +264,7 @@ public class Paintimator extends JFrame{
 
 		if(lpTemp != null){
 			centerPanel.remove(layeredPanelList.getSelected());
-			animationPane.updateAnimation(lpTemp.getSelected(), true);
+			animationPane.updateAnimation(lpTemp);
 			refreshDrawPanel(lpTemp.getSelected());
 			layeredPanelList = lpTemp;
 		}
@@ -277,9 +281,10 @@ public class Paintimator extends JFrame{
 				JOptionPane.YES_NO_CANCEL_OPTION);
 		
 		switch (i) {
-			case JOptionPane.YES_OPTION :
-				animationPane.updateAnimation(layeredPanelList.getSelected(), false);	
+			case JOptionPane.YES_OPTION :	
 				centerPanel.remove(layeredPanelList.getSelected());
+				
+				animationPane.updateAnimation(layeredPanelList);
 				
 				layeredPanel = new LayeredPanel();
 				

@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
 public class AnimationPane extends JPanel {
 
 	private static final long serialVersionUID = -4582247641791559232L;
@@ -20,11 +21,20 @@ public class AnimationPane extends JPanel {
 	Image img;
 	private Image backgroundImg;
 	private Boolean hasBackground = false;
+=======
+public class AnimationPane extends JPanel {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9151202800709578455L;
+
+	LayeredPanelList lpl;
+>>>>>>> Jeremy
     
     JScrollPane scrollframeHolder;
 
     JPanel frameHolder;
-    JPanel thumbPanel;
+    Thumb thumbPanel;
 
     ArrayList<Image> thumbs;
 
@@ -44,6 +54,7 @@ public class AnimationPane extends JPanel {
      * @param panelList
      * @throws IOException 
      */
+
     public AnimationPane(LayeredPanelList panelList) throws IOException {
         init();
     }
@@ -65,12 +76,6 @@ public class AnimationPane extends JPanel {
         scrollframeHolder.getViewport().setOpaque(false);
         scrollframeHolder.setOpaque(false);
         thumbs = new ArrayList<Image>();
-
-        if (!thumbs.isEmpty()) {
-            loadedFrameHolder(thumbs);
-        } else {
-            sampleFrameHolder();
-        }
         
         this.add(scrollframeHolder);
         playButton();
@@ -96,7 +101,7 @@ public class AnimationPane extends JPanel {
 
 	private void sampleFrameHolder() {    	
         for (int i = 0; i < 50; i++) {
-            thumbPanel = new JPanel();
+          //  thumbPanel = new JPanel();
             thumbPanel.setToolTipText("Frame " + (i + 1));
             thumbPanel.setPreferredSize(new Dimension(75,75));
             thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -112,39 +117,39 @@ public class AnimationPane extends JPanel {
     /*
      * Iterates through an array list of images to set the thumbnail frame
      */
-    private void loadedFrameHolder(ArrayList<Image> imgList) {
+    private void loadedFrameHolder(LayeredPanelList lpl) {
         int index = 0;
-
+        System.out.println(lpl.getSize());
         frameHolder.removeAll(); // clears everything
-        for (Image i : imgList) { // adds thumbs
-            newThumb(i, (index + 1));
+        for (LayeredPanel lp : lpl.getArray()) {        	
+        	//Image img = lp.paneToImg().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        	//thumbPanel = ThumbPane.newInstance(img);
+        	thumbPanel = new Thumb();
+        	thumbPanel.add(lp);
+            thumbPanel.setToolTipText("Frame #" + (index + 1));
+            thumbPanel.setPreferredSize(new Dimension(25, 25));
+            thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
+            frameHolder.add(thumbPanel);
             index++;
         }
-        frameHolder.repaint(); // repaints the frame with updated thumbs
     }
     
     /*
      * Creates a new thumbnail frame and adds it to the frame holder
      */
     private void newThumb(Image img, int index) {
-        thumbPanel = new ThumbPane();
+        thumbPanel = Thumb.newInstance(img);
         thumbPanel.setToolTipText("Frame #" + index);
         thumbPanel.setPreferredSize(new Dimension(75, 75));
         thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        if (img != null) {
-            thumbPanel.repaint();
-        }
         frameHolder.add(thumbPanel);
     }
     
     /**
-     * Updates the animation frames
-     * If project is new, clear thumb array list and start over
-     * If project is not new, just add to thumbs
-     * Then update the actual thumbnail frame
+     * Public method for updating the animation frame
      * @param lp
-     * @param isNewProj
      */
+<<<<<<< HEAD
     public void updateAnimation(LayeredPanel lp, boolean isNewProj) {
         img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         
@@ -174,6 +179,13 @@ public class AnimationPane extends JPanel {
      * Sets the thumbnail image to the thumbnail frame
      */
     private class ThumbPane extends JPanel {
+=======
+
+    public void updateAnimation(LayeredPanelList lpl) { 
+        loadedFrameHolder(lpl);
+    }
+       private class ThumbPane extends JPanel {
+>>>>>>> Jeremy
 		/**
 		 * 
 		 */
@@ -186,7 +198,8 @@ public class AnimationPane extends JPanel {
 	    public void paintComponent(Graphics g) {
 	        super.paintComponent(g);
 	
-	        g.drawImage(img, 0, 0, null);
+	     //   g.drawImage(img, 0, 0, null);
 	    }
+
     }
 }
