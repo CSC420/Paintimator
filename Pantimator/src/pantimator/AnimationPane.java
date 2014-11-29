@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 public class AnimationPane extends JPanel {
 
 	private static final long serialVersionUID = -4582247641791559232L;
@@ -21,15 +20,8 @@ public class AnimationPane extends JPanel {
 	Image img;
 	private Image backgroundImg;
 	private Boolean hasBackground = false;
-=======
-public class AnimationPane extends JPanel {	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -9151202800709578455L;
 
 	LayeredPanelList lpl;
->>>>>>> Jeremy
     
     JScrollPane scrollframeHolder;
 
@@ -119,7 +111,7 @@ public class AnimationPane extends JPanel {
      */
     private void loadedFrameHolder(LayeredPanelList lpl) {
         int index = 0;
-        System.out.println(lpl.getSize());
+     //   System.out.println(lpl.getSize());
         frameHolder.removeAll(); // clears everything
         for (LayeredPanel lp : lpl.getArray()) {        	
         	//Image img = lp.paneToImg().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -149,18 +141,6 @@ public class AnimationPane extends JPanel {
      * Public method for updating the animation frame
      * @param lp
      */
-<<<<<<< HEAD
-    public void updateAnimation(LayeredPanel lp, boolean isNewProj) {
-        img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
-        
-        if (!isNewProj) {
-            thumbs.add(img);
-        } else {
-            thumbs.clear();
-            thumbs.add(img);
-        }
-        loadedFrameHolder(thumbs);
-    }
     
     @Override
     public void paintComponent(Graphics g){
@@ -178,14 +158,12 @@ public class AnimationPane extends JPanel {
     /*
      * Sets the thumbnail image to the thumbnail frame
      */
-    private class ThumbPane extends JPanel {
-=======
 
     public void updateAnimation(LayeredPanelList lpl) { 
         loadedFrameHolder(lpl);
     }
        private class ThumbPane extends JPanel {
->>>>>>> Jeremy
+
 		/**
 		 * 
 		 */

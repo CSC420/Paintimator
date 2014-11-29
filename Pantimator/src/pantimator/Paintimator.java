@@ -84,9 +84,7 @@ public class Paintimator extends JFrame{
 		layeredPanelList.add(layeredPanel);
 
 		//center panel
-		//centerPanel = new BackgroundPanel("images/background.jpg");
 		centerPanel = new JPanel(new GridBagLayout());
-		//centerPanel.setLayout(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerPanel.setOpaque(false);
 
@@ -94,9 +92,7 @@ public class Paintimator extends JFrame{
 		animationPane = new AnimationPane();
 		animationPane.setPreferredSize(new Dimension(width-450, 150));
 		animationPane.setOpaque(false);
-		//animationPane.setBackgroundImage(new ImageIcon("images/border1.png").getImage());
 
-		
 
 		//side panel
 		sidePanel = new JPanel(new GridBagLayout());
@@ -124,12 +120,8 @@ public class Paintimator extends JFrame{
 		gbc.gridy = 0;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
 		gbc.gridy = 1;
-<<<<<<< HEAD
-		gbc.fill = GridBagConstraints.VERTICAL;
-		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
-=======
+		//gbc.fill = GridBagConstraints.VERTICAL;
 		animationPane.updateAnimation(layeredPanelList);
->>>>>>> Jeremy
 		centerPanel.add(animationPane, gbc);
 
 		
@@ -168,6 +160,7 @@ public class Paintimator extends JFrame{
 		this.pack();
 		this.setVisible(true);
 		this.setResizable(false);
+		refreshDrawPanel(layeredPanelList.getSelected());
 		layeredPanelList.getSelected().clearRootPane();
 		
 	}
@@ -322,6 +315,10 @@ public class Paintimator extends JFrame{
 	 * Method to easily refresh the drawing panel
 	 */
 	private void refreshDrawPanel(LayeredPanel lp) {
+		gbc = new GridBagConstraints();
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 0;
 		gbc.gridy = 0;
 		
 		addListeners(lp);
