@@ -11,9 +11,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -82,9 +84,7 @@ public class Paintimator extends JFrame{
 		layeredPanelList.add(layeredPanel);
 
 		//center panel
-		//centerPanel = new BackgroundPanel("images/background.jpg");
 		centerPanel = new JPanel(new GridBagLayout());
-		//centerPanel.setLayout(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerPanel.setOpaque(false);
 
@@ -92,9 +92,7 @@ public class Paintimator extends JFrame{
 		animationPane = new AnimationPane();
 		animationPane.setPreferredSize(new Dimension(width-450, 150));
 		animationPane.setOpaque(false);
-		//animationPane.setBackgroundImage(new ImageIcon("images/border1.png").getImage());
 
-		
 
 		//side panel
 		sidePanel = new JPanel(new GridBagLayout());
@@ -122,8 +120,8 @@ public class Paintimator extends JFrame{
 		gbc.gridy = 0;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
 		gbc.gridy = 1;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
+		//gbc.fill = GridBagConstraints.VERTICAL;
+		animationPane.updateAnimation(layeredPanelList);
 		centerPanel.add(animationPane, gbc);
 
 		
@@ -162,11 +160,10 @@ public class Paintimator extends JFrame{
 		this.pack();
 		this.setVisible(true);
 		this.setResizable(false);
+		refreshDrawPanel(layeredPanelList.getSelected());
 		layeredPanelList.getSelected().clearRootPane();
 		
 	}
-	
-	
 	/*
 	 * Method to easily add/update listeners and canvas
 	 */
@@ -260,7 +257,7 @@ public class Paintimator extends JFrame{
 
 		if(lpTemp != null){
 			centerPanel.remove(layeredPanelList.getSelected());
-			animationPane.updateAnimation(lpTemp.getSelected(), true);
+			animationPane.updateAnimation(lpTemp);
 			refreshDrawPanel(lpTemp.getSelected());
 			layeredPanelList = lpTemp;
 		}
@@ -277,9 +274,10 @@ public class Paintimator extends JFrame{
 				JOptionPane.YES_NO_CANCEL_OPTION);
 		
 		switch (i) {
-			case JOptionPane.YES_OPTION :
-				animationPane.updateAnimation(layeredPanelList.getSelected(), false);	
+			case JOptionPane.YES_OPTION :	
 				centerPanel.remove(layeredPanelList.getSelected());
+				
+				animationPane.updateAnimation(layeredPanelList);
 				
 				layeredPanel = new LayeredPanel();
 				
@@ -317,6 +315,10 @@ public class Paintimator extends JFrame{
 	 * Method to easily refresh the drawing panel
 	 */
 	private void refreshDrawPanel(LayeredPanel lp) {
+		gbc = new GridBagConstraints();
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 0;
 		gbc.gridy = 0;
 		
 		addListeners(lp);
