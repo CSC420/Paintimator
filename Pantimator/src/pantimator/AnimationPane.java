@@ -77,11 +77,21 @@ public class AnimationPane extends JPanel {
     private void playButton() throws IOException {
 		// TODO Add play button functionality
     	RoundButton play;
-		BufferedImage buttonIcon = ImageIO.read(new File("images/white-Button.png"));
-		play = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
-		play.setSelectedIcon(new ImageIcon(buttonIcon));
-		play.setPressedIcon(new ImageIcon(buttonIcon));
+		
+    	//BufferedImage buttonIcon = ImageIO.read(new File("images/white-Button.png"));
+		java.net.URL imageURL = AnimationPane.class.getResource("images/white-Button.png");
+		  if (imageURL == null) {
+			 System.out.println("Issue loading play button in Animation Pane"); 
+			 System.exit(-1);
+		  }
+		 play = new RoundButton(new ImageIcon(imageURL));
+		 imageURL = AnimationPane.class.getResource("images/green-Button.png");
+		 if (imageURL == null) {
+			 System.out.println("Issue loading play button in Animation Pane"); 
+			 System.exit(-1);
+		  }
+		play.setSelectedIcon(new ImageIcon(imageURL));
+		play.setPressedIcon(new ImageIcon(imageURL));
 		play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -11,8 +11,14 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,35 +38,63 @@ public class ToolPanel extends JPanel {
 		triangle, paint, undo, redo, bucket, stamp;
 	private RoundButton selectedButton;
 	private RoundButton newSelectedButton;
+	private Clip button;
+	private Clip undoSound;
+	private Clip redoSound;
 
 
-	public ToolPanel(Paintimator p, OptionsPanel o) throws IOException{
+	public ToolPanel(Paintimator p, OptionsPanel o) throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super(new GridBagLayout());
-		//super();
 		master = p;
 		op = o;
 
-		BufferedImage buttonIcon = ImageIO.read(new File("images/undowhiteButton.png"));
+		//AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button.wav"));
+		InputStream is = getClass().getResourceAsStream("sounds/button.wav");
+		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
+        button = AudioSystem.getClip();
+        button.open(ais);
+        
+        is = getClass().getResourceAsStream("sounds/undo.wav");
+		ais = AudioSystem.getAudioInputStream(is);
+        undoSound = AudioSystem.getClip();
+        undoSound.open(ais);
+        
+        is = getClass().getResourceAsStream("sounds/redo.wav");
+		ais = AudioSystem.getAudioInputStream(is);
+        redoSound = AudioSystem.getClip();
+        redoSound.open(ais);
+        
+		
+		java.net.URL buttonIcon = ToolPanel.class.getResource("images/undowhiteButton.png");
+		  if (buttonIcon == null) {
+			 System.out.println("Issue loading tool buttons in Tool Panel"); 
+			 System.exit(-1);
+		  }
 		undo = new RoundButton(new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/undogreenButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/undogreenButton.png");
 		undo.setPressedIcon(new ImageIcon(buttonIcon));
 		undo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				undoSound.stop();
+				undoSound.start();
 				newSelectedButton = undo;
 				changeButtonColors();
 				master.undo();
 				undo.setSelected(false);
+				
 			}
 		});
 
-		buttonIcon = ImageIO.read(new File("images/redowhiteButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/redowhiteButton.png");
 		redo = new RoundButton(new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/redogreenButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/redogreenButton.png");
 		redo.setPressedIcon(new ImageIcon(buttonIcon));
 		redo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				redoSound.stop();
+				redoSound.start();
 				newSelectedButton = redo;
 				changeButtonColors();
 				master.redo();
@@ -70,13 +104,15 @@ public class ToolPanel extends JPanel {
 
 
 		//Line
-		buttonIcon = ImageIO.read(new File("images/linewhite-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/linewhite-Button.png");
 		line = new RoundButton(new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		line.setSelectedIcon(new ImageIcon(buttonIcon));
 		line.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = line;
 				changeButtonColors();
 				master.setListenerState(1);
@@ -87,13 +123,15 @@ public class ToolPanel extends JPanel {
 		
 
 		//Circle
-		buttonIcon = ImageIO.read(new File("images/cirwhite-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/cirwhite-Button.png");
 		circle = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		circle.setSelectedIcon(new ImageIcon(buttonIcon));
 		circle.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = circle;
 				changeButtonColors();
 				master.setListenerState(5);
@@ -102,13 +140,15 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Square
-		buttonIcon = ImageIO.read(new File("images/squarewhite-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/squarewhite-Button.png");
 		square = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		square.setSelectedIcon(new ImageIcon(buttonIcon));
 		square.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = square;
 				changeButtonColors();
 				master.setListenerState(6);
@@ -117,13 +157,15 @@ public class ToolPanel extends JPanel {
 		});
 
 		//triangle
-		buttonIcon = ImageIO.read(new File("images/triwhite-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/triwhite-Button.png");
 		triangle = new RoundButton( new ImageIcon(buttonIcon));  
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		triangle.setSelectedIcon(new ImageIcon(buttonIcon));
 		triangle.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = triangle;
 				changeButtonColors();
 				master.setListenerState(3);
@@ -132,14 +174,16 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Draw
-		buttonIcon = ImageIO.read(new File("images/drawwhiteButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/drawwhiteButton.png");
 		draw = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/drawgreenButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/drawgreenButton.png");
 		draw.setSelectedIcon(new ImageIcon(buttonIcon));
 		draw.setPressedIcon(new ImageIcon(buttonIcon));
 		draw.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = draw;
 				changeButtonColors();
 			//	master.setListenerState(2);
@@ -150,13 +194,15 @@ public class ToolPanel extends JPanel {
 
 
 		//Text
-		buttonIcon = ImageIO.read(new File("images/textwhite-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/textwhite-Button.png");
 		text = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		text.setSelectedIcon(new ImageIcon(buttonIcon));
 		text.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = text;
 				changeButtonColors();
 				master.setListenerState(7);
@@ -165,14 +211,16 @@ public class ToolPanel extends JPanel {
 		});
 
 		//erasing
-		buttonIcon = ImageIO.read(new File("images/erasewhiteButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/erasewhiteButton.png");
 		erase = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/erasegreenButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/erasegreenButton.png");
 		erase.setSelectedIcon(new ImageIcon(buttonIcon));
 		erase.setPressedIcon(new ImageIcon(buttonIcon));
 		erase.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = erase;
 				changeButtonColors();
 				master.setListenerState(4);
@@ -181,14 +229,16 @@ public class ToolPanel extends JPanel {
 		});
 
 		//paint
-		buttonIcon = ImageIO.read(new File("images/paintwhite-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/paintwhite-Button.png");
 		paint = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		paint.setSelectedIcon(new ImageIcon(buttonIcon));
 		paint.setPressedIcon(new ImageIcon(buttonIcon));
 		paint.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = paint;
 				changeButtonColors();
 			//	master.setListenerState(8);
@@ -197,14 +247,16 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Bucket
-		buttonIcon = ImageIO.read(new File("images/bucketwhite-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/bucketwhite-Button.png");
 		bucket = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		bucket.setSelectedIcon(new ImageIcon(buttonIcon));
 		bucket.setPressedIcon(new ImageIcon(buttonIcon));
 		bucket.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = bucket;
 				changeButtonColors();
 				//	master.setListenerState(8);
@@ -213,14 +265,16 @@ public class ToolPanel extends JPanel {
 		});
 		
 		//Stamp
-		buttonIcon = ImageIO.read(new File("images/stampwhite-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/stampwhite-Button.png");
 		stamp = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		stamp.setSelectedIcon(new ImageIcon(buttonIcon));
 		stamp.setPressedIcon(new ImageIcon(buttonIcon));
 		stamp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = stamp;
 				changeButtonColors();
 				//	master.setListenerState(8);

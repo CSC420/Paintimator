@@ -59,7 +59,12 @@ public class OptionsPanel extends JPanel{
 
 	private void createThicknessPanel() throws IOException{
 		//thickness
-		BufferedImage thicknessIcon = ImageIO.read(new File("images/thickness.png"));
+		//BufferedImage thicknessIcon = ImageIO.read(new File("images/thickness.png"));
+		java.net.URL thicknessIcon = OptionsPanel.class.getResource("images/thickness.png");
+		  if (thicknessIcon == null) {
+			 System.out.println("Issue loading thickness button in Options Pane"); 
+			 System.exit(-1);
+		  }
 		JLabel label = new JLabel(new ImageIcon(thicknessIcon));
 		JLabel label2 = new JLabel(new ImageIcon(thicknessIcon));
 		JLabel label3 = new JLabel(new ImageIcon(thicknessIcon));
@@ -147,9 +152,14 @@ public class OptionsPanel extends JPanel{
 	
 	private void createAllButtons() throws IOException{
 		//Magic 
-		BufferedImage buttonIcon = ImageIO.read(new File("images/magicwhite-Button.png"));
+		//BufferedImage buttonIcon = ImageIO.read(new File("images/magicwhite-Button.png"));
+		java.net.URL buttonIcon = OptionsPanel.class.getResource("images/magicwhite-Button.png");
+		  if (buttonIcon == null) {
+			 System.out.println("Issue loading play button in Animation Pane"); 
+			 System.exit(-1);
+		  }
 		magic = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
 		magic.setSelectedIcon(new ImageIcon(buttonIcon));
 		magic.addActionListener(new ActionListener() {
 			@Override
@@ -161,9 +171,9 @@ public class OptionsPanel extends JPanel{
 		});
 		
 		//Pencil
-		buttonIcon = ImageIO.read(new File("images/normalwhite-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/normalwhite-Button.png");
 		normal = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
 		normal.setSelectedIcon(new ImageIcon(buttonIcon));
 		normal.addActionListener(new ActionListener() {
 			@Override
@@ -175,9 +185,9 @@ public class OptionsPanel extends JPanel{
 		});
 		
 		//Crayon
-		buttonIcon = ImageIO.read(new File("images/crayonwhite-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/crayonwhite-Button.png");
 		crayon = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
 		crayon.setSelectedIcon(new ImageIcon(buttonIcon));
 		crayon.addActionListener(new ActionListener() {
 			@Override
@@ -188,9 +198,9 @@ public class OptionsPanel extends JPanel{
 			}
 		});
 		//Marker
-		buttonIcon = ImageIO.read(new File("images/markerwhite-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/markerwhite-Button.png");
 		marker = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
 		marker.setSelectedIcon(new ImageIcon(buttonIcon));
 		marker.addActionListener(new ActionListener() {
 			@Override
@@ -202,9 +212,9 @@ public class OptionsPanel extends JPanel{
 		});
 		
 		//circle
-		buttonIcon = ImageIO.read(new File("images/cirwhite-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/cirwhite-Button.png");
 		circle = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
 		circle.setSelectedIcon(new ImageIcon(buttonIcon));
 		circle.addActionListener(new ActionListener() {
 			@Override
@@ -217,9 +227,9 @@ public class OptionsPanel extends JPanel{
 
 
 		//square
-		buttonIcon = ImageIO.read(new File("images/squarewhite-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/squarewhite-Button.png");
 		square = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
 		square.setSelectedIcon(new ImageIcon(buttonIcon));
 		square.addActionListener(new ActionListener() {
 			@Override
