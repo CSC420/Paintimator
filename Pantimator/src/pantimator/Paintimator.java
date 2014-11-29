@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -51,7 +53,7 @@ public class Paintimator extends JFrame{
 	private int height = 900;
 	private int width = 1440;
 
-	public Paintimator() throws IOException{
+	public Paintimator() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super();
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -67,6 +69,7 @@ public class Paintimator extends JFrame{
 
 		//create a contentPane that can hold an image
         contentPane = new BackgroundPanel("images/background1.png");
+       // "images/myImage.gif"
         contentPane.setLayout(new BorderLayout());
 		
 		//second way seeing if this works with multiple screens
@@ -336,6 +339,12 @@ public class Paintimator extends JFrame{
 					frame = new Paintimator();
 					frame.setVisible(true);
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnsupportedAudioFileException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (LineUnavailableException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

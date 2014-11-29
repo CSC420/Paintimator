@@ -30,7 +30,12 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 	    public ColorWheelPanel(Paintimator master) throws IOException{
 	        this.master = master;
 	        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-	        BufferedImage icon = ImageIO.read(new File("images/color_wheel.png"));
+	        //BufferedImage icon = ImageIO.read(new File("images/color_wheel.png"));
+	        java.net.URL icon = ColorWheelPanel.class.getResource("images/color_wheel.png");
+			  if (icon == null) {
+				 System.out.println("Issue loading Color Wheel in ColorWheelPanel"); 
+				 System.exit(-1);
+			  }
 	        image = new ImageIcon(icon).getImage();
 	        innerCircle = new Ellipse2D.Float(image.getWidth(null)/3, image.getHeight(null)/3,
 	                image.getWidth(null)/3, image.getHeight(null)/3);
