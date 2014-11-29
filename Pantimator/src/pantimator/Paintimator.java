@@ -43,9 +43,11 @@ public class Paintimator extends JFrame{
 	private StorageUtil su;
 	private LayeredPanelList layeredPanelList;
 	
+	
 	private GridBagConstraints gbc;
 	
-	private int height, width;
+	private int height = 900;
+	private int width = 1440;
 
 	public Paintimator() throws IOException{
 		super();
@@ -62,14 +64,14 @@ public class Paintimator extends JFrame{
 		
 
 		//create a contentPane that can hold an image
-        contentPane = new BackgroundPanel("images/background.jpg");
-		//contentPane = new BackgroundPanel();
+        contentPane = new BackgroundPanel("images/background1.png");
         contentPane.setLayout(new BorderLayout());
 		
 		//second way seeing if this works with multiple screens
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		width = gd.getDisplayMode().getWidth();
-		height = gd.getDisplayMode().getHeight();
+//		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+//		width = gd.getDisplayMode().getWidth();
+//		height = gd.getDisplayMode().getHeight();
+		//System.out.println(width + " X " + height);
 		this.setPreferredSize(new Dimension(width, height));
 		
         
@@ -88,6 +90,11 @@ public class Paintimator extends JFrame{
 
 		//animation panel
 		animationPane = new AnimationPane();
+		animationPane.setPreferredSize(new Dimension(width-450, 150));
+		animationPane.setOpaque(false);
+		//animationPane.setBackgroundImage(new ImageIcon("images/border1.png").getImage());
+
+		
 
 		//side panel
 		sidePanel = new JPanel(new GridBagLayout());
@@ -115,8 +122,10 @@ public class Paintimator extends JFrame{
 		gbc.gridy = 0;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
 		gbc.gridy = 1;
+		gbc.fill = GridBagConstraints.VERTICAL;
 		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
 		centerPanel.add(animationPane, gbc);
+
 		
 		gbc.weightx = 0.50;
 		gbc.weighty = 0.50;
@@ -152,8 +161,7 @@ public class Paintimator extends JFrame{
 		this.setContentPane(contentPane);
 		this.pack();
 		this.setVisible(true);
-		setSize(50,50) ;
-		setSize(width,height); 
+		this.setResizable(false);
 		layeredPanelList.getSelected().clearRootPane();
 		
 	}

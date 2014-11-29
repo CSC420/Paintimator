@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -28,7 +29,7 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 
 	    public ColorWheelPanel(Paintimator master) throws IOException{
 	        this.master = master;
-	        setBackground(new Color(0,0,0,0));
+	        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 	        BufferedImage icon = ImageIO.read(new File("images/color_wheel.png"));
 	        image = new ImageIcon(icon).getImage();
 	        innerCircle = new Ellipse2D.Float(image.getWidth(null)/3, image.getHeight(null)/3,
@@ -57,7 +58,7 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 	    public void paintComponent(Graphics g) {
 	        super.paintComponent(g);
 	        Graphics2D g2d = (Graphics2D)g;
-	        g2d.drawImage(image, 0, 0, null);
+	        g2d.drawImage(image,0, 0, null);
 	        g2d.setColor(centerColor);
 	        g2d.fill(innerCircle);
 
@@ -67,7 +68,7 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 	    public void mouseClicked(MouseEvent e) {
 	        if(!innerCircle.contains(e.getPoint()) && outerCircle.contains(e.getPoint())) {
 	            centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
-	            System.out.println("New Color: " + centerColor);
+	          //  System.out.println("New Color: " + centerColor);
 	            this.repaint();
 	            master.setDrawColor(centerColor);
 	        }

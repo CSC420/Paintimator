@@ -3,6 +3,7 @@ package pantimator;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,12 +14,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AnimationPane extends JPanel {
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -4582247641791559232L;
 
 	Image img;
+	private Image backgroundImg;
+	private Boolean hasBackground = false;
     
     JScrollPane scrollframeHolder;
 
@@ -48,18 +49,21 @@ public class AnimationPane extends JPanel {
     }
 
     private void init() throws IOException {
-        this.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        
+        //this.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        this.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
         // make frame holder
         frameHolder = new JPanel(new FlowLayout());
-        frameHolder.setMaximumSize(new Dimension(800, 125));
+        frameHolder.setMaximumSize(new Dimension(775, 125));
+        frameHolder.setOpaque(false);
         
         // make scroll frame
         scrollframeHolder = new JScrollPane(frameHolder);
-        scrollframeHolder.setBorder(new BevelBorder(BevelBorder.LOWERED));
-        scrollframeHolder.setPreferredSize(new Dimension(825, 110));
+        //scrollframeHolder.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        scrollframeHolder.setBorder(BorderFactory.createEmptyBorder());
+        scrollframeHolder.setPreferredSize(new Dimension(790, 110));
         scrollframeHolder.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
+        scrollframeHolder.getViewport().setOpaque(false);
+        scrollframeHolder.setOpaque(false);
         thumbs = new ArrayList<Image>();
 
         if (!thumbs.isEmpty()) {
@@ -70,6 +74,7 @@ public class AnimationPane extends JPanel {
         
         this.add(scrollframeHolder);
         playButton();
+        
     }
 
     private void playButton() throws IOException {
@@ -150,6 +155,19 @@ public class AnimationPane extends JPanel {
             thumbs.add(img);
         }
         loadedFrameHolder(thumbs);
+    }
+    
+    @Override
+    public void paintComponent(Graphics g){
+    	super.paintComponent(g);
+    	if(hasBackground){
+    	g.drawImage(backgroundImg, 0, 0, null);
+    	}
+    }
+    
+    public void setBackgroundImage(Image im){
+    	backgroundImg = im;
+    	hasBackground = true;
     }
     
     /*
