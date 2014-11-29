@@ -32,6 +32,7 @@ public class LayeredPanelList extends ArrayList<LayeredPanel> implements Seriali
      */
     public void setSelectedPanel(int selectedPanel){
         this.intSelectedPanel = selectedPanel;
+
     }
 
     /**
@@ -77,14 +78,6 @@ public class LayeredPanelList extends ArrayList<LayeredPanel> implements Seriali
 
     public LayeredPanel getSelected(){
         return  this.alLayeredPanels.get(this.intSelectedPanel);
-    }
-    
-    public int getSize(){
-    	return this.alLayeredPanels.size();
-    }
-    
-    public ArrayList<LayeredPanel> getArray() {
-    	return this.alLayeredPanels;
     }
 
 }

@@ -227,7 +227,6 @@ public class ToolPanel extends JPanel {
 				//op.setState(OptionsPanel.State.PAINT);
 			}
 		});
-	
 
 
 		GridBagConstraints c = new GridBagConstraints();
@@ -284,7 +283,7 @@ public class ToolPanel extends JPanel {
 		//c.insets = new Insets(2,20,2,5);
 		this.add(erase,c);
 	
-		//this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 	}
 
 	public void changeButtonColors(){

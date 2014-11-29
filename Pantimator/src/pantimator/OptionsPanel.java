@@ -38,11 +38,11 @@ public class OptionsPanel extends JPanel{
 		master = p;
 		
 		thicknessPanel = new JPanel(new GridBagLayout());
-		//thicknessPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		thicknessPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		thicknessPanel.setPreferredSize(new Dimension(100, 250));
 		thicknessPanel.setOpaque(false);
 		opPanel = new JPanel(new GridBagLayout());
-		//opPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		opPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		opSizeThick = new Dimension(100, 500);
 		opSizeNoThick = new Dimension(100, 750);
 		opPanel.setOpaque(false);
@@ -54,7 +54,7 @@ public class OptionsPanel extends JPanel{
 		this.add(opPanel);
 		opPanel.setVisible(false);
 	
-		//this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 	}
 
 	private void createThicknessPanel() throws IOException{
