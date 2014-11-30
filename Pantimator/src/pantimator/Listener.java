@@ -1,6 +1,7 @@
 package pantimator;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -29,8 +30,8 @@ public class Listener implements MouseListener, MouseMotionListener  {
         layeredPanel = lp;
         currentState = LisState.NONE;
 
-       // xDrawPoints = new Vector<>();
-       // yDrawPoints = new Vector<>();
+        xDrawPoints = new Vector<Integer>();
+        yDrawPoints = new Vector<Integer>();
 
         registerShiftListener();
     }
