@@ -147,8 +147,6 @@ public class AnimationPane extends JPanel {
         loadedFrameHolder(lpl);
     }
 
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> Kelly
+
