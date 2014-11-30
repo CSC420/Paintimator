@@ -121,7 +121,6 @@ public class Paintimator extends JFrame{
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
 		gbc.gridy = 1;
 		//gbc.fill = GridBagConstraints.VERTICAL;
-		animationPane.updateAnimation(layeredPanelList);
 		centerPanel.add(animationPane, gbc);
 
 		
@@ -269,9 +268,14 @@ public class Paintimator extends JFrame{
 	 * TODO will work on this after layeredpanellist returns an array larger than 0
 	 */
 	public void newFrame() {
-		int i = JOptionPane.showConfirmDialog(new JPanel(), 
-				"Do you want to save this frame?", "Save Frame", 
-				JOptionPane.YES_NO_CANCEL_OPTION);
+		int i = JOptionPane.showOptionDialog(new JPanel(), 
+				"Do you want to save this frame?", 
+				"Save Frame", 
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.INFORMATION_MESSAGE,
+				null,
+				new String[]{"Save", "Discard", "Cancel"},
+				"default");
 		
 		switch (i) {
 			case JOptionPane.YES_OPTION :	
