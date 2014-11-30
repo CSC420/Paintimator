@@ -12,13 +12,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -32,7 +32,6 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 	    private Color centerColor = Color.black;
 	    private Clip button;
 	    private BufferedImage bimage;
-
 	    public ColorWheelPanel(Paintimator master) throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 	        this.master = master;
 	        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -45,6 +44,8 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 				 System.out.println("Issue loading Color Wheel in ColorWheelPanel"); 
 				 System.exit(-1);
 			  }
+
+	    
 	        image = new ImageIcon(icon).getImage();
 	        innerCircle = new Ellipse2D.Float(image.getWidth(null)/3, image.getHeight(null)/3,
 	                image.getWidth(null)/3, image.getHeight(null)/3);
@@ -84,6 +85,7 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 	            button.stop();
 	            button.start();
 	        	centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
+	            centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
 	          //  System.out.println("New Color: " + centerColor);
 	            this.repaint();
 	            master.setDrawColor(centerColor);

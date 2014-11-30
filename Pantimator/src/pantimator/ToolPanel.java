@@ -48,6 +48,7 @@ public class ToolPanel extends JPanel {
 		master = p;
 		op = o;
 
+
 		//AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button.wav"));
 		InputStream is = getClass().getResourceAsStream("sounds/button.wav");
 		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
@@ -89,6 +90,7 @@ public class ToolPanel extends JPanel {
 		buttonIcon = ToolPanel.class.getResource("images/redowhiteButton.png");
 		redo = new RoundButton(new ImageIcon(buttonIcon));
 		buttonIcon = ToolPanel.class.getResource("images/redogreenButton.png");
+
 		redo.setPressedIcon(new ImageIcon(buttonIcon));
 		redo.addActionListener(new ActionListener() {
 			@Override
@@ -247,6 +249,7 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Bucket
+
 		buttonIcon = ToolPanel.class.getResource("images/bucketwhite-Button.png");
 		bucket = new RoundButton( new ImageIcon(buttonIcon));
 		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
@@ -258,6 +261,7 @@ public class ToolPanel extends JPanel {
 				button.stop();
 				button.start();
 				newSelectedButton = bucket;
+
 				changeButtonColors();
 				//	master.setListenerState(8);
 				//op.setState(OptionsPanel.State.PAINT);
@@ -281,8 +285,6 @@ public class ToolPanel extends JPanel {
 				//op.setState(OptionsPanel.State.PAINT);
 			}
 		});
-	
-
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.VERTICAL;

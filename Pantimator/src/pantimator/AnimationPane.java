@@ -19,12 +19,16 @@ public class AnimationPane extends JPanel {
 
 	Image img;
 	LayeredPanelList lpl;
-    JScrollPane scrollframeHolder;
+	JScrollPane scrollframeHolder;
     JPanel frameHolder;
     Thumb thumbPanel;
     ArrayList<Image> thumbs;
     GridBagConstraints gbc = new GridBagConstraints();
-    
+
+    /**
+     * This is a constructor
+     * @throws IOException 
+     */
     public AnimationPane() throws IOException {
         init();
     }
@@ -118,6 +122,7 @@ public class AnimationPane extends JPanel {
         for (LayeredPanel lp : lpl.getArray()) {        	
         	Image img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         	newThumb(img, index);
+
             index++;
         }
     }
@@ -138,7 +143,6 @@ public class AnimationPane extends JPanel {
      * @param lp
      */
     
-    
     /*
      * Sets the thumbnail image to the thumbnail frame
      */
@@ -148,5 +152,9 @@ public class AnimationPane extends JPanel {
     }
 
 
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> Kelly

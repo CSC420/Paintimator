@@ -1,31 +1,22 @@
 package pantimator;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class OptionsPanel extends JPanel{
 
@@ -48,7 +39,6 @@ public class OptionsPanel extends JPanel{
 		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
         button = AudioSystem.getClip();
         button.open(ais);
-		
 		thicknessPanel = new JPanel(new GridBagLayout());
 		//thicknessPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		thicknessPanel.setPreferredSize(new Dimension(100, 250));

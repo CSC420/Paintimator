@@ -68,7 +68,6 @@ public class Paintimator extends JFrame{
 
 		//create a contentPane that can hold an image
         contentPane = new BackgroundPanel("images/background1.png");
-       // "images/myImage.gif"
         contentPane.setLayout(new BorderLayout());
 		
 		//second way seeing if this works with multiple screens
@@ -94,7 +93,6 @@ public class Paintimator extends JFrame{
 		animationPane = new AnimationPane();
 		animationPane.setPreferredSize(new Dimension(width-450, 150));
 		animationPane.setOpaque(false);
-
 
 		//side panel
 		sidePanel = new JPanel(new GridBagLayout());
