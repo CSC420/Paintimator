@@ -1,36 +1,22 @@
 package pantimator;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-<<<<<<< HEAD
 import java.io.InputStream;
 
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-=======
-
-import javax.imageio.ImageIO;
->>>>>>> Pres
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class OptionsPanel extends JPanel{
 
@@ -43,7 +29,6 @@ public class OptionsPanel extends JPanel{
 	private RoundButton current, selected;
 	private Dimension opSizeNoThick;
 	private Dimension opSizeThick;
-<<<<<<< HEAD
 	private Clip button;
 	
 	public OptionsPanel(Paintimator p) throws IOException, UnsupportedAudioFileException, LineUnavailableException{
@@ -54,14 +39,6 @@ public class OptionsPanel extends JPanel{
 		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
         button = AudioSystem.getClip();
         button.open(ais);
-		
-=======
-	
-	public OptionsPanel(Paintimator p) throws IOException{
-		super();
-		master = p;
-		
->>>>>>> Pres
 		thicknessPanel = new JPanel(new GridBagLayout());
 		//thicknessPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		thicknessPanel.setPreferredSize(new Dimension(100, 250));
@@ -84,16 +61,12 @@ public class OptionsPanel extends JPanel{
 
 	private void createThicknessPanel() throws IOException{
 		//thickness
-<<<<<<< HEAD
 		//BufferedImage thicknessIcon = ImageIO.read(new File("images/thickness.png"));
 		java.net.URL thicknessIcon = OptionsPanel.class.getResource("images/thickness.png");
 		  if (thicknessIcon == null) {
 			 System.out.println("Issue loading thickness button in Options Pane"); 
 			 System.exit(-1);
 		  }
-=======
-		BufferedImage thicknessIcon = ImageIO.read(new File("images/thickness.png"));
->>>>>>> Pres
 		JLabel label = new JLabel(new ImageIcon(thicknessIcon));
 		JLabel label2 = new JLabel(new ImageIcon(thicknessIcon));
 		JLabel label3 = new JLabel(new ImageIcon(thicknessIcon));
@@ -103,11 +76,8 @@ public class OptionsPanel extends JPanel{
 		one.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				button.stop();
 				button.start();
-=======
->>>>>>> Pres
 				master.setBrushSize(1);
 				System.out.println("clicked");
 			}
@@ -118,11 +88,8 @@ public class OptionsPanel extends JPanel{
 		two.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				button.stop();
 				button.start();
-=======
->>>>>>> Pres
 				master.setBrushSize(3);
 				System.out.println("clicked");
 			}
@@ -133,11 +100,8 @@ public class OptionsPanel extends JPanel{
 		three.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				button.stop();
 				button.start();
-=======
->>>>>>> Pres
 				master.setBrushSize(25);
 				System.out.println("clicked");
 			}
@@ -148,11 +112,8 @@ public class OptionsPanel extends JPanel{
 		four.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				button.stop();
 				button.start();
-=======
->>>>>>> Pres
 				master.setBrushSize(80);
 				System.out.println("clicked");
 			}
@@ -201,7 +162,6 @@ public class OptionsPanel extends JPanel{
 	
 	private void createAllButtons() throws IOException{
 		//Magic 
-<<<<<<< HEAD
 		//BufferedImage buttonIcon = ImageIO.read(new File("images/magicwhite-Button.png"));
 		java.net.URL buttonIcon = OptionsPanel.class.getResource("images/magicwhite-Button.png");
 		  if (buttonIcon == null) {
@@ -210,20 +170,12 @@ public class OptionsPanel extends JPanel{
 		  }
 		magic = new RoundButton( new ImageIcon(buttonIcon)); 
 		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
-=======
-		BufferedImage buttonIcon = ImageIO.read(new File("images/magicwhite-Button.png"));
-		magic = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
->>>>>>> Pres
 		magic.setSelectedIcon(new ImageIcon(buttonIcon));
 		magic.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				button.stop();
 				button.start();
-=======
->>>>>>> Pres
 				selected = magic;
 				changeSelectedOption();
 				master.setListenerState(8);
@@ -231,24 +183,15 @@ public class OptionsPanel extends JPanel{
 		});
 		
 		//Pencil
-<<<<<<< HEAD
 		buttonIcon = OptionsPanel.class.getResource("images/normalwhite-Button.png");
 		normal = new RoundButton( new ImageIcon(buttonIcon)); 
 		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
-=======
-		buttonIcon = ImageIO.read(new File("images/normalwhite-Button.png"));
-		normal = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
->>>>>>> Pres
 		normal.setSelectedIcon(new ImageIcon(buttonIcon));
 		normal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				button.stop();
 				button.start();
-=======
->>>>>>> Pres
 				selected = normal;
 				changeSelectedOption();
 				master.setListenerState(2);
@@ -256,48 +199,30 @@ public class OptionsPanel extends JPanel{
 		});
 		
 		//Crayon
-<<<<<<< HEAD
 		buttonIcon = OptionsPanel.class.getResource("images/crayonwhite-Button.png");
 		crayon = new RoundButton( new ImageIcon(buttonIcon)); 
 		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
-=======
-		buttonIcon = ImageIO.read(new File("images/crayonwhite-Button.png"));
-		crayon = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
->>>>>>> Pres
 		crayon.setSelectedIcon(new ImageIcon(buttonIcon));
 		crayon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				button.stop();
 				button.start();
-=======
->>>>>>> Pres
 				selected = crayon;
 				changeSelectedOption();
 				master.setListenerState(2);
 			}
 		});
 		//Marker
-<<<<<<< HEAD
 		buttonIcon = OptionsPanel.class.getResource("images/markerwhite-Button.png");
 		marker = new RoundButton( new ImageIcon(buttonIcon)); 
 		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
-=======
-		buttonIcon = ImageIO.read(new File("images/markerwhite-Button.png"));
-		marker = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
->>>>>>> Pres
 		marker.setSelectedIcon(new ImageIcon(buttonIcon));
 		marker.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				button.stop();
 				button.start();
-=======
->>>>>>> Pres
 				selected = marker;
 				changeSelectedOption();
 				master.setListenerState(2);
@@ -305,24 +230,15 @@ public class OptionsPanel extends JPanel{
 		});
 		
 		//circle
-<<<<<<< HEAD
 		buttonIcon = OptionsPanel.class.getResource("images/cirwhite-Button.png");
 		circle = new RoundButton( new ImageIcon(buttonIcon)); 
 		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
-=======
-		buttonIcon = ImageIO.read(new File("images/cirwhite-Button.png"));
-		circle = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
->>>>>>> Pres
 		circle.setSelectedIcon(new ImageIcon(buttonIcon));
 		circle.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				button.stop();
 				button.start();
-=======
->>>>>>> Pres
 				selected = circle;
 				changeSelectedOption();
 				//master.setListenerState(2);
@@ -331,24 +247,15 @@ public class OptionsPanel extends JPanel{
 
 
 		//square
-<<<<<<< HEAD
 		buttonIcon = OptionsPanel.class.getResource("images/squarewhite-Button.png");
 		square = new RoundButton( new ImageIcon(buttonIcon)); 
 		buttonIcon = OptionsPanel.class.getResource("images/green-Button.png");
-=======
-		buttonIcon = ImageIO.read(new File("images/squarewhite-Button.png"));
-		square = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
->>>>>>> Pres
 		square.setSelectedIcon(new ImageIcon(buttonIcon));
 		square.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 				button.stop();
 				button.start();
-=======
->>>>>>> Pres
 				selected = square;
 				changeSelectedOption();
 				//master.setListenerState(2);

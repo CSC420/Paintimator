@@ -29,14 +29,8 @@ public class Listener implements MouseListener, MouseMotionListener  {
     public Listener(LayeredPanel lp){
         layeredPanel = lp;
         currentState = LisState.NONE;
-
-<<<<<<< HEAD
         xDrawPoints = new Vector<Integer>();
         yDrawPoints = new Vector<Integer>();
-=======
-       // xDrawPoints = new Vector<>();
-       // yDrawPoints = new Vector<>();
->>>>>>> Pres
 
         registerShiftListener();
     }
@@ -44,33 +38,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
     public void setLisState(int num){
         if(num == 1){
             currentState = LisState.LINE;
-<<<<<<< HEAD
-           // layeredPanel.setCanvasCursor(CanvasCursor.LINE);
-        }else if(num == 2){
-            currentState = LisState.DRAW;
-           // layeredPanel.setCanvasCursor(CanvasCursor.PENCIL);
-        }else if(num == 3){
-            currentState = LisState.TRIANGLE;
-           // layeredPanel.setCanvasCursor(CanvasCursor.TRIANGLE);
-        }else if(num == 4){
-            currentState = LisState.ERASE;
-           // layeredPanel.setCanvasCursor(CanvasCursor.ERASER);
-        }else if(num == 5){
-            currentState = LisState.CIRCLE;
-           // layeredPanel.setCanvasCursor(CanvasCursor.CIRCLE);
-        }else if(num == 6){
-            currentState = LisState.SQUARE;
-          //  layeredPanel.setCanvasCursor(CanvasCursor.RECTANGLE);
-        }else if(num == 7){
-            currentState = LisState.TEXT;
-          //  layeredPanel.setCanvasCursor(CanvasCursor.TEXT);
-        }else if(num == 8){
-            currentState = LisState.MAGIC;
-          //  layeredPanel.setCanvasCursor(CanvasCursor.DEFAULT);
-        }else{
-            currentState = LisState.NONE;
-          //  layeredPanel.setCanvasCursor(CanvasCursor.DEFAULT);
-=======
             layeredPanel.setCanvasCursor(CanvasCursor.LINE);
         }else if(num == 2){
             currentState = LisState.DRAW;
@@ -96,7 +63,6 @@ public class Listener implements MouseListener, MouseMotionListener  {
         }else{
             currentState = LisState.NONE;
             layeredPanel.setCanvasCursor(CanvasCursor.DEFAULT);
->>>>>>> Pres
         }
     }
 
