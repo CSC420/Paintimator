@@ -120,10 +120,10 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 Line2D.Float line;
                 double theta =  Math.toDegrees(Math.atan2(e.getY()-l.p1.y, e.getX()-l.p1.x));
                 int dx = Math.abs(l.p1.x - e.getX());
-                LOG.log(Level.INFO, "Angle of line: " + theta);
+               // LOG.log(Level.INFO, "Angle of line: " + theta);
 
                 if(KeyChecker.isShiftPressed()){
-                    LOG.log(Level.INFO, "SHIFT key pressed!!");
+                //    LOG.log(Level.INFO, "SHIFT key pressed!!");
                     //if the shift key is pressed, make a straight line...
 
                     if((theta < 22.5 && theta > -22.5) || (theta > 157.5 || theta < -157.5)){
@@ -212,7 +212,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 int dx = e.getX()-l.p1.x;
 
                 if(KeyChecker.isShiftPressed()) {
-                    LOG.log(Level.INFO, "SHIFT key pressed!!");
+                  //  LOG.log(Level.INFO, "SHIFT key pressed!!");
                     x2 = l.p1.x+dx;
                     y2 = l.p1.y+dx;
                 } else {
@@ -286,7 +286,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 Ellipse2D.Float c = null;
 
                 if(KeyChecker.isShiftPressed()) {
-                    LOG.log(Level.INFO, "SHIFT key pressed!!");
+               //     LOG.log(Level.INFO, "SHIFT key pressed!!");
 
                     float radius = (float)Math.sqrt((l.p1.x-x2)*(l.p1.x-x2) + (l.p1.y-y2)*(l.p1.y-y2))/2f;
 
@@ -330,7 +330,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 Rectangle2D.Float r = null;
 
                 if(KeyChecker.isShiftPressed()) {
-                    LOG.log(Level.INFO, "SHIFT key pressed!!");
+              //      LOG.log(Level.INFO, "SHIFT key pressed!!");
                     float radius = (float)Math.sqrt((l.p1.x-x2)*(l.p1.x-x2) + (l.p1.y-y2)*(l.p1.y-y2))/2f;
                     r = new Rectangle2D.Float((l.p1.x<x2?l.p1.x:x2),
                             (l.p1.y<y2?l.p1.y:y2),radius,radius);

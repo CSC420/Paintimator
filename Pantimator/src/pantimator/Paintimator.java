@@ -49,7 +49,6 @@ public class Paintimator extends JFrame{
 	
 	
 	private GridBagConstraints gbc;
-	
 	private int height = 900;
 	private int width = 1440;
 
@@ -73,9 +72,9 @@ public class Paintimator extends JFrame{
         contentPane.setLayout(new BorderLayout());
 		
 		//second way seeing if this works with multiple screens
-//		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-//		width = gd.getDisplayMode().getWidth();
-//		height = gd.getDisplayMode().getHeight();
+		//GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		//width = gd.getDisplayMode().getWidth();
+		//height = gd.getDisplayMode().getHeight();
 		//System.out.println(width + " X " + height);
 		this.setPreferredSize(new Dimension(width, height));
 		
