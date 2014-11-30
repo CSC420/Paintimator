@@ -11,6 +11,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+<<<<<<< HEAD
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
@@ -19,6 +20,10 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+=======
+
+import javax.imageio.ImageIO;
+>>>>>>> Pres
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -30,6 +35,7 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 	    private Image image = null;
 	    private Ellipse2D.Float innerCircle, outerCircle;
 	    private Color centerColor = Color.black;
+<<<<<<< HEAD
 	    private Clip button;
 	    private BufferedImage bimage;
 
@@ -45,6 +51,15 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 				 System.out.println("Issue loading Color Wheel in ColorWheelPanel"); 
 				 System.exit(-1);
 			  }
+=======
+
+	    private BufferedImage bimage;
+
+	    public ColorWheelPanel(Paintimator master) throws IOException{
+	        this.master = master;
+	        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+	        BufferedImage icon = ImageIO.read(new File("images/color_wheel.png"));
+>>>>>>> Pres
 	        image = new ImageIcon(icon).getImage();
 	        innerCircle = new Ellipse2D.Float(image.getWidth(null)/3, image.getHeight(null)/3,
 	                image.getWidth(null)/3, image.getHeight(null)/3);
@@ -81,9 +96,13 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 	    @Override
 	    public void mouseClicked(MouseEvent e) {
 	        if(!innerCircle.contains(e.getPoint()) && outerCircle.contains(e.getPoint())) {
+<<<<<<< HEAD
 	            button.stop();
 	            button.start();
 	        	centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
+=======
+	            centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
+>>>>>>> Pres
 	          //  System.out.println("New Color: " + centerColor);
 	            this.repaint();
 	            master.setDrawColor(centerColor);
