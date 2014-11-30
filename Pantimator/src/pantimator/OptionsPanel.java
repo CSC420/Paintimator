@@ -10,8 +10,14 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,10 +38,16 @@ public class OptionsPanel extends JPanel{
 	private RoundButton current, selected;
 	private Dimension opSizeNoThick;
 	private Dimension opSizeThick;
+	private Clip button;
 	
-	public OptionsPanel(Paintimator p) throws IOException{
+	public OptionsPanel(Paintimator p) throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super();
 		master = p;
+		
+		InputStream is = getClass().getResourceAsStream("sounds/button.wav");
+		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
+        button = AudioSystem.getClip();
+        button.open(ais);
 		
 		thicknessPanel = new JPanel(new GridBagLayout());
 		//thicknessPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -74,6 +86,8 @@ public class OptionsPanel extends JPanel{
 		one.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				master.setBrushSize(1);
 				System.out.println("clicked");
 			}
@@ -84,6 +98,8 @@ public class OptionsPanel extends JPanel{
 		two.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				master.setBrushSize(3);
 				System.out.println("clicked");
 			}
@@ -94,6 +110,8 @@ public class OptionsPanel extends JPanel{
 		three.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				master.setBrushSize(25);
 				System.out.println("clicked");
 			}
@@ -104,6 +122,8 @@ public class OptionsPanel extends JPanel{
 		four.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				master.setBrushSize(80);
 				System.out.println("clicked");
 			}
@@ -164,6 +184,8 @@ public class OptionsPanel extends JPanel{
 		magic.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				selected = magic;
 				changeSelectedOption();
 				master.setListenerState(8);
@@ -178,6 +200,8 @@ public class OptionsPanel extends JPanel{
 		normal.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				selected = normal;
 				changeSelectedOption();
 				master.setListenerState(2);
@@ -192,6 +216,8 @@ public class OptionsPanel extends JPanel{
 		crayon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				selected = crayon;
 				changeSelectedOption();
 				master.setListenerState(2);
@@ -205,6 +231,8 @@ public class OptionsPanel extends JPanel{
 		marker.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				selected = marker;
 				changeSelectedOption();
 				master.setListenerState(2);
@@ -219,6 +247,8 @@ public class OptionsPanel extends JPanel{
 		circle.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				selected = circle;
 				changeSelectedOption();
 				//master.setListenerState(2);
@@ -234,6 +264,8 @@ public class OptionsPanel extends JPanel{
 		square.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				selected = square;
 				changeSelectedOption();
 				//master.setListenerState(2);
