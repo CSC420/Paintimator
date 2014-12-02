@@ -11,11 +11,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -31,20 +35,24 @@ public class Paintimator extends JFrame{
 	private final String FRAME_TITLE = "Paintimator!";
 	private BackgroundPanel contentPane;
 	private JPanel centerPanel;
+	private JPanel sidePanel;
 	private AnimationPane animationPane;
 	private LayeredPanel layeredPanel;
 	private ToolPanel toolPanel;
+	private OptionsPanel optionsPanel;
+	private ColorWheelPanel cwPanel;
 	private MyMenu menu;
 	private Listener myListener;
 	private JFileChooser fc;
 	private StorageUtil su;
 	private LayeredPanelList layeredPanelList;
 	
-	private GridBagConstraints gbc;
 	
-	private int height, width;
+	private GridBagConstraints gbc;
+	private int height = 900;
+	private int width = 1440;
 
-	public Paintimator() throws IOException{
+	public Paintimator() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super();
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -59,20 +67,14 @@ public class Paintimator extends JFrame{
 		
 
 		//create a contentPane that can hold an image
-       // contentPane = new BackgroundPanel("images/Background.png");
-		contentPane = new BackgroundPanel();
+        contentPane = new BackgroundPanel("images/background1.png");
         contentPane.setLayout(new BorderLayout());
-
-        //one way but apparently doesnt work on multiple screens
-		//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		//width = screenSize.width;
-		//height = screenSize.height;
-		//this.setPreferredSize(screenSize);
 		
 		//second way seeing if this works with multiple screens
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		int width = gd.getDisplayMode().getWidth();
-		int height = gd.getDisplayMode().getHeight();
+		//GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		//width = gd.getDisplayMode().getWidth();
+		//height = gd.getDisplayMode().getHeight();
+		//System.out.println(width + " X " + height);
 		this.setPreferredSize(new Dimension(width, height));
 		
         
@@ -85,15 +87,22 @@ public class Paintimator extends JFrame{
 		//center panel
 		centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		centerPanel.setBackground(Color.LIGHT_GRAY);
-		//centerPanel.setOpaque(false);
+		centerPanel.setOpaque(false);
 
 		//animation panel
 		animationPane = new AnimationPane();
+		animationPane.setPreferredSize(new Dimension(width-450, 150));
+		animationPane.setOpaque(false);
 
-		//tool panel
-		toolPanel = new ToolPanel(this);
-		//toolPanel.setOpaque(false);
+		//side panel
+		sidePanel = new JPanel(new GridBagLayout());
+		optionsPanel = new OptionsPanel(this);
+		toolPanel = new ToolPanel(this, optionsPanel);
+		cwPanel = new ColorWheelPanel(this);
+		toolPanel.setOpaque(false);
+		optionsPanel.setOpaque(false);
+		cwPanel.setOpaque(false);
+		sidePanel.setOpaque(false);
 
 		//menu bar
 		menu = new MyMenu(this);
@@ -111,24 +120,49 @@ public class Paintimator extends JFrame{
 		gbc.gridy = 0;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
 		gbc.gridy = 1;
-		animationPane.updateAnimation(layeredPanelList.getSelected(), true);
+		//gbc.fill = GridBagConstraints.VERTICAL;
 		centerPanel.add(animationPane, gbc);
 
+		
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		toolPanel.setPreferredSize(new Dimension(100,750));
+		sidePanel.add(toolPanel, gbc);
+		
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		gbc.fill = GridBagConstraints.VERTICAL;
+		optionsPanel.setPreferredSize(new Dimension(100,750));
+		sidePanel.add(optionsPanel, gbc);
+		
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.BOTH;
+		sidePanel.add(cwPanel, gbc);
+		
+		sidePanel.setPreferredSize(new Dimension(200,950));
+		sidePanel.setBackground(Color.GRAY);
+		
+		
 		//add panels to the content pane
 		contentPane.add(centerPanel, BorderLayout.CENTER);
-		contentPane.add(toolPanel, BorderLayout.WEST);
+		contentPane.add(sidePanel, BorderLayout.WEST);
 
 		//set it and show it
 		this.setContentPane(contentPane);
 		this.pack();
 		this.setVisible(true);
-		setSize(50,50) ;
-		setSize(width,height); 
+		this.setResizable(false);
+		refreshDrawPanel(layeredPanelList.getSelected());
 		layeredPanelList.getSelected().clearRootPane();
 		
 	}
-	
-	
 	/*
 	 * Method to easily add/update listeners and canvas
 	 */
@@ -156,6 +190,11 @@ public class Paintimator extends JFrame{
 
 	public void setDrawColor(Color c){
 		layeredPanelList.getSelected().setDrawColor(c);
+		this.setSidePanelColor(c);
+	}
+	
+	private void setSidePanelColor(Color c){
+		sidePanel.setBackground(c);
 	}
 
 	//methods to load and save canvas
@@ -217,7 +256,7 @@ public class Paintimator extends JFrame{
 
 		if(lpTemp != null){
 			centerPanel.remove(layeredPanelList.getSelected());
-			animationPane.updateAnimation(lpTemp.getSelected(), true);
+			animationPane.updateAnimation(lpTemp);
 			refreshDrawPanel(lpTemp.getSelected());
 			layeredPanelList = lpTemp;
 		}
@@ -229,19 +268,24 @@ public class Paintimator extends JFrame{
 	 * TODO will work on this after layeredpanellist returns an array larger than 0
 	 */
 	public void newFrame() {
-		int i = JOptionPane.showConfirmDialog(new JPanel(), 
-				"Do you want to save this frame?", "Save Frame", 
-				JOptionPane.YES_NO_CANCEL_OPTION);
+		int i = JOptionPane.showOptionDialog(new JPanel(), 
+				"Do you want to save this frame?", 
+				"Save Frame", 
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.INFORMATION_MESSAGE,
+				null,
+				new String[]{"Save", "Discard", "Cancel"},
+				"default");
 		
 		switch (i) {
-			case JOptionPane.YES_OPTION :
-				animationPane.updateAnimation(layeredPanelList.getSelected(), false);	
+			case JOptionPane.YES_OPTION :	
 				centerPanel.remove(layeredPanelList.getSelected());
+				
+				animationPane.updateAnimation(layeredPanelList);
 				
 				layeredPanel = new LayeredPanel();
 				
 				//draw panel
-				layeredPanel.setDrawColor(Color.BLACK);
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
 				
@@ -275,6 +319,10 @@ public class Paintimator extends JFrame{
 	 * Method to easily refresh the drawing panel
 	 */
 	private void refreshDrawPanel(LayeredPanel lp) {
+		gbc = new GridBagConstraints();
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
+		gbc.gridx = 0;
 		gbc.gridy = 0;
 		
 		addListeners(lp);
@@ -292,6 +340,12 @@ public class Paintimator extends JFrame{
 					frame = new Paintimator();
 					frame.setVisible(true);
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnsupportedAudioFileException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (LineUnavailableException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

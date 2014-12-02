@@ -1,52 +1,103 @@
 package pantimator;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class ToolPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	private Paintimator master;
-	private RoundButton line, draw, text, erase, circle, square, triangle, magic, undo, redo;
+	private OptionsPanel op;
+	private RoundButton line, draw, text, erase, circle, square, 
+		triangle, paint, undo, redo, bucket, stamp;
 	private RoundButton selectedButton;
 	private RoundButton newSelectedButton;
-//	private JButton currentColor;
-//	private JButton newColor;
+	private Clip button;
+	private Clip undoSound;
+	private Clip redoSound;
 
-	public ToolPanel(Paintimator p) throws IOException{
+
+	public ToolPanel(Paintimator p, OptionsPanel o) throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super(new GridBagLayout());
 		//super();
 		master = p;
+		op = o;
 
-		BufferedImage buttonIcon = ImageIO.read(new File("images/undowhiteButton.png"));
+
+		//AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button.wav"));
+		InputStream is = getClass().getResourceAsStream("sounds/button.wav");
+		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
+        button = AudioSystem.getClip();
+        button.open(ais);
+        
+        is = getClass().getResourceAsStream("sounds/undo.wav");
+		ais = AudioSystem.getAudioInputStream(is);
+        undoSound = AudioSystem.getClip();
+        undoSound.open(ais);
+        
+        is = getClass().getResourceAsStream("sounds/redo.wav");
+		ais = AudioSystem.getAudioInputStream(is);
+        redoSound = AudioSystem.getClip();
+        redoSound.open(ais);
+        
+		
+		java.net.URL buttonIcon = ToolPanel.class.getResource("images/undowhiteButton.png");
+		  if (buttonIcon == null) {
+			 System.out.println("Issue loading tool buttons in Tool Panel"); 
+			 System.exit(-1);
+		  }
 		undo = new RoundButton(new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/undogreenButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/undogreenButton.png");
 		undo.setPressedIcon(new ImageIcon(buttonIcon));
 		undo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				undoSound.stop();
+				undoSound.start();
 				newSelectedButton = undo;
 				changeButtonColors();
 				master.undo();
 				undo.setSelected(false);
+				
 			}
 		});
 
-		buttonIcon = ImageIO.read(new File("images/redowhiteButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/redowhiteButton.png");
 		redo = new RoundButton(new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/redogreenButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/redogreenButton.png");
+
 		redo.setPressedIcon(new ImageIcon(buttonIcon));
 		redo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				redoSound.stop();
+				redoSound.start();
 				newSelectedButton = redo;
 				changeButtonColors();
 				master.redo();
@@ -56,403 +107,183 @@ public class ToolPanel extends JPanel {
 
 
 		//Line
-		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/linewhite-Button.png");
 		line = new RoundButton(new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		line.setSelectedIcon(new ImageIcon(buttonIcon));
 		line.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = line;
 				changeButtonColors();
 				master.setListenerState(1);
+				op.setState(OptionsPanel.State.LINE);
 			}
 		});
 
-		//Color Chooser
-		JPanel colors = new ColorSelectorPanel(master, "images/color_wheel.png");
-
-
-		/* Commenting out all this to make room for the new circular color picker...
-		JPanel colors = new JPanel(new GridLayout(0,2));
-		colors.setPreferredSize(new Dimension(50,200));
-		final JButton red = new JButton(), black = new JButton(), white = new JButton(),
-				grey = new JButton(), ltgrey = new JButton(), orange = new JButton(),
-				brown = new JButton(), yellow = new JButton(), green = new JButton(),
-				ltgreen = new JButton(), blue = new JButton(), ltblue = new JButton(),
-				purple = new JButton(), pink = new JButton(), ltbrown = new JButton(),
-				rosie = new JButton(), other = new JButton(), plus = new JButton();
-
-		other.setBackground(Color.WHITE);
-		other.setOpaque(true);
-		other.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		other.setBorderPainted(false);
-		other.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = other;
-				changeSelectedColor();
-				master.setDrawColor(other.getBackground());
-			} 
-		});
 		
-		plus.setBackground(Color.LIGHT_GRAY);
-		buttonIcon = ImageIO.read(new File("images/plus-sign.png"));
-		plus.setIcon(new ImageIcon(buttonIcon));
-		plus.setOpaque(true);
-		plus.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		plus.setBorderPainted(false);
-		plus.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Color selected = JColorChooser.showDialog(master, "Select a Color", Color.WHITE);
-				other.setBackground(selected);
-				newColor = other;
-				changeSelectedColor();
-				master.setDrawColor(selected);
-			} 
-		});
-		
-		red.setBackground(Color.red);
-		red.setOpaque(true);
-		red.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		red.setBorderPainted(false);
-		red.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = red;
-				changeSelectedColor();
-				master.setDrawColor(Color.red);
-			} 
-		});
-
-
-		black.setOpaque(true); 
-		black.setBackground(Color.BLACK);
-		black.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		black.setBorderPainted(false);
-		black.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = black;
-				changeSelectedColor();
-				master.setDrawColor(Color.black);
-			} 
-		});
-
-		white.setOpaque(true);
-		white.setBackground(Color.white);
-		white.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		white.setBorderPainted(false);
-		white.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = white;
-				changeSelectedColor();
-				master.setDrawColor(Color.white);
-			} 
-		});
-
-		grey.setOpaque(true);
-		grey.setBackground(Color.GRAY);
-		grey.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		grey.setBorderPainted(false);
-		grey.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = grey;
-				changeSelectedColor();
-				master.setDrawColor(Color.GRAY);
-			} 
-		});
-
-		ltgrey.setOpaque(true);
-		ltgrey.setBackground(Color.LIGHT_GRAY);
-		ltgrey.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		ltgrey.setBorderPainted(false);
-		ltgrey.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = ltgrey;
-				changeSelectedColor();
-				master.setDrawColor(Color.LIGHT_GRAY);
-			} 
-		});
-
-		orange.setOpaque(true);
-		orange.setBackground(new Color(255,128,0));
-		orange.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		orange.setBorderPainted(false);
-		orange.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = orange;
-				changeSelectedColor();
-				master.setDrawColor(new Color(255,128,0));
-			} 
-		});
-
-		brown.setOpaque(true);
-		brown.setBackground(new Color(139, 69, 19));
-		brown.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		brown.setBorderPainted(false);
-		brown.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = brown;
-				changeSelectedColor();
-				master.setDrawColor(new Color(139, 69, 19));
-			} 
-		});
-
-		yellow.setOpaque(true);
-		yellow.setBackground(Color.yellow);
-		yellow.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		yellow.setBorderPainted(false);
-		yellow.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = yellow;
-				changeSelectedColor();
-				master.setDrawColor(Color.yellow);
-			} 
-		});
-
-		green.setOpaque(true);
-		green.setBackground(new Color(0,128,0));
-		green.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		green.setBorderPainted(false);
-		green.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = green;
-				changeSelectedColor();
-				master.setDrawColor(new Color(0,128,0));
-			} 
-		});
-
-		ltgreen.setOpaque(true);
-		ltgreen.setBackground(new Color(124,252,0));
-		ltgreen.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		ltgreen.setBorderPainted(false);
-		ltgreen.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = ltgreen;
-				changeSelectedColor();
-				master.setDrawColor(new Color(124,252,0));
-			} 
-		});
-
-		blue.setOpaque(true);
-		blue.setBackground(Color.BLUE);
-		blue.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		blue.setBorderPainted(false);
-		blue.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = blue;
-				changeSelectedColor();
-				master.setDrawColor(Color.BLUE);
-			} 
-		});
-
-		ltblue.setOpaque(true);
-		ltblue.setBackground(new Color(135,206,250));
-		ltblue.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		ltblue.setBorderPainted(false);
-		ltblue.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = ltblue;
-				changeSelectedColor();
-				master.setDrawColor(new Color(135,206,250));
-			} 
-		});
-
-		purple.setOpaque(true);
-		purple.setBackground(new Color(128, 0, 128));
-		purple.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		purple.setBorderPainted(false);
-		purple.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = purple;
-				changeSelectedColor();
-				master.setDrawColor(new Color(128, 0, 128));
-			} 
-		});
-
-		pink.setOpaque(true);
-		pink.setBackground(Color.pink);
-		pink.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		pink.setBorderPainted(false);
-		pink.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = pink;
-				changeSelectedColor();
-				master.setDrawColor(Color.pink);
-			} 
-		});
-
-		ltbrown.setOpaque(true);
-		ltbrown.setBackground(new Color(205,133,63));
-		ltbrown.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		ltbrown.setBorderPainted(false);
-		ltbrown.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = ltbrown;
-				changeSelectedColor();
-				master.setDrawColor(new Color(205,133,63));
-			} 
-		});
-
-		rosie.setOpaque(true);
-		rosie.setBackground(new Color(255,239,213));
-		rosie.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		rosie.setBorderPainted(false);
-		rosie.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newColor = rosie;
-				changeSelectedColor();
-				master.setDrawColor(new Color(255,239,213));
-			} 
-		});
-
-		colors.add(black);
-		colors.add(white);
-		colors.add(grey);
-		colors.add(ltgrey);
-		colors.add(red);
-		colors.add(orange);
-		colors.add(ltbrown);
-		colors.add(yellow);
-		colors.add(green);
-		colors.add(ltgreen);
-		colors.add(blue);
-		colors.add(ltblue);
-		colors.add(purple);
-		colors.add(pink);
-		colors.add(brown);
-		colors.add(rosie);
-		colors.add(other);
-		colors.add(plus);
-		colors.setOpaque(false);*/
 
 		//Circle
-		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/cirwhite-Button.png");
 		circle = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		circle.setSelectedIcon(new ImageIcon(buttonIcon));
 		circle.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = circle;
 				changeButtonColors();
 				master.setListenerState(5);
+				op.setState(OptionsPanel.State.CIRCLE);
 			}
 		});
 
 		//Square
-		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/squarewhite-Button.png");
 		square = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		square.setSelectedIcon(new ImageIcon(buttonIcon));
 		square.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = square;
 				changeButtonColors();
 				master.setListenerState(6);
+				op.setState(OptionsPanel.State.SQUARE);
 			}
 		});
 
 		//triangle
-		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/triwhite-Button.png");
 		triangle = new RoundButton( new ImageIcon(buttonIcon));  
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		triangle.setSelectedIcon(new ImageIcon(buttonIcon));
 		triangle.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = triangle;
 				changeButtonColors();
 				master.setListenerState(3);
+				op.setState(OptionsPanel.State.TRIANGLE);
 			}
 		});
 
 		//Draw
-		buttonIcon = ImageIO.read(new File("images/drawwhiteButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/drawwhiteButton.png");
 		draw = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/drawgreenButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/drawgreenButton.png");
 		draw.setSelectedIcon(new ImageIcon(buttonIcon));
 		draw.setPressedIcon(new ImageIcon(buttonIcon));
 		draw.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = draw;
 				changeButtonColors();
-				master.setListenerState(2);
+			//	master.setListenerState(2);
+				op.setState(OptionsPanel.State.DRAW);
 			}
 		});  
 
-		//Magic 
-		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
-		magic = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
-		magic.setSelectedIcon(new ImageIcon(buttonIcon));
-		magic.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				newSelectedButton = magic;
-				changeButtonColors();
-				master.setListenerState(8);
-			}
-		});
+
 
 		//Text
-		buttonIcon = ImageIO.read(new File("images/white-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/textwhite-Button.png");
 		text = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		text.setSelectedIcon(new ImageIcon(buttonIcon));
 		text.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = text;
 				changeButtonColors();
 				master.setListenerState(7);
+				op.setState(OptionsPanel.State.TEXT);
 			}
 		});
 
 		//erasing
-		buttonIcon = ImageIO.read(new File("images/erasewhiteButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/erasewhiteButton.png");
 		erase = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/erasegreenButton.png"));
+		buttonIcon = ToolPanel.class.getResource("images/erasegreenButton.png");
 		erase.setSelectedIcon(new ImageIcon(buttonIcon));
 		erase.setPressedIcon(new ImageIcon(buttonIcon));
 		erase.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
 				newSelectedButton = erase;
 				changeButtonColors();
 				master.setListenerState(4);
+				op.setState(OptionsPanel.State.ERASE);
 			}
 		});
 
-
-
-		final JSlider lineSize = new JSlider(JSlider.HORIZONTAL, 1, 150, 1);
-		final JLabel lineSizeLabel = new JLabel("Line Size: " + lineSize.getValue());
-		lineSize.setPreferredSize(new Dimension(100,40));
-		lineSize.addChangeListener(new ChangeListener() {
+		//paint
+		buttonIcon = ToolPanel.class.getResource("images/paintwhite-Button.png");
+		paint = new RoundButton( new ImageIcon(buttonIcon));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
+		paint.setSelectedIcon(new ImageIcon(buttonIcon));
+		paint.setPressedIcon(new ImageIcon(buttonIcon));
+		paint.addActionListener(new ActionListener() {
 			@Override
-			public void stateChanged(ChangeEvent e) {
-				int tmp = lineSize.getValue();
-				master.setBrushSize(tmp);
-				lineSizeLabel.setText("Line Size: " + lineSize.getValue());
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				newSelectedButton = paint;
+				changeButtonColors();
+			//	master.setListenerState(8);
+				op.setState(OptionsPanel.State.PAINT);
+			}
+		});
+
+		//Bucket
+
+		buttonIcon = ToolPanel.class.getResource("images/bucketwhite-Button.png");
+		bucket = new RoundButton( new ImageIcon(buttonIcon));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
+		bucket.setSelectedIcon(new ImageIcon(buttonIcon));
+		bucket.setPressedIcon(new ImageIcon(buttonIcon));
+		bucket.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				newSelectedButton = bucket;
+
+				changeButtonColors();
+				//	master.setListenerState(8);
+				//op.setState(OptionsPanel.State.PAINT);
+			}
+		});
+		
+		//Stamp
+		buttonIcon = ToolPanel.class.getResource("images/stampwhite-Button.png");
+		stamp = new RoundButton( new ImageIcon(buttonIcon));
+		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
+		stamp.setSelectedIcon(new ImageIcon(buttonIcon));
+		stamp.setPressedIcon(new ImageIcon(buttonIcon));
+		stamp.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				newSelectedButton = stamp;
+				changeButtonColors();
+				//	master.setListenerState(8);
+				//op.setState(OptionsPanel.State.PAINT);
 			}
 		});
 
@@ -477,49 +308,41 @@ public class ToolPanel extends JPanel {
 
 		//c.insets = new Insets(2,20,2,5);
 		c.gridy = 2;
-		this.add(line, c);
+		this.add(paint, c);
 
 		c.gridy = 3;
-		//c.insets = new Insets(2,2,2,20);
-		this.add(magic,c);
+		//c.insets = new Insets(2,20,2,5);
+		this.add(line,c);
 
 		c.gridy = 4;
-		//c.insets = new Insets(2,20,2,5);
-		this.add(text,c);
-
-		c.gridy = 5;
 		//c.insets = new Insets(2,2,2,20);
 		this.add(circle,c);
 
-		c.gridy = 6;
+		c.gridy = 5;
 		//c.insets = new Insets(2,20,2,5);
 		this.add(square,c);
 
-		c.gridy = 7;
+		c.gridy = 6;
 		//c.insets = new Insets(2,2,2,20);
 		this.add(triangle,c);
 
+		c.gridy = 7;
+		//c.insets = new Insets(2,20,2,5);
+		this.add(stamp,c);
+		
 		c.gridy = 8;
 		//c.insets = new Insets(2,20,2,5);
-		this.add(erase,c);
-		
+		this.add(bucket,c);
 		
 		c.gridy = 9;
-		c.insets = new Insets(2,0,0,0);
-		this.add(lineSize, c);
+		//c.insets = new Insets(2,20,2,5);
+		this.add(text,c);
 		
-		c.insets = new Insets(0,0,0,0);
 		c.gridy = 10;
-		this.add(lineSizeLabel,c);
-
-
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridy = 11;
-		c.weighty = 1;
-		c.insets = new Insets(10,10,8,10);
-		this.add(colors, c);
-
-		this.setBackground(Color.DARK_GRAY);
+		//c.insets = new Insets(2,20,2,5);
+		this.add(erase,c);
+	
+		//this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 	}
 
 	public void changeButtonColors(){
@@ -530,14 +353,5 @@ public class ToolPanel extends JPanel {
 		selectedButton = newSelectedButton;
 
 	}
-
-//	public void changeSelectedColor(){
-//		if(currentColor!= null){
-//			currentColor.setBorderPainted(false);
-//		}
-//		newColor.setBorderPainted(true);
-//		currentColor = newColor;
-//
-//	}
 
 }
