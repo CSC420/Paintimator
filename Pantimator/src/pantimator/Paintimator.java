@@ -51,12 +51,8 @@ public class Paintimator extends JFrame{
 	
 	
 	private GridBagConstraints gbc;
-	//private int height = 900;
-	//private int width = 1440;
-	private int height = 768;
-	private int width = 1366;
-	private int height2 = 800;
-	private int width2 = 1280;
+	private int height = 900;
+	private int width = 1440;
 	
 	private boolean debug = true;
 
@@ -84,10 +80,11 @@ public class Paintimator extends JFrame{
 		int myHeight = gd.getDisplayMode().getHeight();
 		//System.out.println(width + " X " + height);
 		if(myHeight < height || myWidth < width){
-			this.setPreferredSize(new Dimension(width2, height2));
-		}else{
-			this.setPreferredSize(new Dimension(width, height));
+			height = 768;
+			width = 1366;
 		}
+		this.setPreferredSize(new Dimension(width, height));
+
         
         //canvas panel
 		layeredPanel = new LayeredPanel();
@@ -140,7 +137,7 @@ public class Paintimator extends JFrame{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.VERTICAL;
-		toolPanel.setMinimumSize(new Dimension(100,750));
+		toolPanel.setMinimumSize(new Dimension(100,700));
 		sidePanel.add(toolPanel, gbc);
 		
 		gbc.weightx = 0.50;
@@ -148,7 +145,7 @@ public class Paintimator extends JFrame{
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.VERTICAL;
-		optionsPanel.setMinimumSize(new Dimension(100,750));
+		optionsPanel.setMinimumSize(new Dimension(100,700));
 		sidePanel.add(optionsPanel, gbc);
 		
 		gbc.gridy = 1;
