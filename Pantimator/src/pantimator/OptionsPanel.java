@@ -79,7 +79,7 @@ public class OptionsPanel extends JPanel{
 				button.stop();
 				button.start();
 				master.setBrushSize(1);
-				System.out.println("clicked");
+				//System.out.println("clicked");
 			}
 		});
 		one.setOpaque(true);
@@ -91,7 +91,7 @@ public class OptionsPanel extends JPanel{
 				button.stop();
 				button.start();
 				master.setBrushSize(3);
-				System.out.println("clicked");
+				//System.out.println("clicked");
 			}
 		});
 		two.setOpaque(true);
@@ -103,7 +103,7 @@ public class OptionsPanel extends JPanel{
 				button.stop();
 				button.start();
 				master.setBrushSize(25);
-				System.out.println("clicked");
+				//System.out.println("clicked");
 			}
 		});
 		three.setOpaque(true);
@@ -115,7 +115,7 @@ public class OptionsPanel extends JPanel{
 				button.stop();
 				button.start();
 				master.setBrushSize(80);
-				System.out.println("clicked");
+				//System.out.println("clicked");
 			}
 		});
 		four.setOpaque(true);

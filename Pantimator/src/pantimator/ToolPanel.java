@@ -56,58 +56,47 @@ public class ToolPanel extends JPanel {
         button = AudioSystem.getClip();
         button.open(ais);
         
-        is = getClass().getResourceAsStream("sounds/undo.wav");
-		ais = AudioSystem.getAudioInputStream(is);
-        undoSound = AudioSystem.getClip();
-        undoSound.open(ais);
-        
-        is = getClass().getResourceAsStream("sounds/redo.wav");
-		ais = AudioSystem.getAudioInputStream(is);
-        redoSound = AudioSystem.getClip();
-        redoSound.open(ais);
-        
-		
-		java.net.URL buttonIcon = ToolPanel.class.getResource("images/undowhiteButton.png");
-		  if (buttonIcon == null) {
-			 System.out.println("Issue loading tool buttons in Tool Panel"); 
-			 System.exit(-1);
-		  }
-		undo = new RoundButton(new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/undogreenButton.png");
-		undo.setPressedIcon(new ImageIcon(buttonIcon));
-		undo.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				undoSound.stop();
-				undoSound.start();
-				newSelectedButton = undo;
-				changeButtonColors();
-				master.undo();
-				undo.setSelected(false);
-				
-			}
-		});
-
-		buttonIcon = ToolPanel.class.getResource("images/redowhiteButton.png");
-		redo = new RoundButton(new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/redogreenButton.png");
-
-		redo.setPressedIcon(new ImageIcon(buttonIcon));
-		redo.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				redoSound.stop();
-				redoSound.start();
-				newSelectedButton = redo;
-				changeButtonColors();
-				master.redo();
-				redo.setSelected(false);
-			}
-		});
+//		java.net.URL buttonIcon = ToolPanel.class.getResource("images/undowhiteButton.png");
+//		  if (buttonIcon == null) {
+//			 System.out.println("Issue loading tool buttons in Tool Panel"); 
+//			 System.exit(-1);
+//		  }
+//		undo = new RoundButton(new ImageIcon(buttonIcon));
+//		buttonIcon = ToolPanel.class.getResource("images/undogreenButton.png");
+//		undo.setPressedIcon(new ImageIcon(buttonIcon));
+//		undo.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				undoSound.stop();
+//				undoSound.start();
+//				newSelectedButton = undo;
+//				changeButtonColors();
+//				master.undo();
+//				undo.setSelected(false);
+//				
+//			}
+//		});
+//
+//		buttonIcon = ToolPanel.class.getResource("images/redowhiteButton.png");
+//		redo = new RoundButton(new ImageIcon(buttonIcon));
+//		buttonIcon = ToolPanel.class.getResource("images/redogreenButton.png");
+//
+//		redo.setPressedIcon(new ImageIcon(buttonIcon));
+//		redo.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				redoSound.stop();
+//				redoSound.start();
+//				newSelectedButton = redo;
+//				changeButtonColors();
+//				master.redo();
+//				redo.setSelected(false);
+//			}
+//		});
 
 
 		//Line
-		buttonIcon = ToolPanel.class.getResource("images/linewhite-Button.png");
+        java.net.URL buttonIcon = ToolPanel.class.getResource("images/linewhite-Button.png");
 		line = new RoundButton(new ImageIcon(buttonIcon)); 
 		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
 		line.setSelectedIcon(new ImageIcon(buttonIcon));
@@ -290,15 +279,15 @@ public class ToolPanel extends JPanel {
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.VERTICAL;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.insets = new Insets(2,8,2,2);
-		this.add(undo, c);
-
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets(2,2,2,8);
-		this.add(redo, c);
+//		c.gridx = 0;
+//		c.gridy = 0;
+//		c.insets = new Insets(2,8,2,2);
+//	//	this.add(undo, c);
+//
+//		c.gridx = 1;
+//		c.gridy = 0;
+//		c.insets = new Insets(2,2,2,8);
+//		//this.add(redo, c);
 
 		c.insets = new Insets(2,10,2,10);
 		c.gridx = 0;

@@ -9,7 +9,8 @@ public enum CanvasCursor {
     PENCIL {
         @Override
         public Cursor getCursor() {
-            cursorImg = toolkit.getImage(PENCIL_IMG);
+           // cursorImg = toolkit.getImage(PENCIL_IMG);
+            cursorImg = toolkit.createImage(CanvasCursor.class.getResource(PENCIL_IMG));
             cursor = toolkit.createCustomCursor(cursorImg,hotspot,"Pencil");
             return cursor;
         }
@@ -17,7 +18,8 @@ public enum CanvasCursor {
     ERASER {
         @Override
         public Cursor getCursor() {
-            cursorImg = toolkit.getImage(ERASER_IMG);
+           // cursorImg = toolkit.getImage(ERASER_IMG);
+            cursorImg = toolkit.createImage(CanvasCursor.class.getResource(ERASER_IMG));
             cursor = toolkit.createCustomCursor(cursorImg,hotspot,"Eraser");
             return cursor;
         }
@@ -25,7 +27,8 @@ public enum CanvasCursor {
     LINE {
         @Override
         public Cursor getCursor() {
-            cursorImg = toolkit.getImage(LINE_IMG);
+           // cursorImg = toolkit.getImage(LINE_IMG);
+            cursorImg = toolkit.createImage(CanvasCursor.class.getResource(LINE_IMG));
             cursor = toolkit.createCustomCursor(cursorImg,hotspot,"Line");
             return cursor;
         }
@@ -33,7 +36,8 @@ public enum CanvasCursor {
     TEXT {
         @Override
         public Cursor getCursor() {
-            cursorImg = toolkit.getImage(TEXT_IMG);
+            //cursorImg = toolkit.getImage(TEXT_IMG);
+            cursorImg = toolkit.createImage(CanvasCursor.class.getResource(TEXT_IMG));
             cursor = toolkit.createCustomCursor(cursorImg,hotspot,"Text");
             return cursor;
         }
@@ -41,7 +45,8 @@ public enum CanvasCursor {
     CIRCLE {
         @Override
         public Cursor getCursor() {
-            cursorImg = toolkit.getImage(CIRCLE_IMG);
+            //cursorImg = toolkit.getImage(CIRCLE_IMG);
+            cursorImg = toolkit.createImage(CanvasCursor.class.getResource(CIRCLE_IMG));
             cursor = toolkit.createCustomCursor(cursorImg,hotspot,"Circle");
             return cursor;
         }
@@ -49,7 +54,8 @@ public enum CanvasCursor {
     RECTANGLE {
         @Override
         public Cursor getCursor() {
-            cursorImg = toolkit.getImage(RECTANGLE_IMG);
+            //cursorImg = toolkit.getImage(RECTANGLE_IMG);
+            cursorImg = toolkit.createImage(CanvasCursor.class.getResource(RECTANGLE_IMG));
             cursor = toolkit.createCustomCursor(cursorImg,hotspot,"Rectangle");
             return cursor;
         }
@@ -57,7 +63,7 @@ public enum CanvasCursor {
     TRIANGLE {
         @Override
         public Cursor getCursor() {
-            cursorImg = toolkit.getImage(TRIANGLE_IMG);
+            cursorImg = toolkit.createImage(CanvasCursor.class.getResource(TRIANGLE_IMG));
             cursor = toolkit.createCustomCursor(cursorImg,hotspot,"Triangle");
             return cursor;
         }
