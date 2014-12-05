@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -53,6 +54,8 @@ public class Paintimator extends JFrame{
 	private int width = 1440;
 	private int height2 = 800;
 	private int width2 = 1280;
+	
+	private boolean debug = true;
 
 	public Paintimator() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super();
@@ -69,7 +72,7 @@ public class Paintimator extends JFrame{
 		
 
 		//create a contentPane that can hold an image
-        contentPane = new BackgroundPanel("images/background2.png");
+        contentPane = new BackgroundPanel("images/background.png");
         contentPane.setLayout(new BorderLayout());
 		
 
@@ -153,7 +156,14 @@ public class Paintimator extends JFrame{
 		
 		sidePanel.setPreferredSize(new Dimension(200,950));
 		sidePanel.setBackground(Color.GRAY);
-		
+		if(debug){
+		sidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		centerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		animationPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		toolPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+		optionsPanel.setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
+		cwPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		}
 		
 		//add panels to the content pane
 		contentPane.add(centerPanel, BorderLayout.CENTER);

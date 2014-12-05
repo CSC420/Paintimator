@@ -1,33 +1,20 @@
 package pantimator;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JColorChooser;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class ToolPanel extends JPanel {
 	
@@ -35,12 +22,10 @@ public class ToolPanel extends JPanel {
 	private Paintimator master;
 	private OptionsPanel op;
 	private RoundButton line, draw, text, erase, circle, square, 
-		triangle, paint, undo, redo, bucket, stamp;
+		triangle, paint, bucket, stamp;
 	private RoundButton selectedButton;
 	private RoundButton newSelectedButton;
 	private Clip button;
-	private Clip undoSound;
-	private Clip redoSound;
 
 
 	public ToolPanel(Paintimator p, OptionsPanel o) throws IOException, UnsupportedAudioFileException, LineUnavailableException{
@@ -55,44 +40,7 @@ public class ToolPanel extends JPanel {
 		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
         button = AudioSystem.getClip();
         button.open(ais);
-        
-//		java.net.URL buttonIcon = ToolPanel.class.getResource("images/undowhiteButton.png");
-//		  if (buttonIcon == null) {
-//			 System.out.println("Issue loading tool buttons in Tool Panel"); 
-//			 System.exit(-1);
-//		  }
-//		undo = new RoundButton(new ImageIcon(buttonIcon));
-//		buttonIcon = ToolPanel.class.getResource("images/undogreenButton.png");
-//		undo.setPressedIcon(new ImageIcon(buttonIcon));
-//		undo.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				undoSound.stop();
-//				undoSound.start();
-//				newSelectedButton = undo;
-//				changeButtonColors();
-//				master.undo();
-//				undo.setSelected(false);
-//				
-//			}
-//		});
-//
-//		buttonIcon = ToolPanel.class.getResource("images/redowhiteButton.png");
-//		redo = new RoundButton(new ImageIcon(buttonIcon));
-//		buttonIcon = ToolPanel.class.getResource("images/redogreenButton.png");
-//
-//		redo.setPressedIcon(new ImageIcon(buttonIcon));
-//		redo.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				redoSound.stop();
-//				redoSound.start();
-//				newSelectedButton = redo;
-//				changeButtonColors();
-//				master.redo();
-//				redo.setSelected(false);
-//			}
-//		});
+       
 
 
 		//Line

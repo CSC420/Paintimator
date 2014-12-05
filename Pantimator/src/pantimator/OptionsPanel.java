@@ -52,9 +52,9 @@ public class OptionsPanel extends JPanel{
 		this.createAllButtons();
 
 		this.add(thicknessPanel);
-		thicknessPanel.setVisible(false);
+		thicknessPanel.setVisible(true);
 		this.add(opPanel);
-		opPanel.setVisible(false);
+		opPanel.setVisible(true);
 	
 		//this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 	}
