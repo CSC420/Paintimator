@@ -53,8 +53,8 @@ public class Paintimator extends JFrame{
 	private GridBagConstraints gbc;
 	//private int height = 900;
 	//private int width = 1440;
-	private int height = 900;
-	private int width = 1440;
+	private int height = 768;
+	private int width = 1366;
 	private int height2 = 800;
 	private int width2 = 1280;
 	
@@ -336,7 +336,7 @@ public class Paintimator extends JFrame{
 	/*
 	 * Method to easily refresh the drawing panel
 	 */
-	private void refreshDrawPanel(LayeredPanel lp) {
+	public void refreshDrawPanel(LayeredPanel lp) {
 		gbc = new GridBagConstraints();
 		gbc.weightx = 0.50;
 		gbc.weighty = 0.50;

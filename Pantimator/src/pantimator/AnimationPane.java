@@ -131,14 +131,14 @@ public class AnimationPane extends JPanel {
     }
     
     public void updateThumbArray(Thumb thumb) {
+    	//painter.refreshDrawPanel(thumbMap.get(thumb));
     	for (Thumb t : thumbMap.keySet()) {
     		if (thumb != t && t.isFocused()) {
-    			System.out.println("Changing focus");
     			t.changeFocus();
+    			break;
     		}
     	}
     	
     	thumb.changeFocus();
-    	//painter.refreshDrawPanel(thumbMap.get(thumb));
     }
 }
