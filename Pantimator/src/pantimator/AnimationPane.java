@@ -1,15 +1,10 @@
 package pantimator;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -131,11 +126,13 @@ public class AnimationPane extends JPanel {
      * Creates a new thumbnail frame and adds it to the frame holder
      */
     private void newThumb(Image img, int index) {
-        thumbPanel = Thumb.newInstance(img);
-        thumbPanel.setToolTipText("Frame #" + index);
-        thumbPanel.setPreferredSize(new Dimension(75, 75));
-        thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
-        frameHolder.add(thumbPanel);
+        Thumb tmpThumb = new Thumb(img);
+
+//        thumbPanel = Thumb.newInstance(img);
+        tmpThumb.setToolTipText("Frame #" + index);
+        tmpThumb.setPreferredSize(new Dimension(75, 75));
+        tmpThumb.setBorder(new BevelBorder(BevelBorder.RAISED));
+        frameHolder.add(tmpThumb);
     }
     
     /**
@@ -150,6 +147,5 @@ public class AnimationPane extends JPanel {
     public void updateAnimation(LayeredPanelList lpl) { 
         loadedFrameHolder(lpl);
     }
-
 
 }

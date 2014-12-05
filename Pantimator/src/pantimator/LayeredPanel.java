@@ -37,15 +37,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         toDrawOnGlass = new ArrayList<ShapeWrapper>();
         removedShapes = new ArrayList<ShapeWrapper>();
 
-        //test code for changing the cursor:
-//        Toolkit toolkit = Toolkit.getDefaultToolkit();
-//        Image pencil = toolkit.getImage("images/pencil.png");
-//        Point hotspot = new Point(0,0);
-//        Cursor cursor = toolkit.createCustomCursor(pencil,hotspot,"Pencil");
-//        setCursor(cursor);
-
-
-
         canvas = new Layer(toDrawOnCanvas);
         glass = new Layer(toDrawOnGlass);
 

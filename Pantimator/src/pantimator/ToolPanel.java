@@ -45,6 +45,7 @@ public class ToolPanel extends JPanel {
 
 	public ToolPanel(Paintimator p, OptionsPanel o) throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super(new GridBagLayout());
+		//super();
 		master = p;
 		op = o;
 
@@ -274,6 +275,7 @@ public class ToolPanel extends JPanel {
 				//op.setState(OptionsPanel.State.PAINT);
 			}
 		});
+
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.VERTICAL;
