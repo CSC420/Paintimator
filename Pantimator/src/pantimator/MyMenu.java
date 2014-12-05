@@ -30,12 +30,29 @@ public class MyMenu extends JMenuBar{
 		JButton jbNewProject = createButton("images/newProject322.png", "New Project");
 		JButton jbSave = createButton("images/save32.png", "Save");
 		JButton jbOpen = createButton("images/open32.png", "Open");
+		JButton jbUndo = createButton("images/arrow_undo.png", "Undo");
+		JButton jbRedo = createButton("images/arrow_redo.png", "Redo");
 		
 		
 		JMenu fileMenu = new JMenu("File");		
 		JMenuItem loadImg = new JMenuItem("Import Image");
 		JMenuItem saveImg = new JMenuItem("Export Image");
-
+		
+		jbUndo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				master.undo();
+			}
+			
+		});
+		
+		jbRedo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				master.redo();
+			}
+			
+		});
 		
 		loadImg.addActionListener(new ActionListener() {
 			@Override
@@ -87,6 +104,8 @@ public class MyMenu extends JMenuBar{
 		fileMenu.add(loadImg);
 		fileMenu.add(saveImg);
 		
+		this.add(jbUndo);
+		this.add(jbRedo);
 		this.add(jbNewFrame);
 		this.add(jbNewProject);
 		this.add(jbOpen);
