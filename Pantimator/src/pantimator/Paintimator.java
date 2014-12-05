@@ -72,17 +72,10 @@ public class Paintimator extends JFrame{
         contentPane = new BackgroundPanel("images/background2.png");
         contentPane.setLayout(new BorderLayout());
 		
-<<<<<<< HEAD
 
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		int myWidth = gd.getDisplayMode().getWidth();
 		int myHeight = gd.getDisplayMode().getHeight();
-=======
-		//second way seeing if this works with multiple screens
-		//GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		//width = gd.getDisplayMode().getWidth();
-		//height = gd.getDisplayMode().getHeight();
->>>>>>> master
 		//System.out.println(width + " X " + height);
 		if(myHeight < height || myWidth < width){
 			this.setPreferredSize(new Dimension(width2, height2));
