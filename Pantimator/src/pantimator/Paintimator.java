@@ -52,6 +52,8 @@ public class Paintimator extends JFrame{
 	
 	private int height = 900;
 	private int width = 1440;
+	private int height2 = 800;
+	private int width2 = 1280;
 
 	public Paintimator() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super();
@@ -68,16 +70,19 @@ public class Paintimator extends JFrame{
 		
 
 		//create a contentPane that can hold an image
-        contentPane = new BackgroundPanel("images/background1.png");
+        contentPane = new BackgroundPanel("images/background2.png");
         contentPane.setLayout(new BorderLayout());
 		
-		//second way seeing if this works with multiple screens
-//		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-//		width = gd.getDisplayMode().getWidth();
-//		height = gd.getDisplayMode().getHeight();
+
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		int myWidth = gd.getDisplayMode().getWidth();
+		int myHeight = gd.getDisplayMode().getHeight();
 		//System.out.println(width + " X " + height);
-		this.setPreferredSize(new Dimension(width, height));
-		
+		if(myHeight < height || myWidth < width){
+			this.setPreferredSize(new Dimension(width2, height2));
+		}else{
+			this.setPreferredSize(new Dimension(width, height));
+		}
         
         //canvas panel
 		layeredPanel = new LayeredPanel();

@@ -6,8 +6,14 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,11 +26,23 @@ public class MyMenu extends JMenuBar{
 
 	private static final long serialVersionUID = 1L;
 	Paintimator master;
+	Clip undoSound, redoSound;
 
-	public MyMenu(Paintimator p){
+	public MyMenu(Paintimator p) throws UnsupportedAudioFileException, IOException, LineUnavailableException{
 		super();
 		master = p;
 		@SuppressWarnings("unused")
+		
+		InputStream is = getClass().getResourceAsStream("sounds/undo.wav");
+		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
+        undoSound = AudioSystem.getClip();
+        undoSound.open(ais);
+        
+        is = getClass().getResourceAsStream("sounds/redo.wav");
+		ais = AudioSystem.getAudioInputStream(is);
+        redoSound = AudioSystem.getClip();
+        redoSound.open(ais);
+		
 		
 		JButton jbNewFrame = createButton("images/newFrame32.png", "New Frame");
 		JButton jbNewProject = createButton("images/newProject322.png", "New Project");
@@ -41,6 +59,8 @@ public class MyMenu extends JMenuBar{
 		jbUndo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				undoSound.stop();
+				undoSound.start();
 				master.undo();
 			}
 			
@@ -49,6 +69,8 @@ public class MyMenu extends JMenuBar{
 		jbRedo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				redoSound.stop();
+				redoSound.start();
 				master.redo();
 			}
 			
@@ -124,21 +146,9 @@ public class MyMenu extends JMenuBar{
 	}
 	
 	private ImageIcon createImageIcon(String path, String des){
-		try {
-			BufferedImage thicknessIcon = ImageIO.read(new File(path));
-			return new ImageIcon(thicknessIcon, des);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		/*java.net.URL imgURL = getClass().getResource(path);
-		if(imgURL != null){
-			return new ImageIcon(imgURL, des);
-		}else{
-			System.err.println("Bad Path: " + path);
-			return null;
-		}*/
+		java.net.URL thicknessIcon = OptionsPanel.class.getResource(path);
+		//BufferedImage thicknessIcon = ImageIO.read(new File(path));
+		return new ImageIcon(thicknessIcon, des);
 	}
 	
 }

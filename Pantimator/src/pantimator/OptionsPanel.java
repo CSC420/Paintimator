@@ -79,7 +79,7 @@ public class OptionsPanel extends JPanel{
 				button.stop();
 				button.start();
 				master.setBrushSize(1);
-				System.out.println("clicked");
+				//System.out.println("clicked");
 			}
 		});
 		one.setOpaque(true);
