@@ -114,9 +114,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Draw
-		buttonIcon = ToolPanel.class.getResource("images/drawwhiteButton.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteDraw.png");
 		draw = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/drawgreenButton.png");
+		buttonIcon = ToolPanel.class.getResource("images/redDraw.png");
 		draw.setSelectedIcon(new ImageIcon(buttonIcon));
 		draw.setPressedIcon(new ImageIcon(buttonIcon));
 		draw.addActionListener(new ActionListener() {
@@ -227,15 +227,6 @@ public class ToolPanel extends JPanel {
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.VERTICAL;
-//		c.gridx = 0;
-//		c.gridy = 0;
-//		c.insets = new Insets(2,8,2,2);
-//	//	this.add(undo, c);
-//
-//		c.gridx = 1;
-//		c.gridy = 0;
-//		c.insets = new Insets(2,2,2,8);
-//		//this.add(redo, c);
 
 		c.insets = new Insets(2,10,2,10);
 		c.gridx = 0;
@@ -245,41 +236,40 @@ public class ToolPanel extends JPanel {
 
 		//c.insets = new Insets(2,20,2,5);
 		c.gridy = 2;
-		this.add(paint, c);
+		//this.add(paint, c);
 
 		c.gridy = 3;
 		//c.insets = new Insets(2,20,2,5);
-		this.add(line,c);
+		//this.add(line,c);
 
 		c.gridy = 4;
 		//c.insets = new Insets(2,2,2,20);
-		this.add(circle,c);
+		//this.add(circle,c);
 
 		c.gridy = 5;
 		//c.insets = new Insets(2,20,2,5);
-		this.add(square,c);
+		//this.add(square,c);
 
 		c.gridy = 6;
 		//c.insets = new Insets(2,2,2,20);
-		this.add(triangle,c);
+		//this.add(triangle,c);
 
 		c.gridy = 7;
 		//c.insets = new Insets(2,20,2,5);
-		this.add(stamp,c);
+		//this.add(stamp,c);
 		
 		c.gridy = 8;
 		//c.insets = new Insets(2,20,2,5);
-		this.add(bucket,c);
+		//this.add(bucket,c);
 		
 		c.gridy = 9;
 		//c.insets = new Insets(2,20,2,5);
-		this.add(text,c);
+		//this.add(text,c);
 		
 		c.gridy = 10;
 		//c.insets = new Insets(2,20,2,5);
-		this.add(erase,c);
+		//this.add(erase,c);
 	
-		//this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 	}
 
 	public void changeButtonColors(){
