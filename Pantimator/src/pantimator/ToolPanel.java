@@ -116,7 +116,7 @@ public class ToolPanel extends JPanel {
 		//Draw
 		buttonIcon = ToolPanel.class.getResource("images/whiteDraw.png");
 		draw = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/redDraw.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteDraw.png");
 		draw.setSelectedIcon(new ImageIcon(buttonIcon));
 		draw.setPressedIcon(new ImageIcon(buttonIcon));
 		draw.addActionListener(new ActionListener() {

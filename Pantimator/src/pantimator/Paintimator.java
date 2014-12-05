@@ -108,9 +108,12 @@ public class Paintimator extends JFrame{
 		toolPanel = new ToolPanel(this, optionsPanel);
 		cwPanel = new ColorWheelPanel(this);
 		toolPanel.setOpaque(false);
+		toolPanel.setMinimumSize(new Dimension(150, height - 200));
 		optionsPanel.setOpaque(false);
+		optionsPanel.setMinimumSize(new Dimension(150, height - 200));
 		cwPanel.setOpaque(false);
 		sidePanel.setOpaque(false);
+		sidePanel.setPreferredSize(new Dimension(300, height));
 
 		//menu bar
 		menu = new MyMenu(this);
@@ -121,41 +124,33 @@ public class Paintimator extends JFrame{
 
 		//add everything to correct locations
 		gbc = new GridBagConstraints();
-		//gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 0.50;
 		gbc.weighty = 0.50;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
+		
 		gbc.gridy = 1;
-		//gbc.fill = GridBagConstraints.VERTICAL;
 		centerPanel.add(animationPane, gbc);
 
-		
-		gbc.weightx = 0.50;
-		gbc.weighty = 0.50;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		toolPanel.setMinimumSize(new Dimension(100,700));
+		gbc.fill = GridBagConstraints.BOTH;
 		sidePanel.add(toolPanel, gbc);
 		
-		gbc.weightx = 0.50;
-		gbc.weighty = 0.50;
 		gbc.gridx = 1;
 		gbc.gridy = 0;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		optionsPanel.setMinimumSize(new Dimension(100,700));
+		gbc.fill = GridBagConstraints.BOTH;
 		sidePanel.add(optionsPanel, gbc);
 		
+		gbc.weightx = 0;
+		gbc.weighty = 0;
 		gbc.gridy = 1;
 		gbc.gridx = 0;
 		gbc.gridwidth = 2;
-		gbc.fill = GridBagConstraints.BOTH;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		sidePanel.add(cwPanel, gbc);
 		
-		sidePanel.setPreferredSize(new Dimension(200,950));
-		sidePanel.setBackground(Color.GRAY);
 		if(debug){
 			sidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			centerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));

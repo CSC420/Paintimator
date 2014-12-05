@@ -73,19 +73,18 @@ public class AnimationPane extends JPanel {
     	RoundButton play;
 		
     	//BufferedImage buttonIcon = ImageIO.read(new File("images/white-Button.png"));
-		java.net.URL imageURL = AnimationPane.class.getResource("images/white-Button.png");
+		java.net.URL imageURL = AnimationPane.class.getResource("images/whiteDraw.png");
 		  if (imageURL == null) {
-			 System.out.println("Issue loading play button in Animation Pane"); 
-			 System.exit(-1);
+			 System.out.println("Issue HERE loading play button in Animation Pane"); 
 		  }
 		 play = new RoundButton(new ImageIcon(imageURL));
-		 imageURL = AnimationPane.class.getResource("images/green-Button.png");
-		 if (imageURL == null) {
-			 System.out.println("Issue loading play button in Animation Pane"); 
-			 System.exit(-1);
-		  }
-		play.setSelectedIcon(new ImageIcon(imageURL));
-		play.setPressedIcon(new ImageIcon(imageURL));
+//		 imageURL = AnimationPane.class.getResource("images/tools/white-Button.png");
+//		 if (imageURL == null) {
+//			 System.out.println("Issue loading play selected button in Animation Pane"); 
+//			 System.exit(-1);
+//		  }
+		//play.setSelectedIcon(new ImageIcon(imageURL));
+		//play.setPressedIcon(new ImageIcon(imageURL));
 		play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
