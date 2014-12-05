@@ -22,7 +22,7 @@ public class ToolPanel extends JPanel {
 	private Paintimator master;
 	private OptionsPanel op;
 	private RoundButton line, draw, text, erase, circle, square, 
-		triangle, paint, bucket, stamp;
+		triangle, paint, bucket, stamp, op1;
 	private RoundButton selectedButton;
 	private RoundButton newSelectedButton;
 	private Clip button;
@@ -44,9 +44,9 @@ public class ToolPanel extends JPanel {
 
 
 		//Line
-        java.net.URL buttonIcon = ToolPanel.class.getResource("images/linewhite-Button.png");
+        java.net.URL buttonIcon = ToolPanel.class.getResource("images/whiteLine.png");
 		line = new RoundButton(new ImageIcon(buttonIcon)); 
-		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteLine.png");
 		line.setSelectedIcon(new ImageIcon(buttonIcon));
 		line.addActionListener(new ActionListener() {
 			@Override
@@ -63,9 +63,9 @@ public class ToolPanel extends JPanel {
 		
 
 		//Circle
-		buttonIcon = ToolPanel.class.getResource("images/cirwhite-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteCircle.png");
 		circle = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteCircle.png");
 		circle.setSelectedIcon(new ImageIcon(buttonIcon));
 		circle.addActionListener(new ActionListener() {
 			@Override
@@ -80,9 +80,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Square
-		buttonIcon = ToolPanel.class.getResource("images/squarewhite-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteSquare.png");
 		square = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteSquare.png");
 		square.setSelectedIcon(new ImageIcon(buttonIcon));
 		square.addActionListener(new ActionListener() {
 			@Override
@@ -97,9 +97,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//triangle
-		buttonIcon = ToolPanel.class.getResource("images/triwhite-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteTriangle.png");
 		triangle = new RoundButton( new ImageIcon(buttonIcon));  
-		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteTriangle.png");
 		triangle.setSelectedIcon(new ImageIcon(buttonIcon));
 		triangle.addActionListener(new ActionListener() {
 			@Override
@@ -134,9 +134,9 @@ public class ToolPanel extends JPanel {
 
 
 		//Text
-		buttonIcon = ToolPanel.class.getResource("images/textwhite-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteText.png");
 		text = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteText.png");
 		text.setSelectedIcon(new ImageIcon(buttonIcon));
 		text.addActionListener(new ActionListener() {
 			@Override
@@ -151,9 +151,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//erasing
-		buttonIcon = ToolPanel.class.getResource("images/erasewhiteButton.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteEraser.png");
 		erase = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/erasegreenButton.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteEraser.png");
 		erase.setSelectedIcon(new ImageIcon(buttonIcon));
 		erase.setPressedIcon(new ImageIcon(buttonIcon));
 		erase.addActionListener(new ActionListener() {
@@ -169,9 +169,9 @@ public class ToolPanel extends JPanel {
 		});
 
 		//paint
-		buttonIcon = ToolPanel.class.getResource("images/paintwhite-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whitePaint.png");
 		paint = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whitePaint.png");
 		paint.setSelectedIcon(new ImageIcon(buttonIcon));
 		paint.setPressedIcon(new ImageIcon(buttonIcon));
 		paint.addActionListener(new ActionListener() {
@@ -188,9 +188,9 @@ public class ToolPanel extends JPanel {
 
 		//Bucket
 
-		buttonIcon = ToolPanel.class.getResource("images/bucketwhite-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteBucket.png");
 		bucket = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
+		buttonIcon = ToolPanel.class.getResource("images/whiteBucket.png");
 		bucket.setSelectedIcon(new ImageIcon(buttonIcon));
 		bucket.setPressedIcon(new ImageIcon(buttonIcon));
 		bucket.addActionListener(new ActionListener() {
@@ -206,24 +206,6 @@ public class ToolPanel extends JPanel {
 			}
 		});
 		
-		//Stamp
-		buttonIcon = ToolPanel.class.getResource("images/stampwhite-Button.png");
-		stamp = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/green-Button.png");
-		stamp.setSelectedIcon(new ImageIcon(buttonIcon));
-		stamp.setPressedIcon(new ImageIcon(buttonIcon));
-		stamp.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				button.stop();
-				button.start();
-				newSelectedButton = stamp;
-				changeButtonColors();
-				//	master.setListenerState(8);
-				//op.setState(OptionsPanel.State.PAINT);
-			}
-		});
-
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.VERTICAL;
@@ -236,23 +218,23 @@ public class ToolPanel extends JPanel {
 
 		//c.insets = new Insets(2,20,2,5);
 		c.gridy = 2;
-		//this.add(paint, c);
+		this.add(paint, c);
 
 		c.gridy = 3;
 		//c.insets = new Insets(2,20,2,5);
-		//this.add(line,c);
+		this.add(line,c);
 
 		c.gridy = 4;
 		//c.insets = new Insets(2,2,2,20);
-		//this.add(circle,c);
+		this.add(circle,c);
 
 		c.gridy = 5;
 		//c.insets = new Insets(2,20,2,5);
-		//this.add(square,c);
+		this.add(square,c);
 
 		c.gridy = 6;
 		//c.insets = new Insets(2,2,2,20);
-		//this.add(triangle,c);
+		this.add(triangle,c);
 
 		c.gridy = 7;
 		//c.insets = new Insets(2,20,2,5);
@@ -260,17 +242,18 @@ public class ToolPanel extends JPanel {
 		
 		c.gridy = 8;
 		//c.insets = new Insets(2,20,2,5);
-		//this.add(bucket,c);
+		this.add(bucket,c);
 		
 		c.gridy = 9;
 		//c.insets = new Insets(2,20,2,5);
-		//this.add(text,c);
+		this.add(text,c);
 		
 		c.gridy = 10;
 		//c.insets = new Insets(2,20,2,5);
-		//this.add(erase,c);
+		this.add(erase,c);
 	
 	}
+	
 
 	public void changeButtonColors(){
 		if(selectedButton != null){

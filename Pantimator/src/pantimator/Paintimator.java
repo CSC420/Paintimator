@@ -107,10 +107,11 @@ public class Paintimator extends JFrame{
 		optionsPanel = new OptionsPanel(this);
 		toolPanel = new ToolPanel(this, optionsPanel);
 		cwPanel = new ColorWheelPanel(this);
+		
 		toolPanel.setOpaque(false);
-		toolPanel.setMinimumSize(new Dimension(150, height - 200));
+		//toolPanel.setMinimumSize(new Dimension(150, height - 200));
 		optionsPanel.setOpaque(false);
-		optionsPanel.setMinimumSize(new Dimension(150, height - 200));
+		//optionsPanel.setMinimumSize(new Dimension(150, height - 200));
 		cwPanel.setOpaque(false);
 		sidePanel.setOpaque(false);
 		sidePanel.setPreferredSize(new Dimension(300, height));
@@ -133,11 +134,15 @@ public class Paintimator extends JFrame{
 		gbc.gridy = 1;
 		centerPanel.add(animationPane, gbc);
 
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
 		sidePanel.add(toolPanel, gbc);
 		
+		gbc.weightx = 0.50;
+		gbc.weighty = 0.50;
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.BOTH;
