@@ -53,8 +53,8 @@ public class Paintimator extends JFrame{
 	private GridBagConstraints gbc;
 	//private int height = 900;
 	//private int width = 1440;
-	private int height = 768;
-	private int width = 1366;
+	private int height = 900;
+	private int width = 1440;
 	private int height2 = 800;
 	private int width2 = 1280;
 	
