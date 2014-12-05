@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -50,8 +51,10 @@ public class Paintimator extends JFrame{
 	
 	
 	private GridBagConstraints gbc;
-	private int height = 900;
-	private int width = 1440;
+	//private int height = 900;
+	//private int width = 1440;
+	private int height = 768;
+	private int width = 1366;
 	private int height2 = 800;
 	private int width2 = 1280;
 	
@@ -137,7 +140,7 @@ public class Paintimator extends JFrame{
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.VERTICAL;
-		toolPanel.setPreferredSize(new Dimension(100,750));
+		toolPanel.setMinimumSize(new Dimension(100,750));
 		sidePanel.add(toolPanel, gbc);
 		
 		gbc.weightx = 0.50;
@@ -145,7 +148,7 @@ public class Paintimator extends JFrame{
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.VERTICAL;
-		optionsPanel.setPreferredSize(new Dimension(100,750));
+		optionsPanel.setMinimumSize(new Dimension(100,750));
 		sidePanel.add(optionsPanel, gbc);
 		
 		gbc.gridy = 1;
@@ -157,12 +160,12 @@ public class Paintimator extends JFrame{
 		sidePanel.setPreferredSize(new Dimension(200,950));
 		sidePanel.setBackground(Color.GRAY);
 		if(debug){
-		sidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		centerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		animationPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		toolPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-		optionsPanel.setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
-		cwPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+			sidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			centerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			animationPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			toolPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+			optionsPanel.setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
+			cwPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		}
 		
 		//add panels to the content pane

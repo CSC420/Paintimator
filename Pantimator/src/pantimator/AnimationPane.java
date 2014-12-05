@@ -52,7 +52,7 @@ public class AnimationPane extends JPanel {
         //scrollframeHolder.setBorder(new BevelBorder(BevelBorder.LOWERED));
         scrollframeHolder.setBorder(BorderFactory.createEmptyBorder());
         scrollframeHolder.setPreferredSize(new Dimension(790, 110));
-        scrollframeHolder.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollframeHolder.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollframeHolder.getViewport().setOpaque(false);
         scrollframeHolder.setOpaque(false);
         thumbs = new ArrayList<Image>();
@@ -91,28 +91,12 @@ public class AnimationPane extends JPanel {
 		});
         this.add(play);
 	}
-
-	private void sampleFrameHolder() {    	
-        for (int i = 0; i < 50; i++) {
-          //  thumbPanel = new JPanel();
-            thumbPanel.setToolTipText("Frame " + (i + 1));
-            thumbPanel.setPreferredSize(new Dimension(75,75));
-            thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
-            frameHolder.add(thumbPanel);
-        }
-    }
-
-    @SuppressWarnings("unused")
-	private void defaultFrameHolder() {
-        newThumb(null, 1);
-    }
     
     /*
      * Iterates through an array list of images to set the thumbnail frame
      */
     private void loadedFrameHolder(LayeredPanelList lpl) {
         int index = 1;
-     //   System.out.println(lpl.getSize());
         frameHolder.removeAll(); // clears everything
         for (LayeredPanel lp : lpl.getArray()) {        	
         	Image img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
@@ -126,24 +110,16 @@ public class AnimationPane extends JPanel {
      * Creates a new thumbnail frame and adds it to the frame holder
      */
     private void newThumb(Image img, int index) {
-        Thumb tmpThumb = new Thumb(img);
-
-//        thumbPanel = Thumb.newInstance(img);
-        tmpThumb.setToolTipText("Frame #" + index);
-        tmpThumb.setPreferredSize(new Dimension(75, 75));
-        tmpThumb.setBorder(new BevelBorder(BevelBorder.RAISED));
-        frameHolder.add(tmpThumb);
+    	thumbPanel = Thumb.newInstance(img);
+        thumbPanel.setToolTipText("Frame #" + index);
+        thumbPanel.setPreferredSize(new Dimension(75, 75));
+        frameHolder.add(thumbPanel);
     }
     
     /**
      * Public method for updating the animation frame
      * @param lp
      */
-    
-    /*
-     * Sets the thumbnail image to the thumbnail frame
-     */
-
     public void updateAnimation(LayeredPanelList lpl) { 
         loadedFrameHolder(lpl);
     }

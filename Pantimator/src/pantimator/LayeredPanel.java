@@ -141,8 +141,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     }
 
     /* added by Jeremy
-         * method which imports an image to the root pane that can be "edited"
-         */
+     * method which imports an image to the root pane that can be "edited"
+     */
     public void importImgToPane(BufferedImage img) {
         if (this.img != img) {
             this.img = img;
