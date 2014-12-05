@@ -101,7 +101,7 @@ public class Paintimator extends JFrame{
 		centerPanel.setOpaque(false);
 
 		//animation panel
-		animationPane = new AnimationPane();
+		animationPane = new AnimationPane(this);
 		animationPane.setPreferredSize(new Dimension(width-450, 150));
 		animationPane.setOpaque(false);
 

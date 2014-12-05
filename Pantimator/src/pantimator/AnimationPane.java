@@ -2,11 +2,13 @@ package pantimator;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AnimationPane extends JPanel {
 
@@ -17,14 +19,17 @@ public class AnimationPane extends JPanel {
 	JScrollPane scrollframeHolder;
     JPanel frameHolder;
     Thumb thumbPanel;
-    ArrayList<Image> thumbs;
+    Paintimator painter;
+    
+    HashMap<Thumb, LayeredPanel> thumbMap;
     GridBagConstraints gbc = new GridBagConstraints();
 
     /**
      * This is a constructor
      * @throws IOException 
      */
-    public AnimationPane() throws IOException {
+    public AnimationPane(Paintimator painter) throws IOException {
+    	this.painter = painter;
         init();
     }
     
@@ -55,7 +60,8 @@ public class AnimationPane extends JPanel {
         scrollframeHolder.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollframeHolder.getViewport().setOpaque(false);
         scrollframeHolder.setOpaque(false);
-        thumbs = new ArrayList<Image>();
+        
+        thumbMap = new HashMap<Thumb, LayeredPanel>();
         
         this.add(scrollframeHolder);
         playButton();
@@ -101,7 +107,7 @@ public class AnimationPane extends JPanel {
         for (LayeredPanel lp : lpl.getArray()) {        	
         	Image img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         	newThumb(img, index);
-
+        	thumbMap.put(thumbPanel, lp);
             index++;
         }
     }
@@ -110,7 +116,7 @@ public class AnimationPane extends JPanel {
      * Creates a new thumbnail frame and adds it to the frame holder
      */
     private void newThumb(Image img, int index) {
-    	thumbPanel = Thumb.newInstance(img);
+    	thumbPanel = Thumb.newInstance(this, img);
         thumbPanel.setToolTipText("Frame #" + index);
         thumbPanel.setPreferredSize(new Dimension(75, 75));
         frameHolder.add(thumbPanel);
@@ -123,5 +129,16 @@ public class AnimationPane extends JPanel {
     public void updateAnimation(LayeredPanelList lpl) { 
         loadedFrameHolder(lpl);
     }
-
+    
+    public void updateThumbArray(Thumb thumb) {
+    	for (Thumb t : thumbMap.keySet()) {
+    		if (thumb != t && t.isFocused()) {
+    			System.out.println("Changing focus");
+    			t.changeFocus();
+    		}
+    	}
+    	
+    	thumb.changeFocus();
+    	//painter.refreshDrawPanel(thumbMap.get(thumb));
+    }
 }
