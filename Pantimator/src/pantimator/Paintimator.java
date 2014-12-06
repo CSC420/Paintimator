@@ -23,6 +23,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -48,7 +49,9 @@ public class Paintimator extends JFrame{
 	private JFileChooser fc;
 	private StorageUtil su;
 	private LayeredPanelList layeredPanelList;
-	
+	private JButton backPage, fwdPage;
+	private int totalPages = 0;
+	private int currentPage = 0;
 	
 	private GridBagConstraints gbc;
 	private int height = 900;
@@ -91,15 +94,21 @@ public class Paintimator extends JFrame{
 		layeredPanel.setDrawColor(Color.BLACK);
 		layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 		layeredPanelList.add(layeredPanel);
+		//listener
+		myListener = new Listener(layeredPanel);
+		layeredPanel.addMouseListener(myListener);
+		layeredPanel.addMouseMotionListener(myListener);
 
 		//center panel
 		centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerPanel.setOpaque(false);
+		this.createButtons();
+
 
 		//animation panel
 		animationPane = new AnimationPane(this);
-		animationPane.setPreferredSize(new Dimension(width-450, 150));
+		//animationPane.setPreferredSize(new Dimension(width-450, 150));
 		animationPane.setOpaque(false);
 
 		//side panel
@@ -109,9 +118,7 @@ public class Paintimator extends JFrame{
 		cwPanel = new ColorWheelPanel(this);
 		
 		toolPanel.setOpaque(false);
-		//toolPanel.setMinimumSize(new Dimension(150, height - 200));
 		optionsPanel.setOpaque(false);
-		//optionsPanel.setMinimumSize(new Dimension(150, height - 200));
 		cwPanel.setOpaque(false);
 		sidePanel.setOpaque(false);
 		sidePanel.setPreferredSize(new Dimension(300, height));
@@ -120,8 +127,7 @@ public class Paintimator extends JFrame{
 		menu = new MyMenu(this);
 		this.setJMenuBar(menu);
 
-		//listener
-		addListeners(layeredPanel);
+		
 
 		//add everything to correct locations
 		gbc = new GridBagConstraints();
@@ -129,9 +135,22 @@ public class Paintimator extends JFrame{
 		gbc.weighty = 0.50;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.CENTER;
 		centerPanel.add(layeredPanelList.getSelected(), gbc);
 		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.LAST_LINE_START;
+		centerPanel.add(backPage, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.LAST_LINE_END;
+		centerPanel.add(fwdPage, gbc);
+		
+		gbc.gridx = 0;
 		gbc.gridy = 1;
+		gbc.anchor = GridBagConstraints.CENTER;
 		centerPanel.add(animationPane, gbc);
 
 		gbc.weightx = 0.50;
@@ -158,7 +177,7 @@ public class Paintimator extends JFrame{
 		
 		if(debug){
 			sidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			centerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			centerPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 			animationPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			toolPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 			optionsPanel.setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
@@ -181,11 +200,6 @@ public class Paintimator extends JFrame{
 	/*
 	 * Method to easily add/update listeners and canvas
 	 */
-	private void addListeners(LayeredPanel lp) {
-		myListener = new Listener(lp);
-		lp.addMouseListener(myListener);
-		lp.addMouseMotionListener(myListener);
-	}
 
 	public void undo(){
 		layeredPanel.undo();
@@ -206,6 +220,40 @@ public class Paintimator extends JFrame{
 	public void setDrawColor(Color c){
 		layeredPanelList.getSelected().setDrawColor(c);
 		optionsPanel.setButtonBackgroundColor(c);
+	}
+	
+	public void setCanvasCursor(CanvasCursor c){
+		layeredPanel.setCanvasCursor(c);
+	}
+	
+	public void setCurrentCanvas(LayeredPanel lp){
+		myListener.updateLayeredPanel(lp);
+	}
+	
+	private void createButtons(){
+		java.net.URL buttonIcon = Paintimator.class.getResource("images/BackPage.png");
+		backPage = new JButton(new ImageIcon(buttonIcon));
+		backPage.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(currentPage < totalPages){
+					setCurrentCanvas(layeredPanelList.getPrev());
+					
+				}
+				
+			}	
+		});
+		buttonIcon = Paintimator.class.getResource("images/FwPage.png");
+		
+		fwdPage = new JButton(new ImageIcon(buttonIcon));
+		fwdPage.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				setCurrentCanvas(layeredPanelList.getNext());
+				
+			}		
+		});
 	}
 
 
@@ -292,30 +340,35 @@ public class Paintimator extends JFrame{
 		switch (i) {
 			case JOptionPane.YES_OPTION :	
 				centerPanel.remove(layeredPanelList.getSelected());
-				
 				animationPane.updateAnimation(layeredPanelList);
 				
 				layeredPanel = new LayeredPanel();
-				
-				//draw panel
+				layeredPanel.addMouseListener(myListener);
+				layeredPanel.addMouseMotionListener(myListener);
+				this.setCurrentCanvas(layeredPanel);
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
 				
 				refreshDrawPanel(layeredPanelList.getSelected());
+				
+				totalPages++;
+				currentPage = totalPages;
 				break;
 			case JOptionPane.NO_OPTION :
 				centerPanel.remove(layeredPanelList.getSelected());
 				layeredPanelList.remove(layeredPanelList.getSelected());
 				
 				layeredPanel = new LayeredPanel();
-				
-				//draw panel
+				layeredPanel.addMouseListener(myListener);
+				layeredPanel.addMouseMotionListener(myListener);
+				this.setCurrentCanvas(layeredPanel);
 				layeredPanel.setDrawColor(Color.BLACK);
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
 				
 				
 				refreshDrawPanel(layeredPanelList.getSelected());
+				animationPane.updateAnimation(layeredPanelList);
 				break;
 			default :
 				break;
@@ -331,13 +384,13 @@ public class Paintimator extends JFrame{
 	 * Method to easily refresh the drawing panel
 	 */
 	public void refreshDrawPanel(LayeredPanel lp) {
+
 		gbc = new GridBagConstraints();
 		gbc.weightx = 0.50;
 		gbc.weighty = 0.50;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		
-		addListeners(lp);
+		gbc.anchor = GridBagConstraints.CENTER;
 		
 		centerPanel.add(lp, gbc);
 		centerPanel.validate();

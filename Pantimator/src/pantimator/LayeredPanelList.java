@@ -8,35 +8,25 @@ public class LayeredPanelList extends ArrayList<LayeredPanel> implements Seriali
     private static final long serialVersionUID = 000006;
 
     private ArrayList<LayeredPanel> alLayeredPanels;
-    private int intNumberOfPanels;
-    private int intSelectedPanel;
+    private int intNumberOfPanels = 0;
+    private int intSelectedPanel = 0;
 
-    /**
-     * Empty Constructor
-     */
     LayeredPanelList(){
         alLayeredPanels = new ArrayList<LayeredPanel>();
 
     }
 
-
     public boolean add(LayeredPanel panelIn){
         this.alLayeredPanels.add(panelIn);
-        this.intNumberOfPanels = this.alLayeredPanels.size();
-        this.intSelectedPanel = this.alLayeredPanels.size() -1;
+        intSelectedPanel = intNumberOfPanels;
+        intNumberOfPanels ++;
         return true;
     }
 
-    /**
-     *
-     */
     public void setSelectedPanel(int selectedPanel){
         this.intSelectedPanel = selectedPanel;
     }
 
-    /**
-     *
-     */
     public int getIntSelectedPanel(){
         return this.intSelectedPanel;
     }
