@@ -316,6 +316,8 @@ public class OptionsPanel extends JPanel{
 
 	private void addLineOptions(){
 		this.removeAll();
+		one.setIcon(buttonIcon);
+		one.setOpaque(false);
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.insets = new Insets(3,0,3,0);
 		cc.gridx = 0;
@@ -496,6 +498,22 @@ public class OptionsPanel extends JPanel{
 	}
 	private void addTextOptions(){
 		this.removeAll();
+		one.setIcon(buttonIcon);
+		one.setOpaque(false);
+		GridBagConstraints cc = new GridBagConstraints();
+		cc.insets = new Insets(3,0,3,0);
+		cc.gridx = 0;
+		cc.gridy = 0;
+		this.add(one, cc);
+
+		this.revalidate();
+		this.repaint();
+	}
+	
+	private void addBucketOptions(){
+		this.removeAll();
+		one.setIcon(buttonIcon);
+		one.setOpaque(false);
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.insets = new Insets(3,0,3,0);
 		cc.gridx = 0;
@@ -578,6 +596,14 @@ public class OptionsPanel extends JPanel{
 	        	}
 	        	public void updateListener(OptionsPanel op){
 	        		op.master.setListenerState(7);
+	        	}
+	        },
+	        BUCKET{
+	        	public void updateOptions(OptionsPanel op){
+	        		op.addBucketOptions();
+	        	}
+	        	public void updateListener(OptionsPanel op){
+	        		//op.master.setListenerState(7);
 	        	}
 	        },
 	        

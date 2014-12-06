@@ -194,7 +194,7 @@ public class ToolPanel extends JPanel {
 				newSelectedButton = bucket;
 				changeButtonColors();
 
-				//op.setState(OptionsPanel.State.PAINT);
+				op.setState(OptionsPanel.State.BUCKET);
 			}
 		});
 		
