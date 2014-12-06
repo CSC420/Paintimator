@@ -5,12 +5,15 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class AnimationPane extends JPanel {
 
 	private static final long serialVersionUID = -4582247641791559232L;
+    private final Component context = this;
 
 	Image img;
 	LayeredPanelList lpl;
@@ -24,10 +27,10 @@ public class AnimationPane extends JPanel {
      * This is a constructor
      * @throws IOException 
      */
-    public AnimationPane() throws IOException {
+/*    public AnimationPane() throws IOException {
         init();
-    }
-    
+    }*/
+
     /**
      * Constructor that will be able to take a LayeredPanelList and parse through it for
      * frames
@@ -36,6 +39,7 @@ public class AnimationPane extends JPanel {
      */
 
     public AnimationPane(LayeredPanelList panelList) throws IOException {
+        this.lpl = panelList;
         init();
     }
 
@@ -83,10 +87,20 @@ public class AnimationPane extends JPanel {
 		play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(new JPanel(),
-						"If I were a real button I would play an animation",
-						"Play Button",
-						JOptionPane.OK_OPTION);
+
+                BufferedImage[] b = new BufferedImage[0];
+                Vector<BufferedImage> images = new Vector<BufferedImage>();
+
+                for(LayeredPanel lp : lpl.getArray()){
+                    images.add(lp.paneToBufferedImg());
+                }
+
+
+                AnimationPlayerPanel app = new AnimationPlayerPanel(images.toArray(b));
+
+                JOptionPane.showOptionDialog(context, app, "Your Animation",
+                        JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, new Object[0], null);
 			}
 		});
         this.add(play);
@@ -111,6 +125,7 @@ public class AnimationPane extends JPanel {
      * Iterates through an array list of images to set the thumbnail frame
      */
     private void loadedFrameHolder(LayeredPanelList lpl) {
+        this.lpl = lpl;
         int index = 1;
      //   System.out.println(lpl.getSize());
         frameHolder.removeAll(); // clears everything
@@ -137,7 +152,7 @@ public class AnimationPane extends JPanel {
     
     /**
      * Public method for updating the animation frame
-     * @param lp
+     * @param lpl
      */
     
     /*
