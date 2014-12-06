@@ -2,9 +2,6 @@ package pantimator;
 
 import java.awt.*;
 
-/**
- * Created by wilhelmi on 11/11/14.
- */
 public enum CanvasCursor {
     PENCIL {
         @Override
@@ -68,6 +65,14 @@ public enum CanvasCursor {
             return cursor;
         }
     },
+    BUCKET {
+        @Override
+        public Cursor getCursor() {
+            cursorImg = toolkit.createImage(CanvasCursor.class.getResource(BUCKET_IMG));
+            cursor = toolkit.createCustomCursor(cursorImg,hotspot,"Bucket");
+            return cursor;
+        }
+    },
     DEFAULT{
         @Override
         public Cursor getCursor(){
@@ -78,11 +83,12 @@ public enum CanvasCursor {
 
     private static final String PENCIL_IMG = "images/pencil.png",
         ERASER_IMG = "images/eraser.png",
-        LINE_IMG = "images/line.png",
+        LINE_IMG = "images/lineCursor.png",
         TEXT_IMG = "images/text.png",
-        CIRCLE_IMG = "images/circle.png",
-        RECTANGLE_IMG = "images/rectangle.png",
-        TRIANGLE_IMG = "images/triangle.png";
+        CIRCLE_IMG = "images/cirCursor.png",
+        RECTANGLE_IMG = "images/recCursor.png",
+        TRIANGLE_IMG = "images/triangle.png",
+    	BUCKET_IMG = "images/bucketCursor.png";
 
     private static Point hotspot = new Point(0,0);
     private static Toolkit toolkit = Toolkit.getDefaultToolkit();

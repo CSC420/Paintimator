@@ -603,7 +603,7 @@ public class OptionsPanel extends JPanel{
 	        		op.addBucketOptions();
 	        	}
 	        	public void updateListener(OptionsPanel op){
-	        		//op.master.setListenerState(7);
+	        		op.master.setListenerState(9);
 	        	}
 	        },
 	        
