@@ -1,27 +1,26 @@
 package pantimator;
 
-import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class LayeredPanelList extends ArrayList<LayeredPanel> implements Serializable{
     private static final long serialVersionUID = 000006;
-
     private ArrayList<LayeredPanel> alLayeredPanels;
     private int intNumberOfPanels = 0;
     private int intSelectedPanel = 0;
 
     LayeredPanelList(){
         alLayeredPanels = new ArrayList<LayeredPanel>();
-
     }
 
     public boolean add(LayeredPanel panelIn){
-        this.alLayeredPanels.add(panelIn);
+        alLayeredPanels.add(panelIn);
         intSelectedPanel = intNumberOfPanels;
         intNumberOfPanels ++;
+        
         return true;
     }
+    
 
     public void setSelectedPanel(int selectedPanel){
         this.intSelectedPanel = selectedPanel;
@@ -38,20 +37,21 @@ public class LayeredPanelList extends ArrayList<LayeredPanel> implements Seriali
     }
 
     public LayeredPanel getPrev(){
+
         if(this.intSelectedPanel > 0){
-           return this.alLayeredPanels.get(this.intSelectedPanel);
+        	 intSelectedPanel --;
+        	 return this.getSelected();
         }else{
-            this.intSelectedPanel --;
-            return this.alLayeredPanels.get(this.intSelectedPanel);
+        	return this.getSelected();
         }
     }
 
     public LayeredPanel getNext(){
         if(this.intSelectedPanel == (this.intNumberOfPanels - 1 )){
-            return this.alLayeredPanels.get(this.intSelectedPanel);
+        	return this.getSelected();
         }else{
-            this.intNumberOfPanels ++;
-            return this.alLayeredPanels.get(this.intSelectedPanel);
+            this.intSelectedPanel ++;
+            return this.getSelected();
         }
     }
 

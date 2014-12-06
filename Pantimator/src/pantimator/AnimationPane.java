@@ -9,11 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.HashMap;
-=======
 import java.util.Vector;
->>>>>>> master
 
 public class AnimationPane extends JPanel {
 
@@ -34,10 +31,10 @@ public class AnimationPane extends JPanel {
      * This is a constructor
      * @throws IOException 
      */
-<<<<<<< HEAD
+
     public AnimationPane(Paintimator painter) throws IOException {
     	this.painter = painter;
-=======
+    }
 /*    public AnimationPane() throws IOException {
 >>>>>>> master
         init();

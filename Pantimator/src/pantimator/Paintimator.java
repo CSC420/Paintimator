@@ -1,31 +1,18 @@
 package pantimator;
 
-<<<<<<< HEAD
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Toolkit;
-=======
-import javax.imageio.ImageIO;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
-import java.awt.*;
->>>>>>> master
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-<<<<<<< HEAD
-import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -34,13 +21,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
-=======
->>>>>>> master
+
 
 public class Paintimator extends JFrame{
 	private static final long serialVersionUID = -9178351480074121591L;
@@ -60,8 +45,6 @@ public class Paintimator extends JFrame{
 	private StorageUtil su;
 	private LayeredPanelList layeredPanelList;
 	private JButton backPage, fwdPage;
-	private int totalPages = 0;
-	private int currentPage = 0;
 	
 	private GridBagConstraints gbc;
 	private int height = 900;
@@ -74,15 +57,7 @@ public class Paintimator extends JFrame{
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setTitle(FRAME_TITLE);
-
 		
-		su = new StorageUtil(this);
-		layeredPanelList = new LayeredPanelList();
-		fc = new JFileChooser();
-		fc.addChoosableFileFilter(new ImageFilter());
-		fc.setAcceptAllFileFilterUsed(false);
-		
-
 		//create a contentPane that can hold an image
         contentPane = new BackgroundPanel("images/background.png");
         contentPane.setLayout(new BorderLayout());
@@ -103,8 +78,6 @@ public class Paintimator extends JFrame{
 		layeredPanel = new LayeredPanel();
 		layeredPanel.setDrawColor(Color.BLACK);
 		layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
-		layeredPanelList.add(layeredPanel);
-		//listener
 		myListener = new Listener(layeredPanel);
 		layeredPanel.addMouseListener(myListener);
 		layeredPanel.addMouseMotionListener(myListener);
@@ -117,15 +90,18 @@ public class Paintimator extends JFrame{
 
 
 		//animation panel
-<<<<<<< HEAD
-		animationPane = new AnimationPane(this);
-		//animationPane.setPreferredSize(new Dimension(width-450, 150));
-=======
 		animationPane = new AnimationPane(layeredPanelList);
-		animationPane.setPreferredSize(new Dimension(width-450, 150));
->>>>>>> master
+		//animationPane.setPreferredSize(new Dimension(width-450, 150));
 		animationPane.setOpaque(false);
-
+		
+		su = new StorageUtil(this);
+		layeredPanelList = new LayeredPanelList();
+		fc = new JFileChooser();
+		fc.addChoosableFileFilter(new ImageFilter());
+		fc.setAcceptAllFileFilterUsed(false);
+		layeredPanelList.add(layeredPanel);
+		
+		
 		//side panel
 		sidePanel = new JPanel(new GridBagLayout());
 		optionsPanel = new OptionsPanel(this);
@@ -142,7 +118,6 @@ public class Paintimator extends JFrame{
 		menu = new MyMenu(this);
 		this.setJMenuBar(menu);
 
-		
 
 		//add everything to correct locations
 		gbc = new GridBagConstraints();
@@ -241,21 +216,22 @@ public class Paintimator extends JFrame{
 		layeredPanel.setCanvasCursor(c);
 	}
 	
-	public void setCurrentCanvas(LayeredPanel lp){
+	public void setCurrentCanvasListener(LayeredPanel lp){
 		myListener.updateLayeredPanel(lp);
+		
 	}
 	
 	private void createButtons(){
 		java.net.URL buttonIcon = Paintimator.class.getResource("images/BackPage.png");
 		backPage = new JButton(new ImageIcon(buttonIcon));
-		backPage.addActionListener(new ActionListener(){
+		
+		backPage.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(currentPage < totalPages){
-					setCurrentCanvas(layeredPanelList.getPrev());
-					
-				}
-				
+				centerPanel.remove(layeredPanelList.getSelected());	
+				LayeredPanel tmp = layeredPanelList.getPrev();
+				refreshDrawPanel(tmp);
+				setCurrentCanvasListener(tmp);
 			}	
 		});
 		buttonIcon = Paintimator.class.getResource("images/FwPage.png");
@@ -265,8 +241,10 @@ public class Paintimator extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				setCurrentCanvas(layeredPanelList.getNext());
-				
+				centerPanel.remove(layeredPanelList.getSelected());	
+				LayeredPanel tmp = layeredPanelList.getNext();
+				refreshDrawPanel(tmp);
+				setCurrentCanvasListener(tmp);
 			}		
 		});
 	}
@@ -360,14 +338,11 @@ public class Paintimator extends JFrame{
 				layeredPanel = new LayeredPanel();
 				layeredPanel.addMouseListener(myListener);
 				layeredPanel.addMouseMotionListener(myListener);
-				this.setCurrentCanvas(layeredPanel);
+				this.setCurrentCanvasListener(layeredPanel);
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
 				
 				refreshDrawPanel(layeredPanelList.getSelected());
-				
-				totalPages++;
-				currentPage = totalPages;
 				break;
 			case JOptionPane.NO_OPTION :
 				centerPanel.remove(layeredPanelList.getSelected());
@@ -376,7 +351,7 @@ public class Paintimator extends JFrame{
 				layeredPanel = new LayeredPanel();
 				layeredPanel.addMouseListener(myListener);
 				layeredPanel.addMouseMotionListener(myListener);
-				this.setCurrentCanvas(layeredPanel);
+				this.setCurrentCanvasListener(layeredPanel);
 				layeredPanel.setDrawColor(Color.BLACK);
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
