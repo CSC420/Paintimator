@@ -55,7 +55,6 @@ public class ToolPanel extends JPanel {
 				button.start();
 				newSelectedButton = line;
 				changeButtonColors();
-				master.setListenerState(1);
 				op.setState(OptionsPanel.State.LINE);
 			}
 		});
@@ -74,7 +73,6 @@ public class ToolPanel extends JPanel {
 				button.start();
 				newSelectedButton = circle;
 				changeButtonColors();
-				master.setListenerState(5);
 				op.setState(OptionsPanel.State.CIRCLE);
 			}
 		});
@@ -91,7 +89,6 @@ public class ToolPanel extends JPanel {
 				button.start();
 				newSelectedButton = square;
 				changeButtonColors();
-				master.setListenerState(6);
 				op.setState(OptionsPanel.State.SQUARE);
 			}
 		});
@@ -108,7 +105,6 @@ public class ToolPanel extends JPanel {
 				button.start();
 				newSelectedButton = triangle;
 				changeButtonColors();
-				master.setListenerState(3);
 				op.setState(OptionsPanel.State.TRIANGLE);
 			}
 		});
@@ -118,7 +114,7 @@ public class ToolPanel extends JPanel {
 		draw = new RoundButton( new ImageIcon(buttonIcon));
 		buttonIcon = ToolPanel.class.getResource("images/whiteDraw.png");
 		draw.setSelectedIcon(new ImageIcon(buttonIcon));
-		draw.setPressedIcon(new ImageIcon(buttonIcon));
+		//draw.setPressedIcon(new ImageIcon(buttonIcon));
 		draw.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -126,7 +122,6 @@ public class ToolPanel extends JPanel {
 				button.start();
 				newSelectedButton = draw;
 				changeButtonColors();
-			//	master.setListenerState(2);
 				op.setState(OptionsPanel.State.DRAW);
 			}
 		});  
@@ -145,7 +140,6 @@ public class ToolPanel extends JPanel {
 				button.start();
 				newSelectedButton = text;
 				changeButtonColors();
-				master.setListenerState(7);
 				op.setState(OptionsPanel.State.TEXT);
 			}
 		});
@@ -155,7 +149,7 @@ public class ToolPanel extends JPanel {
 		erase = new RoundButton( new ImageIcon(buttonIcon));
 		buttonIcon = ToolPanel.class.getResource("images/whiteEraser.png");
 		erase.setSelectedIcon(new ImageIcon(buttonIcon));
-		erase.setPressedIcon(new ImageIcon(buttonIcon));
+		//erase.setPressedIcon(new ImageIcon(buttonIcon));
 		erase.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -163,7 +157,6 @@ public class ToolPanel extends JPanel {
 				button.start();
 				newSelectedButton = erase;
 				changeButtonColors();
-				master.setListenerState(4);
 				op.setState(OptionsPanel.State.ERASE);
 			}
 		});
@@ -173,7 +166,7 @@ public class ToolPanel extends JPanel {
 		paint = new RoundButton( new ImageIcon(buttonIcon));
 		buttonIcon = ToolPanel.class.getResource("images/whitePaint.png");
 		paint.setSelectedIcon(new ImageIcon(buttonIcon));
-		paint.setPressedIcon(new ImageIcon(buttonIcon));
+		//paint.setPressedIcon(new ImageIcon(buttonIcon));
 		paint.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -181,7 +174,7 @@ public class ToolPanel extends JPanel {
 				button.start();
 				newSelectedButton = paint;
 				changeButtonColors();
-			//	master.setListenerState(8);
+
 				op.setState(OptionsPanel.State.PAINT);
 			}
 		});
@@ -192,16 +185,15 @@ public class ToolPanel extends JPanel {
 		bucket = new RoundButton( new ImageIcon(buttonIcon));
 		buttonIcon = ToolPanel.class.getResource("images/whiteBucket.png");
 		bucket.setSelectedIcon(new ImageIcon(buttonIcon));
-		bucket.setPressedIcon(new ImageIcon(buttonIcon));
+		//bucket.setPressedIcon(new ImageIcon(buttonIcon));
 		bucket.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				button.stop();
 				button.start();
 				newSelectedButton = bucket;
-
 				changeButtonColors();
-				//	master.setListenerState(8);
+
 				//op.setState(OptionsPanel.State.PAINT);
 			}
 		});
@@ -210,7 +202,7 @@ public class ToolPanel extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.VERTICAL;
 
-		c.insets = new Insets(2,10,2,10);
+		c.insets = new Insets(3,0,3,0);
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 2;

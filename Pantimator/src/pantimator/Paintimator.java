@@ -205,12 +205,9 @@ public class Paintimator extends JFrame{
 
 	public void setDrawColor(Color c){
 		layeredPanelList.getSelected().setDrawColor(c);
-		this.setSidePanelColor(c);
+		optionsPanel.setButtonBackgroundColor(c);
 	}
-	
-	private void setSidePanelColor(Color c){
-		sidePanel.setBackground(c);
-	}
+
 
 	//methods to load and save canvas
 	public void loadImage(){
