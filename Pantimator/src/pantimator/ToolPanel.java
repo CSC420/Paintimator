@@ -110,7 +110,11 @@ public class ToolPanel extends JPanel {
 		});
 
 		//Draw
+<<<<<<< HEAD
 		buttonIcon = ToolPanel.class.getResource("images/whiteDraw.png");
+=======
+		buttonIcon = ToolPanel.class.getResource("images/drawgreenButton.png");
+>>>>>>> master
 		draw = new RoundButton( new ImageIcon(buttonIcon));
 		buttonIcon = ToolPanel.class.getResource("images/whiteDraw.png");
 		draw.setSelectedIcon(new ImageIcon(buttonIcon));

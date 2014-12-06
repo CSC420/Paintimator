@@ -1,5 +1,6 @@
 package pantimator;
 
+<<<<<<< HEAD
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -11,11 +12,18 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+=======
+import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+import java.awt.*;
+>>>>>>> master
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+<<<<<<< HEAD
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -31,6 +39,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+=======
+>>>>>>> master
 
 public class Paintimator extends JFrame{
 	private static final long serialVersionUID = -9178351480074121591L;
@@ -107,8 +117,13 @@ public class Paintimator extends JFrame{
 
 
 		//animation panel
+<<<<<<< HEAD
 		animationPane = new AnimationPane(this);
 		//animationPane.setPreferredSize(new Dimension(width-450, 150));
+=======
+		animationPane = new AnimationPane(layeredPanelList);
+		animationPane.setPreferredSize(new Dimension(width-450, 150));
+>>>>>>> master
 		animationPane.setOpaque(false);
 
 		//side panel
@@ -287,11 +302,11 @@ public class Paintimator extends JFrame{
 					BufferedImage bi = layeredPanel.paneToBufferedImg();
 					ImageIO.write(bi, ext, savedPane);
 				} catch (IOException e1) {
-					JOptionPane.showMessageDialog(new JPanel(), "Image could not be saved.",
+					JOptionPane.showMessageDialog(this, "Image could not be saved.",
 							"Image error", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(new JPanel(), "Extension not accepted. Please choose a new one.",
+				JOptionPane.showMessageDialog(this, "Extension not accepted. Please choose a new one.",
 						"Extension error", JOptionPane.ERROR_MESSAGE);
 				saveImage(e);
 			}
@@ -328,7 +343,7 @@ public class Paintimator extends JFrame{
 	 * TODO will work on this after layeredpanellist returns an array larger than 0
 	 */
 	public void newFrame() {
-		int i = JOptionPane.showOptionDialog(new JPanel(), 
+		int i = JOptionPane.showOptionDialog(this,
 				"Do you want to save this frame?", 
 				"Save Frame", 
 				JOptionPane.YES_NO_CANCEL_OPTION,
@@ -405,14 +420,14 @@ public class Paintimator extends JFrame{
 					frame = new Paintimator();
 					frame.setVisible(true);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+                    System.exit(1);
 				} catch (UnsupportedAudioFileException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+                    System.exit(1);
 				} catch (LineUnavailableException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+                    System.exit(1);
 				}
 
 			}
