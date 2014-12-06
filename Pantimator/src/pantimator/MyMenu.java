@@ -26,8 +26,8 @@ public class MyMenu extends JMenuBar{
 		master = p;
 		@SuppressWarnings("unused")
 		
-		JButton jbNewFrame = createButton("images/newFrame32.png", "New Frame");
-		JButton jbNewProject = createButton("images/newProject322.png", "New Project");
+		JButton jbNewFrame = createButton("images/newFrame32.png", "New Page");
+		JButton jbNewProject = createButton("images/newProject322.png", "New Notebook");
 		JButton jbSave = createButton("images/save32.png", "Save");
 		JButton jbOpen = createButton("images/open32.png", "Open");
 		JButton jbUndo = createButton("images/arrow_undo.png", "Undo");
