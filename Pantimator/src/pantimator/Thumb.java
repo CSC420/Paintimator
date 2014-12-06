@@ -19,28 +19,30 @@ public class Thumb extends JPanel implements MouseListener {
 	private Image image;
 	private AnimationPane ap;
 	private boolean isFocused = false;
+	private int index;
 
-    public Thumb(AnimationPane ap, Image img) {
+    public Thumb(AnimationPane ap, Image img, int i) {
     	this.ap = ap;
         image = img;
+        index = i;
         init();
     }
 
-    public static Thumb newInstance(AnimationPane ap, Image img) {
-		Thumb tp = new Thumb(ap, img);
+    public static Thumb newInstance(AnimationPane ap, Image img, int i) {
+		Thumb tp = new Thumb(ap, img, i);
 		return tp;
 	}
 	
     private void init() {
     	addMouseListener(this);
-		this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.GRAY, Color.BLACK));
+    	this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     }
     
     private void setFocusBorder() {
     	if (!isFocused) {
-			this.setBorder(BorderFactory.createLineBorder(Color.CYAN));
+			//this.setBorder(BorderFactory.createLineBorder(Color.CYAN));
 		} else {
-			this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.GRAY, Color.BLACK));
+			this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		}
     	
     	isFocused = !isFocused;
@@ -68,19 +70,20 @@ public class Thumb extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		notifyAP();		
+		ap.thumbSelected(this.index);
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		if (!isFocused) {
-			this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.CYAN, Color.BLACK));
+			//this.setBorder(BorderFactory.createLineBorder(Color.CYAN, 2));
 		}
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		if (!isFocused) {
-			this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.GRAY, Color.BLACK));
+			//this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		}
 	}
 

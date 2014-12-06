@@ -104,16 +104,18 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         s.setTimeStamp(System.nanoTime());
         toDrawOnCanvas.add(s);
         canvas.repaint();
-
+      
     }
 
     public void drawOnGlassPane(ShapeWrapper s){
+    	
         glass.setBounds(0,0,getWidth(),getHeight());
         s.setLineSize(brushSize);
         s.setColor(drawColor);
         s.setTimeStamp(System.nanoTime());
         toDrawOnGlass.add(s);
         glass.repaint();
+        
     }
 
     public void clearRootPane(){

@@ -21,7 +21,28 @@ public class LayeredPanelList extends ArrayList<LayeredPanel> implements Seriali
         return true;
     }
     
+    public boolean remove(LayeredPanel panelOut){
+    	boolean tmp = alLayeredPanels.remove(panelOut);
+        intNumberOfPanels --;
+        intSelectedPanel = intNumberOfPanels-1;
+        return tmp;
+    }
 
+    public boolean isAtEnd(){
+    	if(intNumberOfPanels == intSelectedPanel+1){
+    		return true;
+    	}
+    	return false;
+    }
+    public boolean isAtStart(){
+    	if(intSelectedPanel==0){
+    		return true;
+    	}
+    	return false;
+    }
+    
+    
+    
     public void setSelectedPanel(int selectedPanel){
         this.intSelectedPanel = selectedPanel;
     }

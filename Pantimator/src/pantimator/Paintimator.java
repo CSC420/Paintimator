@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -29,7 +30,7 @@ import javax.swing.WindowConstants;
 
 public class Paintimator extends JFrame{
 	private static final long serialVersionUID = -9178351480074121591L;
-	
+	private Paintimator context = this;
 	private final String FRAME_TITLE = "Paintimator!";
 	private BackgroundPanel contentPane;
 	private JPanel centerPanel;
@@ -90,7 +91,7 @@ public class Paintimator extends JFrame{
 
 
 		//animation panel
-		animationPane = new AnimationPane(layeredPanelList);
+		animationPane = new AnimationPane(layeredPanelList, this);
 		//animationPane.setPreferredSize(new Dimension(width-450, 150));
 		animationPane.setOpaque(false);
 		
@@ -100,6 +101,7 @@ public class Paintimator extends JFrame{
 		fc.addChoosableFileFilter(new ImageFilter());
 		fc.setAcceptAllFileFilterUsed(false);
 		layeredPanelList.add(layeredPanel);
+		animationPane.updateAnimation(layeredPanelList, 1);
 		
 		
 		//side panel
@@ -221,30 +223,77 @@ public class Paintimator extends JFrame{
 		
 	}
 	
+	public void updateThumbs(){
+		animationPane.updateAnimation(layeredPanelList, 1);
+	}
+	
+	public void thumbSelect(int index){
+		centerPanel.remove(layeredPanelList.getSelected());	
+		LayeredPanel tmp = layeredPanelList.get(index);
+		animationPane.updateAnimation(layeredPanelList, index +1);
+		refreshDrawPanel(tmp);
+		setCurrentCanvasListener(tmp);
+	}
+	
+	
 	private void createButtons(){
 		java.net.URL buttonIcon = Paintimator.class.getResource("images/BackPage.png");
 		backPage = new JButton(new ImageIcon(buttonIcon));
-		
+		backPage.setToolTipText("Previous Page");
 		backPage.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				centerPanel.remove(layeredPanelList.getSelected());	
 				LayeredPanel tmp = layeredPanelList.getPrev();
+				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel() +1);
 				refreshDrawPanel(tmp);
 				setCurrentCanvasListener(tmp);
+				
 			}	
 		});
 		buttonIcon = Paintimator.class.getResource("images/FwPage.png");
 		
 		fwdPage = new JButton(new ImageIcon(buttonIcon));
+		fwdPage.setToolTipText("Next Page");
 		fwdPage.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(layeredPanelList.isAtEnd()){
+					int i = JOptionPane.showOptionDialog(context,
+							"Do you want to add a new page?", 
+							"Next Page", 
+							JOptionPane.OK_CANCEL_OPTION,
+							JOptionPane.QUESTION_MESSAGE,
+							null,
+							new String[]{"New Page", "Cancel"},
+							"default");
+					
+					switch (i) {
+						case JOptionPane.OK_OPTION :	
+							centerPanel.remove(layeredPanelList.getSelected());
+							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
+							layeredPanel = new LayeredPanel();
+							layeredPanel.addMouseListener(myListener);
+							layeredPanel.addMouseMotionListener(myListener);
+							layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
+							layeredPanelList.add(layeredPanel);
+							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
+							refreshDrawPanel(layeredPanelList.getSelected());
+							setCurrentCanvasListener(layeredPanel);
+							break;
+						default :
+							break;
+					}
+					
+				}else{
+				
 				centerPanel.remove(layeredPanelList.getSelected());	
 				LayeredPanel tmp = layeredPanelList.getNext();
+				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel() +1);
 				refreshDrawPanel(tmp);
 				setCurrentCanvasListener(tmp);
+				}
 			}		
 		});
 	}
@@ -309,7 +358,7 @@ public class Paintimator extends JFrame{
 
 		if(lpTemp != null){
 			centerPanel.remove(layeredPanelList.getSelected());
-			animationPane.updateAnimation(lpTemp);
+			animationPane.updateAnimation(lpTemp, 1);
 			refreshDrawPanel(lpTemp.getSelected());
 			layeredPanelList = lpTemp;
 		}
@@ -333,7 +382,7 @@ public class Paintimator extends JFrame{
 		switch (i) {
 			case JOptionPane.YES_OPTION :	
 				centerPanel.remove(layeredPanelList.getSelected());
-				animationPane.updateAnimation(layeredPanelList);
+				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 				
 				layeredPanel = new LayeredPanel();
 				layeredPanel.addMouseListener(myListener);
@@ -341,11 +390,12 @@ public class Paintimator extends JFrame{
 				this.setCurrentCanvasListener(layeredPanel);
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
-				
+				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 				refreshDrawPanel(layeredPanelList.getSelected());
 				break;
 			case JOptionPane.NO_OPTION :
 				centerPanel.remove(layeredPanelList.getSelected());
+				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 				layeredPanelList.remove(layeredPanelList.getSelected());
 				
 				layeredPanel = new LayeredPanel();
@@ -355,10 +405,10 @@ public class Paintimator extends JFrame{
 				layeredPanel.setDrawColor(Color.BLACK);
 				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 				layeredPanelList.add(layeredPanel);
-				
+				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 				
 				refreshDrawPanel(layeredPanelList.getSelected());
-				animationPane.updateAnimation(layeredPanelList);
+				
 				break;
 			default :
 				break;

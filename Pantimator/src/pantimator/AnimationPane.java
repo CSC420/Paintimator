@@ -27,29 +27,19 @@ public class AnimationPane extends JPanel {
     HashMap<Thumb, LayeredPanel> thumbMap;
     GridBagConstraints gbc = new GridBagConstraints();
 
-    /**
-     * This is a constructor
-     * @throws IOException 
-     */
 
     public AnimationPane(Paintimator painter) throws IOException {
     	this.painter = painter;
     }
-/*    public AnimationPane() throws IOException {
->>>>>>> master
-        init();
-    }*/
 
-    /**
-     * Constructor that will be able to take a LayeredPanelList and parse through it for
-     * frames
-     * @param panelList
-     * @throws IOException 
-     */
-
-    public AnimationPane(LayeredPanelList panelList) throws IOException {
+    public AnimationPane(LayeredPanelList panelList, Paintimator p) throws IOException {
         this.lpl = panelList;
+        painter = p;
         init();
+    }
+    
+    public void thumbSelected(int index){
+    	painter.thumbSelect(index-1);
     }
 
     private void init() throws IOException {
@@ -79,11 +69,9 @@ public class AnimationPane extends JPanel {
     private void playButton() throws IOException {
 		// TODO Add play button functionality
     	RoundButton play;
-		
-    	//BufferedImage buttonIcon = ImageIO.read(new File("images/white-Button.png"));
 		java.net.URL imageURL = AnimationPane.class.getResource("images/white-Button.png");
 		  if (imageURL == null) {
-			 System.out.println("Issue HERE loading play button in Animation Pane"); 
+			 System.out.println("Issue loading play button in Animation Pane"); 
 		  }
 		 play = new RoundButton(new ImageIcon(imageURL));
 		 play.addActionListener(new ActionListener() {
@@ -111,13 +99,13 @@ public class AnimationPane extends JPanel {
     /*
      * Iterates through an array list of images to set the thumbnail frame
      */
-    private void loadedFrameHolder(LayeredPanelList lpl) {
+    private void loadedFrameHolder(LayeredPanelList lpl, int selected) {
         this.lpl = lpl;
         int index = 1;
         frameHolder.removeAll(); // clears everything
         for (LayeredPanel lp : lpl.getArray()) {        	
         	Image img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
-        	newThumb(img, index);
+        	newThumb(img, index, selected);
         	thumbMap.put(thumbPanel, lp);
             index++;
         }
@@ -126,10 +114,13 @@ public class AnimationPane extends JPanel {
     /*
      * Creates a new thumbnail frame and adds it to the frame holder
      */
-    private void newThumb(Image img, int index) {
-    	thumbPanel = Thumb.newInstance(this, img);
+    private void newThumb(Image img, int index, int selected) {
+    	thumbPanel = Thumb.newInstance(this, img, index);
         thumbPanel.setToolTipText("Frame #" + index);
         thumbPanel.setPreferredSize(new Dimension(75, 75));
+        if(index == selected){
+        	thumbPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        }
         frameHolder.add(thumbPanel);
     }
     
@@ -137,8 +128,8 @@ public class AnimationPane extends JPanel {
      * Public method for updating the animation frame
      * @param lpl
      */
-    public void updateAnimation(LayeredPanelList lpl) { 
-        loadedFrameHolder(lpl);
+    public void updateAnimation(LayeredPanelList lpl, int selected) { 
+        loadedFrameHolder(lpl, selected);
     }
     
     public void updateThumbArray(Thumb thumb) {
