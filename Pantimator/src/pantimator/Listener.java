@@ -58,7 +58,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
             layeredPanel.setCanvasCursor(CanvasCursor.TEXT);
         }else if(num == 8){
             currentState = LisState.MAGIC;
-            layeredPanel.setCanvasCursor(CanvasCursor.DEFAULT);
+            layeredPanel.setCanvasCursor(CanvasCursor.PAINT);
         }else if(num == 9){
 
             layeredPanel.setCanvasCursor(CanvasCursor.BUCKET);
