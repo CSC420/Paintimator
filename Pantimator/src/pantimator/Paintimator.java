@@ -51,7 +51,7 @@ public class Paintimator extends JFrame{
 	private int height = 900;
 	private int width = 1440;
 	
-	private boolean debug = true;
+	private boolean debug = false;
 
 	public Paintimator() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super();
@@ -60,7 +60,7 @@ public class Paintimator extends JFrame{
 		this.setTitle(FRAME_TITLE);
 		
 		//create a contentPane that can hold an image
-        contentPane = new BackgroundPanel("images/background.png");
+        contentPane = new BackgroundPanel("images/background2.png");
         contentPane.setLayout(new BorderLayout());
 		
 
@@ -114,7 +114,7 @@ public class Paintimator extends JFrame{
 		optionsPanel.setOpaque(false);
 		cwPanel.setOpaque(false);
 		sidePanel.setOpaque(false);
-		sidePanel.setPreferredSize(new Dimension(300, height));
+		sidePanel.setPreferredSize(new Dimension(280, height));
 
 		//menu bar
 		menu = new MyMenu(this);
