@@ -87,7 +87,7 @@ public class Paintimator extends JFrame{
 		centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerPanel.setOpaque(false);
-		//this.createButtons();
+		this.createButtons();
 
 
 		//animation panel
