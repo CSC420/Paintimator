@@ -20,12 +20,13 @@ public class AnimationPane extends JPanel {
 	Image img;
 	LayeredPanelList lpl;
 	JScrollPane scrollframeHolder;
-    JPanel frameHolder;
+    JPanel frameHolder, btnHolder;
     Thumb thumbPanel;
     Paintimator painter;
-	JButton play;
+	JButton play, btn05x, btn10x, btn15x;
     HashMap<Thumb, LayeredPanel> thumbMap;
     GridBagConstraints gbc = new GridBagConstraints();
+    private int frameRate = 200;
 
 
     public AnimationPane(Paintimator painter) throws IOException {
@@ -73,6 +74,72 @@ public class AnimationPane extends JPanel {
 		  if (imageURL == null) {
 			 System.out.println("Issue loading play button in Animation Pane"); 
 		  }
+		 //Mark
+		  btnHolder = new JPanel(new GridBagLayout());
+		  btnHolder.setOpaque(false);
+		  
+		  
+		  btn05x = new JButton("0.5x"); 
+		  btn05x.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+		  btn05x.setBackground(Color.black);
+		  btn05x.addActionListener(new ActionListener(){
+			  @Override
+				public void actionPerformed(ActionEvent e) {
+				  
+				  btn05x.setBackground(Color.blue);
+				  frameRate = 100;
+				  
+				  if(btn10x != null){
+					  btn10x.setBackground(Color.black);
+				  }
+				  
+				  if(btn15x != null){
+					  btn15x.setBackground(Color.black);
+				  }
+			  }
+		  });
+		  
+		  btn10x = new JButton("1.0x"); 
+		  btn10x.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+		  btn10x.setBackground(Color.blue);
+		  btn10x.addActionListener(new ActionListener(){
+			  @Override
+				public void actionPerformed(ActionEvent e) {
+				  
+				  btn10x.setBackground(Color.blue);
+				  frameRate = 200;
+				  
+				  if(btn05x != null){
+					  btn05x.setBackground(Color.black);
+				  }
+				  
+				  if(btn15x != null){
+					  btn15x.setBackground(Color.black);
+				  }
+			  }
+		  });
+		  
+		  btn15x = new JButton("1.5x"); 
+		  btn15x.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+		  btn15x.setBackground(Color.black);
+		  btn15x.addActionListener(new ActionListener(){
+			  @Override
+				public void actionPerformed(ActionEvent e) {
+				  
+				  btn15x.setBackground(Color.blue);
+				  frameRate = 300;
+				  
+				  if(btn10x != null){
+					  btn10x.setBackground(Color.black);
+				  }
+				  
+				  if(btn05x != null){
+					  btn05x.setBackground(Color.black);
+				  }
+			  }
+		  });
+		  
+		  
 		 play = new JButton(new ImageIcon(imageURL));
 		 play.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 		 play.setOpaque(true);
@@ -90,14 +157,42 @@ public class AnimationPane extends JPanel {
                 }
 
 
-                AnimationPlayerPanel app = new AnimationPlayerPanel(images.toArray(b));
+                AnimationPlayerPanel app = new AnimationPlayerPanel(images.toArray(b), frameRate);
 
                 JOptionPane.showOptionDialog(context, app, "Your Animation",
                         JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, new Object[0], null);
 			}
 		});
-        this.add(play);
+		 
+		 gbc.gridx = 0;
+		 gbc.gridy = 0;
+		 gbc.gridheight = 1;
+		 gbc.gridwidth = 3;
+		 btnHolder.add(play, gbc);
+		 
+		 gbc.gridx = 0;
+		 gbc.gridy = 1;
+		 gbc.gridheight = 1;
+		 gbc.gridwidth = 1;
+		 btnHolder.add(btn05x, gbc);
+		 
+		 gbc.gridx = 1;
+		 gbc.gridy = 1;
+		 gbc.gridheight = 1;
+		 gbc.gridwidth = 1;
+		 btnHolder.add(btn10x, gbc);
+		 
+		 gbc.gridx = 2;
+		 gbc.gridy = 1;
+		 gbc.gridheight = 1;
+		 gbc.gridwidth = 1;
+		 btnHolder.add(btn15x, gbc);
+		 
+		 this.add(btnHolder);
+		 //this.add(play);
+        //this.add(btn1x);
+        //this.setBackground(Color.blue);
 	}
     
     /*
