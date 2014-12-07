@@ -1,5 +1,10 @@
 package pantimator;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
@@ -10,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
@@ -26,6 +32,7 @@ public class AnimationPane extends JPanel {
     Thumb thumbPanel;
     Paintimator painter;
 	JButton play;
+	private Clip button;
     HashMap<Thumb, LayeredPanel> thumbMap;
     GridBagConstraints gbc = new GridBagConstraints();
 
@@ -34,7 +41,7 @@ public class AnimationPane extends JPanel {
     	this.painter = painter;
     }
 
-    public AnimationPane(LayeredPanelList panelList, Paintimator p) throws IOException {
+    public AnimationPane(LayeredPanelList panelList, Paintimator p) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         this.lpl = panelList;
         painter = p;
         init();
@@ -44,7 +51,7 @@ public class AnimationPane extends JPanel {
     	painter.thumbSelect(index-1);
     }
 
-    private void init() throws IOException {
+    private void init() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         //this.setBorder(new BevelBorder(BevelBorder.LOWERED));
         this.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
         // make frame holder
@@ -62,7 +69,10 @@ public class AnimationPane extends JPanel {
         scrollframeHolder.setOpaque(false);
         
         thumbMap = new HashMap<Thumb, LayeredPanel>();
-        
+        InputStream is = getClass().getResourceAsStream("sounds/button2.wav");
+		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
+        button = AudioSystem.getClip();
+        button.open(ais);
         this.add(scrollframeHolder);
         playButton();
         
@@ -117,7 +127,8 @@ public class AnimationPane extends JPanel {
 		 play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				button.stop();
+				button.start();
                 BufferedImage[] b = new BufferedImage[0];
                 Vector<BufferedImage> images = new Vector<BufferedImage>();
 
