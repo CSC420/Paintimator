@@ -114,7 +114,7 @@ public class Paintimator extends JFrame{
 		optionsPanel.setOpaque(false);
 		cwPanel.setOpaque(false);
 		sidePanel.setOpaque(false);
-		sidePanel.setPreferredSize(new Dimension(280, height));
+		sidePanel.setPreferredSize(new Dimension(220, height));
 
 		//menu bar
 		menu = new MyMenu(this);
