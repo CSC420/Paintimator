@@ -23,7 +23,7 @@ public class AnimationPane extends JPanel {
     JPanel frameHolder;
     Thumb thumbPanel;
     Paintimator painter;
-    
+	JButton play;
     HashMap<Thumb, LayeredPanel> thumbMap;
     GridBagConstraints gbc = new GridBagConstraints();
 
@@ -68,12 +68,16 @@ public class AnimationPane extends JPanel {
 
     private void playButton() throws IOException {
 		// TODO Add play button functionality
-    	RoundButton play;
-		java.net.URL imageURL = AnimationPane.class.getResource("images/white-Button.png");
+
+		java.net.URL imageURL = AnimationPane.class.getResource("images/play.png");
 		  if (imageURL == null) {
 			 System.out.println("Issue loading play button in Animation Pane"); 
 		  }
-		 play = new RoundButton(new ImageIcon(imageURL));
+		 play = new JButton(new ImageIcon(imageURL));
+		 play.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+		 play.setOpaque(true);
+		 play.setContentAreaFilled(false);
+		 play.setBackground(Color.BLACK);
 		 play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

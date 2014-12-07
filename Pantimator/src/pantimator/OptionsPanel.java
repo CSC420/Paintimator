@@ -27,14 +27,14 @@ public class OptionsPanel extends JPanel{
 	private Paintimator master;
 	private State currentState;
 
-	private RoundButton buttonIcon, pencil, crayon, marker, 
+	private RoundButton buttonIcon,buttonIcon2,buttonIcon3, pencil, crayon, marker, 
 						th1, th2, th3, th4, th5,
 						s1, s2, s3, s4, s5, s6, s7, s8, s9,
 						c1, c2, c3, c4, c5, c6, c7, c8, c9,
 						p1,p2,p3,p4,p5,p6,p7,p8,p9,
 						b1,b2,b3,b4,b5,b6,b7,b8,b9,
 						e1,e2,e3,e4,e5,e6,e7,e8,e9,
-						l1,l2,l3,l4,l5,l6,l7,l8,l9,
+						l1,l2,l3,buttonIcon4,
 						t1,t2,t3,t4,t5,t6,t7,t8,t9;
 						
 	
@@ -57,6 +57,9 @@ public class OptionsPanel extends JPanel{
 	
 	private void createAllButtons(){
 		buttonIcon = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/white-Button.png")));
+		buttonIcon2 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/white-Button.png")));
+		buttonIcon3 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/white-Button.png")));
+		buttonIcon4 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/white-Button.png")));
 		pencil = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whitePencil.png")));
 		pencil.addActionListener(new ActionListener() {
 			@Override
@@ -287,6 +290,30 @@ public class OptionsPanel extends JPanel{
 				
 			}
 		});
+		c8 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteCircleBubbles.png")));
+		c8.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = c8;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		c9 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteCircleLatch.png")));
+		c9.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = c9;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
 		e1 = s1;
 		e1.addActionListener(new ActionListener() {
 			@Override
@@ -371,6 +398,90 @@ public class OptionsPanel extends JPanel{
 				
 			}
 		});
+		t9 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteTriangleBrick.png")));
+		t9.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = t9;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		t3 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteTriangleBubbles.png")));
+		t3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = t3;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		t4 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteTriangleChecker.png")));
+		t4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = t4;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		t5 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteTriangleDiamond.png")));
+		t5.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = t5;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		t6 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteTriangleHearts.png")));
+		t6.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = t6;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		t7 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteTriangleLatch.png")));
+		t7.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = t7;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		t8 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteTriangleStripe.png")));
+		t8.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = t8;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
 		p1 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whitePaint6.png")));
 		p1.addActionListener(new ActionListener() {
 			@Override
@@ -438,6 +549,42 @@ public class OptionsPanel extends JPanel{
 				button.stop();
 				button.start();
 				selected = p6;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		p7 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whitePaint7.png")));
+		p7.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = p7;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		p8 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whitePaint8.png")));
+		p8.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = p8;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		p9 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whitePaint9.png")));
+		p9.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = p9;
 				updateListener();
 				changeSelectedOption();
 				
@@ -518,6 +665,43 @@ public class OptionsPanel extends JPanel{
 				
 			}
 		});
+		l1 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteLine1.png")));
+		l1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = l1;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		l2 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteLine2.png")));
+		l2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = l2;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		l3 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteLine3.png")));
+		l3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				button.stop();
+				button.start();
+				selected = l3;
+				updateListener();
+				changeSelectedOption();
+				
+			}
+		});
+		
 	
 	}
 	
@@ -634,6 +818,15 @@ public class OptionsPanel extends JPanel{
 		cc.gridy = 5;
 		this.add(p6, cc);
 		
+		cc.gridy = 6;
+		this.add(p7,cc);
+		
+		cc.gridy = 7;
+		this.add(p8,cc);
+		
+		cc.gridy = 8;
+		this.add(p9,cc);
+		
 		this.revalidate();
 		this.repaint();
 	}
@@ -663,6 +856,15 @@ public class OptionsPanel extends JPanel{
 		
 		cc.gridy = 5;
 		this.add(buttonIcon,cc);
+		
+		cc.gridy = 6;
+		this.add(l1,cc);
+		
+		cc.gridy = 7;
+		this.add(l2,cc);
+		
+		cc.gridy = 8;
+		this.add(l3,cc);
 		
 		
 		this.revalidate();
@@ -725,6 +927,27 @@ public class OptionsPanel extends JPanel{
 		cc.gridx = 0;
 		cc.gridy = 1;
 		this.add(t2, cc);
+		
+		cc.gridy = 2;
+		this.add(t3,cc);
+		
+		cc.gridy = 3;
+		this.add(t4,cc);
+		
+		cc.gridy = 4;
+		this.add(t5,cc);
+		
+		cc.gridy = 5;
+		this.add(t6,cc);
+		
+		cc.gridy = 6;
+		this.add(t7,cc);
+		
+		cc.gridy = 7;
+		this.add(t8,cc);
+		
+		cc.gridy = 8;
+		this.add(t9,cc);
 
 		this.revalidate();
 		this.repaint();
@@ -744,15 +967,31 @@ public class OptionsPanel extends JPanel{
 		
 		cc.gridx = 0;
 		cc.gridy = 2;
-		this.add(e3, cc);
+		this.add(buttonIcon2, cc);
 		
 		cc.gridx = 0;
 		cc.gridy = 3;
-		this.add(e4, cc);
+		this.add(e3, cc);
 		
 		cc.gridx = 0;
 		cc.gridy = 4;
+		this.add(e4, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 5;
+		this.add(buttonIcon, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 6;
 		this.add(e5, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 7;
+		this.add(buttonIcon3, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 8;
+		this.add(buttonIcon4, cc);
 		
 		this.revalidate();
 		this.repaint();
@@ -790,6 +1029,12 @@ public class OptionsPanel extends JPanel{
 		cc.gridy = 6;
 		this.add(c7, cc);
 		
+		cc.gridy = 7;
+		this.add(c8,cc);
+		
+		cc.gridy = 8;
+		this.add(c9,cc);
+		
 
 		this.revalidate();
 		this.repaint();
@@ -802,6 +1047,36 @@ public class OptionsPanel extends JPanel{
 		cc.gridx = 0;
 		cc.gridy = 0;
 		this.add(buttonIcon, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 1;
+		this.add(buttonIcon2, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 2;
+		this.add(buttonIcon3, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 3;
+		this.add(buttonIcon, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 4;
+		this.add(buttonIcon, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 5;
+		this.add(buttonIcon, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 6;
+		this.add(buttonIcon, cc);
+		
+		cc.gridy = 7;
+		this.add(buttonIcon,cc);
+		
+		cc.gridy = 8;
+		this.add(buttonIcon,cc);
 
 		this.revalidate();
 		this.repaint();
@@ -814,6 +1089,36 @@ public class OptionsPanel extends JPanel{
 		cc.gridx = 0;
 		cc.gridy = 0;
 		this.add(buttonIcon, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 1;
+		this.add(buttonIcon2, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 2;
+		this.add(buttonIcon3, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 3;
+		this.add(buttonIcon4, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 4;
+		this.add(buttonIcon, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 5;
+		this.add(buttonIcon, cc);
+		
+		cc.gridx = 0;
+		cc.gridy = 6;
+		this.add(buttonIcon, cc);
+		
+		cc.gridy = 7;
+		this.add(buttonIcon,cc);
+		
+		cc.gridy = 8;
+		this.add(buttonIcon,cc);
 
 		this.revalidate();
 		this.repaint();
