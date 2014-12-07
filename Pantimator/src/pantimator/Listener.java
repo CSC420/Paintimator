@@ -28,42 +28,38 @@ public class Listener implements MouseListener, MouseMotionListener  {
     public Listener(LayeredPanel lp){
         layeredPanel = lp;
         currentState = LisState.NONE;
-
-       // xDrawPoints = new Vector<>();
-       // yDrawPoints = new Vector<>();
+        xDrawPoints = new Vector<Integer>();
+        yDrawPoints = new Vector<Integer>();
 
         registerShiftListener();
     }
+    
+    
 
     public void setLisState(int num){
         if(num == 1){
             currentState = LisState.LINE;
-            layeredPanel.setCanvasCursor(CanvasCursor.LINE);
         }else if(num == 2){
             currentState = LisState.DRAW;
-            layeredPanel.setCanvasCursor(CanvasCursor.PENCIL);
         }else if(num == 3){
             currentState = LisState.TRIANGLE;
-            layeredPanel.setCanvasCursor(CanvasCursor.TRIANGLE);
         }else if(num == 4){
             currentState = LisState.ERASE;
-            layeredPanel.setCanvasCursor(CanvasCursor.ERASER);
         }else if(num == 5){
             currentState = LisState.CIRCLE;
-            layeredPanel.setCanvasCursor(CanvasCursor.CIRCLE);
         }else if(num == 6){
             currentState = LisState.SQUARE;
-            layeredPanel.setCanvasCursor(CanvasCursor.RECTANGLE);
         }else if(num == 7){
             currentState = LisState.TEXT;
-            layeredPanel.setCanvasCursor(CanvasCursor.TEXT);
         }else if(num == 8){
             currentState = LisState.MAGIC;
-            layeredPanel.setCanvasCursor(CanvasCursor.DEFAULT);
         }else{
             currentState = LisState.NONE;
-            layeredPanel.setCanvasCursor(CanvasCursor.DEFAULT);
         }
+    }
+    
+    public void updateLayeredPanel(LayeredPanel lp){
+    	layeredPanel = lp;
     }
 
     @Override
@@ -120,10 +116,10 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 Line2D.Float line;
                 double theta =  Math.toDegrees(Math.atan2(e.getY()-l.p1.y, e.getX()-l.p1.x));
                 int dx = Math.abs(l.p1.x - e.getX());
-                LOG.log(Level.INFO, "Angle of line: " + theta);
+               // LOG.log(Level.INFO, "Angle of line: " + theta);
 
                 if(KeyChecker.isShiftPressed()){
-                    LOG.log(Level.INFO, "SHIFT key pressed!!");
+                //    LOG.log(Level.INFO, "SHIFT key pressed!!");
                     //if the shift key is pressed, make a straight line...
 
                     if((theta < 22.5 && theta > -22.5) || (theta > 157.5 || theta < -157.5)){
@@ -212,7 +208,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 int dx = e.getX()-l.p1.x;
 
                 if(KeyChecker.isShiftPressed()) {
-                    LOG.log(Level.INFO, "SHIFT key pressed!!");
+                  //  LOG.log(Level.INFO, "SHIFT key pressed!!");
                     x2 = l.p1.x+dx;
                     y2 = l.p1.y+dx;
                 } else {
@@ -286,7 +282,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 Ellipse2D.Float c = null;
 
                 if(KeyChecker.isShiftPressed()) {
-                    LOG.log(Level.INFO, "SHIFT key pressed!!");
+               //     LOG.log(Level.INFO, "SHIFT key pressed!!");
 
                     float radius = (float)Math.sqrt((l.p1.x-x2)*(l.p1.x-x2) + (l.p1.y-y2)*(l.p1.y-y2))/2f;
 
@@ -330,7 +326,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
                 Rectangle2D.Float r = null;
 
                 if(KeyChecker.isShiftPressed()) {
-                    LOG.log(Level.INFO, "SHIFT key pressed!!");
+              //      LOG.log(Level.INFO, "SHIFT key pressed!!");
                     float radius = (float)Math.sqrt((l.p1.x-x2)*(l.p1.x-x2) + (l.p1.y-y2)*(l.p1.y-y2))/2f;
                     r = new Rectangle2D.Float((l.p1.x<x2?l.p1.x:x2),
                             (l.p1.y<y2?l.p1.y:y2),radius,radius);

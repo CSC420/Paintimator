@@ -11,7 +11,13 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import java.io.InputStream;
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -24,13 +30,22 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 	    private Image image = null;
 	    private Ellipse2D.Float innerCircle, outerCircle;
 	    private Color centerColor = Color.black;
-
+	    private Clip button;
 	    private BufferedImage bimage;
-
-	    public ColorWheelPanel(Paintimator master) throws IOException{
+	    public ColorWheelPanel(Paintimator master) throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 	        this.master = master;
 	        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-	        BufferedImage icon = ImageIO.read(new File("images/color_wheel.png"));
+			InputStream is = getClass().getResourceAsStream("sounds/colorWheel.wav");
+			AudioInputStream ais = AudioSystem.getAudioInputStream(is);
+	        button = AudioSystem.getClip();
+	        button.open(ais);
+	        java.net.URL icon = ColorWheelPanel.class.getResource("images/color_wheel.png");
+			  if (icon == null) {
+				 System.out.println("Issue loading Color Wheel in ColorWheelPanel"); 
+				 System.exit(-1);
+			  }
+
+	    
 	        image = new ImageIcon(icon).getImage();
 	        innerCircle = new Ellipse2D.Float(image.getWidth(null)/3, image.getHeight(null)/3,
 	                image.getWidth(null)/3, image.getHeight(null)/3);
@@ -67,7 +82,10 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 	    @Override
 	    public void mouseClicked(MouseEvent e) {
 	        if(!innerCircle.contains(e.getPoint()) && outerCircle.contains(e.getPoint())) {
-	            centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
+	            button.stop();
+	            button.start();
+	        	centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
+	            //centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
 	          //  System.out.println("New Color: " + centerColor);
 	            this.repaint();
 	            master.setDrawColor(centerColor);

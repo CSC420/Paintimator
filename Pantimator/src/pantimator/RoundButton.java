@@ -54,8 +54,9 @@ class RoundButton extends JButton {
 		Icon icon = getIcon();
 		Insets i = getInsets();
 		if (icon != null) {
-			int iw = Math.max(icon.getIconWidth(), icon.getIconHeight());
-			return new Dimension(iw + i.right + i.left, iw + i.top + i.bottom);
+			//this was to make a perfect circle now just use image
+			//int iw = Math.max(icon.getIconWidth(), icon.getIconHeight());
+			return new Dimension(icon.getIconWidth() + i.right + i.left, icon.getIconHeight() + i.top + i.bottom);
 		}
 		return new Dimension (10, 10);
 	}
@@ -65,7 +66,7 @@ class RoundButton extends JButton {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setColor(getBackground());
+		g2.setColor(Color.BLACK);
 		g2.draw(shape);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_OFF);

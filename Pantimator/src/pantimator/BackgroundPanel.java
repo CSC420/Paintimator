@@ -13,12 +13,20 @@ class BackgroundPanel extends JPanel {
 private static final long serialVersionUID = 1L;
 private Image img;
 
-  public BackgroundPanel(String img) {
-    this(new ImageIcon(img).getImage());
+  public BackgroundPanel(String im) {
+   // this(new ImageIcon(img).getImage());
+	  java.net.URL imageURL = BackgroundPanel.class.getResource(im);
+	  if (imageURL != null) {
+	      ImageIcon icon = new ImageIcon(imageURL);
+	      img = icon.getImage();
+	      this.backgroundPanel1();
+	  }
+    
+    
   }
 
-  public BackgroundPanel(Image img) {
-    this.img = img;
+  private void backgroundPanel1() {
+    //this.img = img;
     Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
     setPreferredSize(size);
     setMinimumSize(size);

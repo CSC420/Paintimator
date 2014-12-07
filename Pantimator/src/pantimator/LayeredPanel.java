@@ -37,15 +37,6 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         toDrawOnGlass = new ArrayList<ShapeWrapper>();
         removedShapes = new ArrayList<ShapeWrapper>();
 
-        //test code for changing the cursor:
-//        Toolkit toolkit = Toolkit.getDefaultToolkit();
-//        Image pencil = toolkit.getImage("images/pencil.png");
-//        Point hotspot = new Point(0,0);
-//        Cursor cursor = toolkit.createCustomCursor(pencil,hotspot,"Pencil");
-//        setCursor(cursor);
-
-
-
         canvas = new Layer(toDrawOnCanvas);
         glass = new Layer(toDrawOnGlass);
 
@@ -113,16 +104,18 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         s.setTimeStamp(System.nanoTime());
         toDrawOnCanvas.add(s);
         canvas.repaint();
-
+      
     }
 
     public void drawOnGlassPane(ShapeWrapper s){
+    	
         glass.setBounds(0,0,getWidth(),getHeight());
         s.setLineSize(brushSize);
         s.setColor(drawColor);
         s.setTimeStamp(System.nanoTime());
         toDrawOnGlass.add(s);
         glass.repaint();
+        
     }
 
     public void clearRootPane(){
@@ -150,8 +143,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     }
 
     /* added by Jeremy
-         * method which imports an image to the root pane that can be "edited"
-         */
+     * method which imports an image to the root pane that can be "edited"
+     */
     public void importImgToPane(BufferedImage img) {
         if (this.img != img) {
             this.img = img;

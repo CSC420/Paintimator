@@ -1,54 +1,45 @@
 package pantimator;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Vector;
 
 public class AnimationPane extends JPanel {
 
 	private static final long serialVersionUID = -4582247641791559232L;
+    private final Component context = this;
 
 	Image img;
-	private Image backgroundImg;
-	private Boolean hasBackground = false;
-
 	LayeredPanelList lpl;
-    
-    JScrollPane scrollframeHolder;
-
+	JScrollPane scrollframeHolder;
     JPanel frameHolder;
     Thumb thumbPanel;
-
-    ArrayList<Image> thumbs;
-
+    Paintimator painter;
+	JButton play;
+    HashMap<Thumb, LayeredPanel> thumbMap;
     GridBagConstraints gbc = new GridBagConstraints();
-    
-    /**
-     * This is a constructor
-     * @throws IOException 
-     */
-    public AnimationPane() throws IOException {
+
+
+    public AnimationPane(Paintimator painter) throws IOException {
+    	this.painter = painter;
+    }
+
+    public AnimationPane(LayeredPanelList panelList, Paintimator p) throws IOException {
+        this.lpl = panelList;
+        painter = p;
         init();
     }
     
-    /**
-     * Constructor that will be able to take a LayeredPanelList and parse through it for
-     * frames
-     * @param panelList
-     * @throws IOException 
-     */
-
-    public AnimationPane(LayeredPanelList panelList) throws IOException {
-        init();
+    public void thumbSelected(int index){
+    	painter.thumbSelect(index-1);
     }
 
     private void init() throws IOException {
@@ -64,10 +55,11 @@ public class AnimationPane extends JPanel {
         //scrollframeHolder.setBorder(new BevelBorder(BevelBorder.LOWERED));
         scrollframeHolder.setBorder(BorderFactory.createEmptyBorder());
         scrollframeHolder.setPreferredSize(new Dimension(790, 110));
-        scrollframeHolder.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollframeHolder.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollframeHolder.getViewport().setOpaque(false);
         scrollframeHolder.setOpaque(false);
-        thumbs = new ArrayList<Image>();
+        
+        thumbMap = new HashMap<Thumb, LayeredPanel>();
         
         this.add(scrollframeHolder);
         playButton();
@@ -76,52 +68,49 @@ public class AnimationPane extends JPanel {
 
     private void playButton() throws IOException {
 		// TODO Add play button functionality
-    	RoundButton play;
-		BufferedImage buttonIcon = ImageIO.read(new File("images/white-Button.png"));
-		play = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ImageIO.read(new File("images/green-Button.png"));
-		play.setSelectedIcon(new ImageIcon(buttonIcon));
-		play.setPressedIcon(new ImageIcon(buttonIcon));
-		play.addActionListener(new ActionListener() {
+
+		java.net.URL imageURL = AnimationPane.class.getResource("images/play.png");
+		  if (imageURL == null) {
+			 System.out.println("Issue loading play button in Animation Pane"); 
+		  }
+		 play = new JButton(new ImageIcon(imageURL));
+		 play.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+		 play.setOpaque(true);
+		 play.setContentAreaFilled(false);
+		 play.setBackground(Color.BLACK);
+		 play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//do whatever here
+
+                BufferedImage[] b = new BufferedImage[0];
+                Vector<BufferedImage> images = new Vector<BufferedImage>();
+
+                for(LayeredPanel lp : lpl.getArray()){
+                    images.add(lp.paneToBufferedImg());
+                }
+
+
+                AnimationPlayerPanel app = new AnimationPlayerPanel(images.toArray(b));
+
+                JOptionPane.showOptionDialog(context, app, "Your Animation",
+                        JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, new Object[0], null);
 			}
 		});
         this.add(play);
 	}
-
-	private void sampleFrameHolder() {    	
-        for (int i = 0; i < 50; i++) {
-          //  thumbPanel = new JPanel();
-            thumbPanel.setToolTipText("Frame " + (i + 1));
-            thumbPanel.setPreferredSize(new Dimension(75,75));
-            thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
-            frameHolder.add(thumbPanel);
-        }
-    }
-
-    @SuppressWarnings("unused")
-	private void defaultFrameHolder() {
-        newThumb(null, 1);
-    }
     
     /*
      * Iterates through an array list of images to set the thumbnail frame
      */
-    private void loadedFrameHolder(LayeredPanelList lpl) {
-        int index = 0;
-     //   System.out.println(lpl.getSize());
+    private void loadedFrameHolder(LayeredPanelList lpl, int selected) {
+        this.lpl = lpl;
+        int index = 1;
         frameHolder.removeAll(); // clears everything
         for (LayeredPanel lp : lpl.getArray()) {        	
-        	//Image img = lp.paneToImg().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        	//thumbPanel = ThumbPane.newInstance(img);
-        	thumbPanel = new Thumb();
-        	thumbPanel.add(lp);
-            thumbPanel.setToolTipText("Frame #" + (index + 1));
-            thumbPanel.setPreferredSize(new Dimension(25, 25));
-            thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
-            frameHolder.add(thumbPanel);
+        	Image img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        	newThumb(img, index, selected);
+        	thumbMap.put(thumbPanel, lp);
             index++;
         }
     }
@@ -129,55 +118,33 @@ public class AnimationPane extends JPanel {
     /*
      * Creates a new thumbnail frame and adds it to the frame holder
      */
-    private void newThumb(Image img, int index) {
-        thumbPanel = Thumb.newInstance(img);
+    private void newThumb(Image img, int index, int selected) {
+    	thumbPanel = Thumb.newInstance(this, img, index);
         thumbPanel.setToolTipText("Frame #" + index);
         thumbPanel.setPreferredSize(new Dimension(75, 75));
-        thumbPanel.setBorder(new BevelBorder(BevelBorder.RAISED));
+        if(index == selected){
+        	thumbPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        }
         frameHolder.add(thumbPanel);
     }
     
     /**
      * Public method for updating the animation frame
-     * @param lp
+     * @param lpl
      */
+    public void updateAnimation(LayeredPanelList lpl, int selected) { 
+        loadedFrameHolder(lpl, selected);
+    }
     
-    @Override
-    public void paintComponent(Graphics g){
-    	super.paintComponent(g);
-    	if(hasBackground){
-    	g.drawImage(backgroundImg, 0, 0, null);
+    public void updateThumbArray(Thumb thumb) {
+    	//painter.refreshDrawPanel(thumbMap.get(thumb));
+    	for (Thumb t : thumbMap.keySet()) {
+    		if (thumb != t && t.isFocused()) {
+    			t.changeFocus();
+    			break;
+    		}
     	}
-    }
-    
-    public void setBackgroundImage(Image im){
-    	backgroundImg = im;
-    	hasBackground = true;
-    }
-    
-    /*
-     * Sets the thumbnail image to the thumbnail frame
-     */
-
-    public void updateAnimation(LayeredPanelList lpl) { 
-        loadedFrameHolder(lpl);
-    }
-       private class ThumbPane extends JPanel {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 3670839323703410770L;
-
-		@SuppressWarnings("unused")
-		public void ThumbPane() {}
     	
-	    @Override
-	    public void paintComponent(Graphics g) {
-	        super.paintComponent(g);
-	
-	     //   g.drawImage(img, 0, 0, null);
-	    }
-
+    	thumb.changeFocus();
     }
 }

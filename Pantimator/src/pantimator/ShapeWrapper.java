@@ -14,7 +14,6 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
     private Long timeStamp;
     private boolean erase = false, text = false, magic = false;
     private String string = "";
-
     private BufferedImage bi;
     private boolean img = false;
 
