@@ -20,12 +20,13 @@ public class AnimationPane extends JPanel {
 	Image img;
 	LayeredPanelList lpl;
 	JScrollPane scrollframeHolder;
-    JPanel frameHolder;
+    JPanel frameHolder, btnHolder;
     Thumb thumbPanel;
     Paintimator painter;
-	JButton play;
+	JButton play, btn05x, btn15x, btn10x;
     HashMap<Thumb, LayeredPanel> thumbMap;
     GridBagConstraints gbc = new GridBagConstraints();
+    int frameRate;
 
 
     public AnimationPane(Paintimator painter) throws IOException {
@@ -73,11 +74,6 @@ public class AnimationPane extends JPanel {
 		  if (imageURL == null) {
 			 System.out.println("Issue loading play button in Animation Pane"); 
 		  }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of 6e8d9f2... Updates
 		 //Mark
 		  btnHolder = new JPanel(new GridBagLayout());
 		  btnHolder.setOpaque(false);
@@ -144,7 +140,6 @@ public class AnimationPane extends JPanel {
 		  });
 		  
 		  
->>>>>>> parent of 6e8d9f2... Updates
 		 play = new JButton(new ImageIcon(imageURL));
 		 play.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 		 play.setOpaque(true);
@@ -169,9 +164,7 @@ public class AnimationPane extends JPanel {
                         null, new Object[0], null);
 			}
 		});
-<<<<<<< HEAD
         this.add(play);
-=======
 		 
 		 gbc.gridx = 0;
 		 gbc.gridy = 0;
@@ -201,7 +194,6 @@ public class AnimationPane extends JPanel {
 		 //this.add(play);
         //this.add(btn1x);
         //this.setBackground(Color.blue);
->>>>>>> parent of 6e8d9f2... Updates
 	}
     
     /*
