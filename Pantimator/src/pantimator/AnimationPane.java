@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 package pantimator;
 
 import javax.swing.*;
@@ -245,4 +243,4 @@ public class AnimationPane extends JPanel {
     	thumb.changeFocus();
     }
 }
->>>>>>> parent of 6e8d9f2... Updates
+
