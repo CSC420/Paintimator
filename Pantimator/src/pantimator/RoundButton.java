@@ -35,7 +35,7 @@ class RoundButton extends JButton {
 			return;
 		}
 		setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
-		setBackground(Color.BLACK);
+		setBackground(new Color(0, 0, 0, 0));
 		setContentAreaFilled(false);
 		setFocusPainted(false);
 		setAlignmentY(Component.TOP_ALIGNMENT);
@@ -66,6 +66,7 @@ class RoundButton extends JButton {
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+		//g2.setColor(new Color(0, 0, 0, 0));
 		g2.setColor(Color.BLACK);
 		g2.draw(shape);
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
