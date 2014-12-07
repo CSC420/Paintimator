@@ -263,14 +263,14 @@ public class Paintimator extends JFrame{
 					int i = JOptionPane.showOptionDialog(context,
 							"Do you want to add a new page?", 
 							"Next Page", 
-							JOptionPane.OK_CANCEL_OPTION,
+							JOptionPane.YES_NO_OPTION,
 							JOptionPane.QUESTION_MESSAGE,
 							null,
-							new String[]{"New Page", "Cancel"},
-							"default");
+							new String[]{"Add New Page", "No"},
+							"Add New Page");
 					
 					switch (i) {
-						case JOptionPane.OK_OPTION :	
+						case JOptionPane.YES_OPTION:	
 							centerPanel.remove(layeredPanelList.getSelected());
 							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 							layeredPanel = new LayeredPanel();
@@ -371,13 +371,13 @@ public class Paintimator extends JFrame{
 	 */
 	public void newFrame() {
 		int i = JOptionPane.showOptionDialog(this,
-				"Do you want to save this frame?", 
-				"Save Frame", 
-				JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.INFORMATION_MESSAGE,
+				"Do you want to add a page?", 
+				"New Page", 
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
 				null,
-				new String[]{"Save", "Discard", "Cancel"},
-				"default");
+				new String[]{"Add New Page", "No"},
+				"Add New Page");
 		
 		switch (i) {
 			case JOptionPane.YES_OPTION :	
@@ -392,23 +392,6 @@ public class Paintimator extends JFrame{
 				layeredPanelList.add(layeredPanel);
 				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 				refreshDrawPanel(layeredPanelList.getSelected());
-				break;
-			case JOptionPane.NO_OPTION :
-				centerPanel.remove(layeredPanelList.getSelected());
-				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
-				layeredPanelList.remove(layeredPanelList.getSelected());
-				
-				layeredPanel = new LayeredPanel();
-				layeredPanel.addMouseListener(myListener);
-				layeredPanel.addMouseMotionListener(myListener);
-				this.setCurrentCanvasListener(layeredPanel);
-				layeredPanel.setDrawColor(Color.BLACK);
-				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
-				layeredPanelList.add(layeredPanel);
-				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
-				
-				refreshDrawPanel(layeredPanelList.getSelected());
-				
 				break;
 			default :
 				break;
