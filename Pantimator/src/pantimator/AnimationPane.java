@@ -6,6 +6,8 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,7 +69,6 @@ public class AnimationPane extends JPanel {
     }
 
     private void playButton() throws IOException {
-		// TODO Add play button functionality
 
 		java.net.URL imageURL = AnimationPane.class.getResource("images/play.png");
 		  if (imageURL == null) {
@@ -78,6 +79,41 @@ public class AnimationPane extends JPanel {
 		 play.setOpaque(true);
 		 play.setContentAreaFilled(false);
 		 play.setBackground(Color.BLACK);
+		 play.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				play.setBorder(BorderFactory.createLineBorder(Color.YELLOW,1));
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				play.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			 
+				 
+		 });
+		
 		 play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
