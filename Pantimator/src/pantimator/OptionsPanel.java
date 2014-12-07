@@ -45,7 +45,8 @@ public class OptionsPanel extends JPanel{
 		super();
 		master = p;
 		
-		InputStream is = getClass().getResourceAsStream("sounds/button.wav");
+		//InputStream is = getClass().getResourceAsStream("sounds/button.wav");
+		InputStream is = getClass().getResourceAsStream("sounds/button2.wav");
 		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
         button = AudioSystem.getClip();
         button.open(ais);
@@ -82,7 +83,7 @@ public class OptionsPanel extends JPanel{
 				selected = crayon;
 				updateListener();
 				changeSelectedOption();
-				master.setCanvasCursor(CanvasCursor.PENCIL);
+				master.setCanvasCursor(CanvasCursor.CRAYON);
 			}
 		});
 		marker = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteMarker.png")));
@@ -94,7 +95,7 @@ public class OptionsPanel extends JPanel{
 				selected = marker;
 				updateListener();
 				changeSelectedOption();
-				master.setCanvasCursor(CanvasCursor.PENCIL);
+				master.setCanvasCursor(CanvasCursor.MARKER);
 			}
 		});
 
@@ -314,7 +315,7 @@ public class OptionsPanel extends JPanel{
 				
 			}
 		});
-		e1 = s1;
+		e1 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteEraserLgSq.png")));
 		e1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -326,7 +327,7 @@ public class OptionsPanel extends JPanel{
 				
 			}
 		});
-		e2 = c1;
+		e2 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteEraserLgCir.png")));
 		e2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -351,12 +352,12 @@ public class OptionsPanel extends JPanel{
 			}
 		});
 		e4 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteEraserSmCir.png")));
-		e3.addActionListener(new ActionListener() {
+		e4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				button.stop();
 				button.start();
-				selected = e3;
+				selected = e4;
 				updateListener();
 				changeSelectedOption();
 				
@@ -519,12 +520,12 @@ public class OptionsPanel extends JPanel{
 			}
 		});
 		p4 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whitePaint3.png")));
-		pencil.addActionListener(new ActionListener() {
+		p4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				button.stop();
 				button.start();
-				selected = pencil;
+				selected = p4;
 				updateListener();
 				changeSelectedOption();
 				
@@ -591,8 +592,6 @@ public class OptionsPanel extends JPanel{
 			}
 		});
 		th1 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteth1.png")));
-		th1.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-		th1.setBorderPainted(false);
 		th1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -606,8 +605,6 @@ public class OptionsPanel extends JPanel{
 			}
 		});
 		th2 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteth2.png")));
-		th2.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-		th2.setBorderPainted(false);
 		th2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -621,8 +618,6 @@ public class OptionsPanel extends JPanel{
 			}
 		});
 		th3 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteth3.png")));
-		th3.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-		th3.setBorderPainted(false);
 		th3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -636,8 +631,6 @@ public class OptionsPanel extends JPanel{
 			}
 		});
 		th4 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteth4.png")));
-		th4.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-		th4.setBorderPainted(false);
 		th4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -651,8 +644,6 @@ public class OptionsPanel extends JPanel{
 			}
 		});
 		th5 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteth5.png")));
-		th5.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-		th5.setBorderPainted(false);
 		th5.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -734,8 +725,10 @@ public class OptionsPanel extends JPanel{
 	public void changeSelectedOption(){
 		if(current != null){
 			current.setSelected(false);
+			current.setBackground(new Color(0, 0, 0, 0));
 		}
 		selected.setSelected(true);
+		selected.setBackground(Color.RED);
 		current = selected;
 
 	}
@@ -743,23 +736,27 @@ public class OptionsPanel extends JPanel{
 	public void changeSelectedTh(){
 		if(thCur != null){
 			thCur.setSelected(false);
-			thCur.setBorderPainted(false);
+			thCur.setBackground(new Color(0, 0, 0, 0));
 		}
 		thSel.setSelected(true);
-		thSel.setBorderPainted(true);
+		thSel.setBackground(Color.RED);
 		thCur = thSel;
 
 	}
 	
 	private void addDrawOptions(){
 		this.removeAll();
-
+		selected = pencil;
+		thSel = th1;
+		changeSelectedTh();
+		changeSelectedOption();
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.fill = GridBagConstraints.VERTICAL;
 		cc.insets = new Insets(3,0,3,0);
 		cc.gridx = 0;
 		cc.gridy = 0;
 		this.add(th1,cc);
+		
 		
 		cc.gridy = 1;
 		this.add(th2,cc);
@@ -792,6 +789,8 @@ public class OptionsPanel extends JPanel{
 	private void addPaintOptions(){
 		this.removeAll();
 		master.setBrushSize(3);
+		selected = p1;
+		changeSelectedOption();
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.insets = new Insets(3,0,3,0);
 		cc.gridx = 0;
@@ -834,7 +833,10 @@ public class OptionsPanel extends JPanel{
 
 	private void addLineOptions(){
 		this.removeAll();
-
+		selected = l1;
+		thSel = th1;
+		changeSelectedTh();
+		changeSelectedOption();
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.fill = GridBagConstraints.VERTICAL;
 		cc.insets = new Insets(3,0,3,0);
@@ -873,6 +875,8 @@ public class OptionsPanel extends JPanel{
 	private void addSquareOptions(){
 		this.removeAll();
 		master.setBrushSize(3);
+		selected = s1;
+		changeSelectedOption();
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.insets = new Insets(3,0,3,0);
 		cc.gridx = 0;
@@ -918,6 +922,8 @@ public class OptionsPanel extends JPanel{
 	private void addTriOptions(){
 		this.removeAll();
 		master.setBrushSize(3);
+		selected = t1;
+		changeSelectedOption();
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.insets = new Insets(3,0,3,0);
 		cc.gridx = 0;
@@ -954,7 +960,9 @@ public class OptionsPanel extends JPanel{
 	}
 	private void addEraseOptions(){
 		this.removeAll();
-
+		selected = e1;
+		changeSelectedOption();
+		
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.insets = new Insets(3,0,3,0);
 		cc.gridx = 0;
@@ -999,6 +1007,8 @@ public class OptionsPanel extends JPanel{
 	private void addCircleOptions(){
 		this.removeAll();
 		master.setBrushSize(3);
+		selected = c1;
+		changeSelectedOption();
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.insets = new Insets(3,0,3,0);
 		cc.gridx = 0;
@@ -1041,7 +1051,8 @@ public class OptionsPanel extends JPanel{
 	}
 	private void addTextOptions(){
 		this.removeAll();
-
+		selected = buttonIcon;
+		changeSelectedOption();
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.insets = new Insets(3,0,3,0);
 		cc.gridx = 0;
@@ -1084,6 +1095,8 @@ public class OptionsPanel extends JPanel{
 	
 	private void addBucketOptions(){
 		this.removeAll();
+		selected = buttonIcon;
+		changeSelectedOption();
 		GridBagConstraints cc = new GridBagConstraints();
 		cc.insets = new Insets(3,0,3,0);
 		cc.gridx = 0;
@@ -1139,7 +1152,7 @@ public class OptionsPanel extends JPanel{
 	        },
 	        DRAW{
 	        	public void updateOptions(OptionsPanel op){
-	                op.master.setCanvasCursor(CanvasCursor.DEFAULT);
+	                op.master.setCanvasCursor(CanvasCursor.PENCIL);
 	        		op.addDrawOptions();
 	        	}
 	        	public void updateListener(OptionsPanel op){

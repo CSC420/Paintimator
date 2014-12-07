@@ -207,7 +207,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
                     g2d.setColor(s.getColor());
                     g2d.fill(textShape);
                 }else if(s.isMagic()) {
-                    g2d.setStroke(new WobbleStroke(s.getLineSize()/2f, s.getLineSize()/2f));
+                    
+                	g2d.setStroke(new WobbleStroke(s.getLineSize()/2f, s.getLineSize()/2f));
                     g2d.setColor(s.getColor());
                     g2d.draw(s.getShape());
                 }else {
