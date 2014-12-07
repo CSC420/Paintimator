@@ -51,7 +51,7 @@ public class Paintimator extends JFrame{
 	private int height = 900;
 	private int width = 1440;
 	
-	private boolean debug = false;
+	private boolean debug = true;
 
 	public Paintimator() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super();
@@ -60,7 +60,7 @@ public class Paintimator extends JFrame{
 		this.setTitle(FRAME_TITLE);
 		
 		//create a contentPane that can hold an image
-        contentPane = new BackgroundPanel("images/background2.png");
+        contentPane = new BackgroundPanel("images/background.png");
         contentPane.setLayout(new BorderLayout());
 		
 
@@ -114,7 +114,7 @@ public class Paintimator extends JFrame{
 		optionsPanel.setOpaque(false);
 		cwPanel.setOpaque(false);
 		sidePanel.setOpaque(false);
-		sidePanel.setPreferredSize(new Dimension(220, height));
+		sidePanel.setPreferredSize(new Dimension(300, height));
 
 		//menu bar
 		menu = new MyMenu(this);
@@ -187,7 +187,7 @@ public class Paintimator extends JFrame{
 		this.setResizable(false);
 		refreshDrawPanel(layeredPanelList.getSelected());
 		layeredPanelList.getSelected().clearRootPane();
-		this.updateThumbs();
+		
 	}
 	/*
 	 * Method to easily add/update listeners and canvas
@@ -237,8 +237,7 @@ public class Paintimator extends JFrame{
 	
 	
 	private void createButtons(){
-		//java.net.URL buttonIcon = Paintimator.class.getResource("images/BackPage.png");
-		java.net.URL buttonIcon = Paintimator.class.getResource("images/bckbtnLg.png");
+		java.net.URL buttonIcon = Paintimator.class.getResource("images/BackPage.png");
 		backPage = new JButton(new ImageIcon(buttonIcon));
 		backPage.setToolTipText("Previous Page");
 		backPage.addActionListener(new ActionListener() {
@@ -252,8 +251,7 @@ public class Paintimator extends JFrame{
 				
 			}	
 		});
-		//buttonIcon = Paintimator.class.getResource("images/FwPage.png");
-		buttonIcon = Paintimator.class.getResource("images/fwbtnLg.png");
+		buttonIcon = Paintimator.class.getResource("images/FwPage.png");
 		
 		fwdPage = new JButton(new ImageIcon(buttonIcon));
 		fwdPage.setToolTipText("Next Page");
@@ -416,7 +414,6 @@ public class Paintimator extends JFrame{
 				break;
 		}
 		layeredPanelList.getSelected().clearRootPane();
-		
 	}
 	
 	public void newProj() {

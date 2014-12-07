@@ -70,31 +70,16 @@ public class AnimationPane extends JPanel {
     private void playButton() throws IOException {
 		// TODO Add play button functionality
 
-		java.net.URL imageURL = AnimationPane.class.getResource("images/play100.png");
-		java.net.URL image05URL = AnimationPane.class.getResource("images/05.png");
-		java.net.URL image10URL = AnimationPane.class.getResource("images/10.png");
-		java.net.URL image15URL = AnimationPane.class.getResource("images/15.png");
+		java.net.URL imageURL = AnimationPane.class.getResource("images/play.png");
 		  if (imageURL == null) {
 			 System.out.println("Issue loading play button in Animation Pane"); 
-		  }
-		  
-		  if (image05URL == null) {
-				 System.out.println("Issue loading play button in Animation Pane"); 
-		  }
-		  
-		  if (image10URL == null) {
-				 System.out.println("Issue loading play button in Animation Pane"); 
-		  }
-		  
-		  if (image15URL == null) {
-				 System.out.println("Issue loading play button in Animation Pane"); 
 		  }
 		 //Mark
 		  btnHolder = new JPanel(new GridBagLayout());
 		  btnHolder.setOpaque(false);
 		  
 		  
-		  btn05x = new JButton(new ImageIcon(image05URL)); 
+		  btn05x = new JButton("0.5x"); 
 		  btn05x.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 		  btn05x.setBackground(Color.black);
 		  btn05x.addActionListener(new ActionListener(){
@@ -102,7 +87,7 @@ public class AnimationPane extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 				  
 				  btn05x.setBackground(Color.blue);
-				  frameRate = 300;
+				  frameRate = 100;
 				  
 				  if(btn10x != null){
 					  btn10x.setBackground(Color.black);
@@ -114,7 +99,7 @@ public class AnimationPane extends JPanel {
 			  }
 		  });
 		  
-		  btn10x = new JButton(new ImageIcon(image10URL)); 
+		  btn10x = new JButton("1.0x"); 
 		  btn10x.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 		  btn10x.setBackground(Color.blue);
 		  btn10x.addActionListener(new ActionListener(){
@@ -134,7 +119,7 @@ public class AnimationPane extends JPanel {
 			  }
 		  });
 		  
-		  btn15x = new JButton(new ImageIcon(image15URL)); 
+		  btn15x = new JButton("1.5x"); 
 		  btn15x.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 		  btn15x.setBackground(Color.black);
 		  btn15x.addActionListener(new ActionListener(){
@@ -142,7 +127,7 @@ public class AnimationPane extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 				  
 				  btn15x.setBackground(Color.blue);
-				  frameRate = 100;
+				  frameRate = 300;
 				  
 				  if(btn10x != null){
 					  btn10x.setBackground(Color.black);
@@ -184,37 +169,27 @@ public class AnimationPane extends JPanel {
 		 gbc.gridy = 0;
 		 gbc.gridheight = 1;
 		 gbc.gridwidth = 3;
-		 gbc.anchor = GridBagConstraints.NORTH;
 		 btnHolder.add(play, gbc);
 		 
 		 gbc.gridx = 0;
 		 gbc.gridy = 1;
 		 gbc.gridheight = 1;
 		 gbc.gridwidth = 1;
-		 gbc.anchor = GridBagConstraints.WEST;
 		 btnHolder.add(btn05x, gbc);
+		 
+		 gbc.gridx = 1;
+		 gbc.gridy = 1;
+		 gbc.gridheight = 1;
+		 gbc.gridwidth = 1;
+		 btnHolder.add(btn10x, gbc);
 		 
 		 gbc.gridx = 2;
 		 gbc.gridy = 1;
 		 gbc.gridheight = 1;
 		 gbc.gridwidth = 1;
-		 //gbc.insets = new Insets(0,10,0,10);
-		 gbc.anchor = GridBagConstraints.CENTER;
-		 btnHolder.add(btn10x, gbc);
-		 
-		 gbc.gridx = 4;
-		 gbc.gridy = 1;
-		 gbc.gridheight = 1;
-		 gbc.gridwidth = 1;
-		 gbc.anchor = GridBagConstraints.EAST;
 		 btnHolder.add(btn15x, gbc);
-
 		 
-		 btnHolder.setBorder(BorderFactory.createLineBorder(Color.red));
 		 this.add(btnHolder);
-		 
-		 
-		 
 		 //this.add(play);
         //this.add(btn1x);
         //this.setBackground(Color.blue);
