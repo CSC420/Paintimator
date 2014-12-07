@@ -315,7 +315,7 @@ public class OptionsPanel extends JPanel{
 				
 			}
 		});
-		e1 = s1;
+		e1 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteEraserLgSq.png")));
 		e1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -327,7 +327,7 @@ public class OptionsPanel extends JPanel{
 				
 			}
 		});
-		e2 = c1;
+		e2 = new RoundButton(new ImageIcon(OptionsPanel.class.getResource("images/whiteEraserLgCir.png")));
 		e2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
