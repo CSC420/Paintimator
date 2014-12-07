@@ -85,7 +85,7 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 	            button.stop();
 	            button.start();
 	        	centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
-	            centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
+	            //centerColor = new Color(bimage.getRGB(e.getX(), e.getY()));
 	          //  System.out.println("New Color: " + centerColor);
 	            this.repaint();
 	            master.setDrawColor(centerColor);

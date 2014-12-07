@@ -104,16 +104,18 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         s.setTimeStamp(System.nanoTime());
         toDrawOnCanvas.add(s);
         canvas.repaint();
-
+      
     }
 
     public void drawOnGlassPane(ShapeWrapper s){
+    	
         glass.setBounds(0,0,getWidth(),getHeight());
         s.setLineSize(brushSize);
         s.setColor(drawColor);
         s.setTimeStamp(System.nanoTime());
         toDrawOnGlass.add(s);
         glass.repaint();
+        
     }
 
     public void clearRootPane(){
@@ -141,8 +143,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     }
 
     /* added by Jeremy
-         * method which imports an image to the root pane that can be "edited"
-         */
+     * method which imports an image to the root pane that can be "edited"
+     */
     public void importImgToPane(BufferedImage img) {
         if (this.img != img) {
             this.img = img;

@@ -1,42 +1,52 @@
 package pantimator;
 
-import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class LayeredPanelList extends ArrayList<LayeredPanel> implements Serializable{
     private static final long serialVersionUID = 000006;
-
     private ArrayList<LayeredPanel> alLayeredPanels;
-    private int intNumberOfPanels;
-    private int intSelectedPanel;
+    private int intNumberOfPanels = 0;
+    private int intSelectedPanel = 0;
 
-    /**
-     * Empty Constructor
-     */
     LayeredPanelList(){
         alLayeredPanels = new ArrayList<LayeredPanel>();
-
     }
-
 
     public boolean add(LayeredPanel panelIn){
-        this.alLayeredPanels.add(panelIn);
-        this.intNumberOfPanels = this.alLayeredPanels.size();
-        this.intSelectedPanel = this.alLayeredPanels.size() -1;
+        alLayeredPanels.add(panelIn);
+        intSelectedPanel = intNumberOfPanels;
+        intNumberOfPanels ++;
+        
         return true;
     }
+    
+    public boolean remove(LayeredPanel panelOut){
+    	boolean tmp = alLayeredPanels.remove(panelOut);
+        intNumberOfPanels --;
+        intSelectedPanel = intNumberOfPanels-1;
+        return tmp;
+    }
 
-    /**
-     *
-     */
+    public boolean isAtEnd(){
+    	if(intNumberOfPanels == intSelectedPanel+1){
+    		return true;
+    	}
+    	return false;
+    }
+    public boolean isAtStart(){
+    	if(intSelectedPanel==0){
+    		return true;
+    	}
+    	return false;
+    }
+    
+    
+    
     public void setSelectedPanel(int selectedPanel){
         this.intSelectedPanel = selectedPanel;
     }
 
-    /**
-     *
-     */
     public int getIntSelectedPanel(){
         return this.intSelectedPanel;
     }
@@ -48,20 +58,21 @@ public class LayeredPanelList extends ArrayList<LayeredPanel> implements Seriali
     }
 
     public LayeredPanel getPrev(){
+
         if(this.intSelectedPanel > 0){
-           return this.alLayeredPanels.get(this.intSelectedPanel);
+        	 intSelectedPanel --;
+        	 return this.getSelected();
         }else{
-            this.intSelectedPanel --;
-            return this.alLayeredPanels.get(this.intSelectedPanel);
+        	return this.getSelected();
         }
     }
 
     public LayeredPanel getNext(){
         if(this.intSelectedPanel == (this.intNumberOfPanels - 1 )){
-            return this.alLayeredPanels.get(this.intSelectedPanel);
+        	return this.getSelected();
         }else{
-            this.intNumberOfPanels ++;
-            return this.alLayeredPanels.get(this.intSelectedPanel);
+            this.intSelectedPanel ++;
+            return this.getSelected();
         }
     }
 
