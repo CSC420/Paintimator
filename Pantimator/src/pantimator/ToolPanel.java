@@ -183,9 +183,9 @@ public class ToolPanel extends JPanel {
 
 		buttonIcon = ToolPanel.class.getResource("images/whiteBucket.png");
 		bucket = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/whiteBucket.png");
+		buttonIcon = ToolPanel.class.getResource("images/redBucket2.png");
 		bucket.setSelectedIcon(new ImageIcon(buttonIcon));
-		//bucket.setPressedIcon(new ImageIcon(buttonIcon));
+		bucket.setPressedIcon(new ImageIcon(buttonIcon));
 		bucket.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
