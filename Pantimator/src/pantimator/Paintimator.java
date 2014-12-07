@@ -87,7 +87,7 @@ public class Paintimator extends JFrame{
 		centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		centerPanel.setOpaque(false);
-		this.createButtons();
+		//this.createButtons();
 
 
 		//animation panel
@@ -237,7 +237,7 @@ public class Paintimator extends JFrame{
 	
 	
 	private void createButtons(){
-		java.net.URL buttonIcon = Paintimator.class.getResource("images/BackPage.png");
+		java.net.URL buttonIcon = Paintimator.class.getResource("images/backPage.png");
 		backPage = new JButton(new ImageIcon(buttonIcon));
 		backPage.setToolTipText("Previous Page");
 		backPage.addActionListener(new ActionListener() {
