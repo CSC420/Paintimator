@@ -74,7 +74,10 @@ public class AnimationPane extends JPanel {
 			 System.out.println("Issue loading play button in Animation Pane"); 
 		  }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 6e8d9f2... Updates
 		 //Mark
 		  btnHolder = new JPanel(new GridBagLayout());
 		  btnHolder.setOpaque(false);
