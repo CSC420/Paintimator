@@ -80,7 +80,8 @@ public class AnimationPane extends JPanel {
 
     private void playButton() throws IOException {
 
-		java.net.URL imageURL = AnimationPane.class.getResource("images/play.png");
+		final java.net.URL imageURL = AnimationPane.class.getResource("images/play.png");
+		final java.net.URL imageGreenURL = AnimationPane.class.getResource("images/playGreen.png");
 		  if (imageURL == null) {
 			 System.out.println("Issue loading play button in Animation Pane"); 
 		  }
@@ -99,13 +100,15 @@ public class AnimationPane extends JPanel {
 
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				play.setBorder(BorderFactory.createLineBorder(Color.YELLOW,1));
+				//play.setBorder(BorderFactory.createLineBorder(Color.YELLOW,1));
+				play.setIcon(new ImageIcon(imageGreenURL));
 				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				play.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+				//play.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+				play.setIcon(new ImageIcon(imageURL));
 				
 			}
 
