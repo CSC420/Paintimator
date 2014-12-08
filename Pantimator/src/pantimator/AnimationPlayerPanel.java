@@ -25,18 +25,6 @@ public class AnimationPlayerPanel extends JPanel {
         this.add(b, BorderLayout.SOUTH);
         playAnimation();
     }//end Constructor
-    
-    public AnimationPlayerPanel(BufferedImage[] imgs, int frameRt){
-        images = imgs;
-        frameRate = frameRt;
-        animation = new JLabel(new ImageIcon(images[0]));
-        b = new JToggleButton("Start/Stop");
-
-        this.setLayout(new BorderLayout());
-        this.add(animation, BorderLayout.CENTER);
-        this.add(b, BorderLayout.SOUTH);
-        playAnimation();
-    }//end Constructor
 
     public void playAnimation(){
         for(BufferedImage bi : images) {

@@ -1,5 +1,6 @@
 package pantimator;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 
 
 
@@ -47,9 +49,9 @@ public class MyMenu extends JMenuBar{
 		
 		
 		JButton jbNewFrame = createButton("images/newFrame32.png", "New Page");
-		JButton jbNewProject = createButton("images/newProject322.png", "New New Notebook");
-		JButton jbSave = createButton("images/save32.png", "Save");
-		JButton jbOpen = createButton("images/open32.png", "Open");
+		JButton jbNewProject = createButton("images/newProject322.png", "New Notebook");
+		JButton jbSave = createButton("images/save32.png", "Save Notebook");
+		JButton jbOpen = createButton("images/open32.png", "Open Notebook");
 		JButton jbUndo = createButton("images/arrow_undo.png", "Undo");
 		JButton jbRedo = createButton("images/arrow_redo.png", "Redo");
 		
@@ -133,7 +135,8 @@ public class MyMenu extends JMenuBar{
 		this.add(jbNewFrame);
 		this.add(jbNewProject);
 		this.add(jbOpen);
-		this.add(jbSave);		
+		this.add(jbSave);	
+		this.setBackground(new Color(223,223,223));
 	}
 	
 	private JButton createButton(String imgPath, String strToolTip){

@@ -36,7 +36,8 @@ public class ToolPanel extends JPanel {
 
 
 		//AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button.wav"));
-		InputStream is = getClass().getResourceAsStream("sounds/button.wav");
+		//InputStream is = getClass().getResourceAsStream("sounds/button.wav");
+		InputStream is = getClass().getResourceAsStream("sounds/button2.wav");
 		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
         button = AudioSystem.getClip();
         button.open(ais);
@@ -46,7 +47,7 @@ public class ToolPanel extends JPanel {
 		//Line
         java.net.URL buttonIcon = ToolPanel.class.getResource("images/whiteLine.png");
 		line = new RoundButton(new ImageIcon(buttonIcon)); 
-		buttonIcon = ToolPanel.class.getResource("images/whiteLine.png");
+		buttonIcon = ToolPanel.class.getResource("images/selLine.png");
 		line.setSelectedIcon(new ImageIcon(buttonIcon));
 		line.addActionListener(new ActionListener() {
 			@Override
@@ -64,7 +65,7 @@ public class ToolPanel extends JPanel {
 		//Circle
 		buttonIcon = ToolPanel.class.getResource("images/whiteCircle.png");
 		circle = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ToolPanel.class.getResource("images/whiteCircle.png");
+		buttonIcon = ToolPanel.class.getResource("images/selCircle.png");
 		circle.setSelectedIcon(new ImageIcon(buttonIcon));
 		circle.addActionListener(new ActionListener() {
 			@Override
@@ -80,7 +81,7 @@ public class ToolPanel extends JPanel {
 		//Square
 		buttonIcon = ToolPanel.class.getResource("images/whiteSquare.png");
 		square = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ToolPanel.class.getResource("images/whiteSquare.png");
+		buttonIcon = ToolPanel.class.getResource("images/selSquare.png");
 		square.setSelectedIcon(new ImageIcon(buttonIcon));
 		square.addActionListener(new ActionListener() {
 			@Override
@@ -96,7 +97,7 @@ public class ToolPanel extends JPanel {
 		//triangle
 		buttonIcon = ToolPanel.class.getResource("images/whiteTriangle.png");
 		triangle = new RoundButton( new ImageIcon(buttonIcon));  
-		buttonIcon = ToolPanel.class.getResource("images/whiteTriangle.png");
+		buttonIcon = ToolPanel.class.getResource("images/selTriangle.png");
 		triangle.setSelectedIcon(new ImageIcon(buttonIcon));
 		triangle.addActionListener(new ActionListener() {
 			@Override
@@ -112,7 +113,7 @@ public class ToolPanel extends JPanel {
 		//Draw
 		buttonIcon = ToolPanel.class.getResource("images/whiteDraw.png");
 		draw = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/whiteDraw.png");
+		buttonIcon = ToolPanel.class.getResource("images/selDraw.png");
 		draw.setSelectedIcon(new ImageIcon(buttonIcon));
 		//draw.setPressedIcon(new ImageIcon(buttonIcon));
 		draw.addActionListener(new ActionListener() {
@@ -131,7 +132,7 @@ public class ToolPanel extends JPanel {
 		//Text
 		buttonIcon = ToolPanel.class.getResource("images/whiteText.png");
 		text = new RoundButton( new ImageIcon(buttonIcon)); 
-		buttonIcon = ToolPanel.class.getResource("images/whiteText.png");
+		buttonIcon = ToolPanel.class.getResource("images/selText.png");
 		text.setSelectedIcon(new ImageIcon(buttonIcon));
 		text.addActionListener(new ActionListener() {
 			@Override
@@ -147,7 +148,7 @@ public class ToolPanel extends JPanel {
 		//erasing
 		buttonIcon = ToolPanel.class.getResource("images/whiteEraser.png");
 		erase = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/whiteEraser.png");
+		buttonIcon = ToolPanel.class.getResource("images/selEraser.png");
 		erase.setSelectedIcon(new ImageIcon(buttonIcon));
 		//erase.setPressedIcon(new ImageIcon(buttonIcon));
 		erase.addActionListener(new ActionListener() {
@@ -164,7 +165,7 @@ public class ToolPanel extends JPanel {
 		//paint
 		buttonIcon = ToolPanel.class.getResource("images/whitePaint.png");
 		paint = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/whitePaint.png");
+		buttonIcon = ToolPanel.class.getResource("images/selPaint.png");
 		paint.setSelectedIcon(new ImageIcon(buttonIcon));
 		//paint.setPressedIcon(new ImageIcon(buttonIcon));
 		paint.addActionListener(new ActionListener() {
@@ -183,9 +184,9 @@ public class ToolPanel extends JPanel {
 
 		buttonIcon = ToolPanel.class.getResource("images/whiteBucket.png");
 		bucket = new RoundButton( new ImageIcon(buttonIcon));
-		buttonIcon = ToolPanel.class.getResource("images/whiteBucket.png");
+		buttonIcon = ToolPanel.class.getResource("images/selBucket.png");
 		bucket.setSelectedIcon(new ImageIcon(buttonIcon));
-		//bucket.setPressedIcon(new ImageIcon(buttonIcon));
+		bucket.setPressedIcon(new ImageIcon(buttonIcon));
 		bucket.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -197,6 +198,8 @@ public class ToolPanel extends JPanel {
 			}
 		});
 		
+		newSelectedButton = draw;
+		changeButtonColors();
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.VERTICAL;
@@ -245,7 +248,12 @@ public class ToolPanel extends JPanel {
 	
 	}
 	
-
+	public void resetState(){
+		newSelectedButton = draw;
+		changeButtonColors();
+		op.setState(OptionsPanel.State.DRAW);
+	}
+	
 	public void changeButtonColors(){
 		if(selectedButton != null){
 			selectedButton.setSelected(false);

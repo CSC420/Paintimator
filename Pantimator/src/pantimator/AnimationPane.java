@@ -1,13 +1,21 @@
 package pantimator;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
@@ -20,20 +28,20 @@ public class AnimationPane extends JPanel {
 	Image img;
 	LayeredPanelList lpl;
 	JScrollPane scrollframeHolder;
-    JPanel frameHolder, btnHolder;
+    JPanel frameHolder;
     Thumb thumbPanel;
     Paintimator painter;
-	JButton play, btn05x, btn10x, btn15x;
+	JButton play;
+	private Clip button;
     HashMap<Thumb, LayeredPanel> thumbMap;
     GridBagConstraints gbc = new GridBagConstraints();
-    private int frameRate = 200;
 
 
     public AnimationPane(Paintimator painter) throws IOException {
     	this.painter = painter;
     }
 
-    public AnimationPane(LayeredPanelList panelList, Paintimator p) throws IOException {
+    public AnimationPane(LayeredPanelList panelList, Paintimator p) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         this.lpl = panelList;
         painter = p;
         init();
@@ -43,7 +51,7 @@ public class AnimationPane extends JPanel {
     	painter.thumbSelect(index-1);
     }
 
-    private void init() throws IOException {
+    private void init() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         //this.setBorder(new BevelBorder(BevelBorder.LOWERED));
         this.setBorder(BorderFactory.createEmptyBorder(0, 20, 20, 20));
         // make frame holder
@@ -61,94 +69,66 @@ public class AnimationPane extends JPanel {
         scrollframeHolder.setOpaque(false);
         
         thumbMap = new HashMap<Thumb, LayeredPanel>();
-        
+        InputStream is = getClass().getResourceAsStream("sounds/button2.wav");
+		AudioInputStream ais = AudioSystem.getAudioInputStream(is);
+        button = AudioSystem.getClip();
+        button.open(ais);
         this.add(scrollframeHolder);
         playButton();
         
     }
 
     private void playButton() throws IOException {
-		// TODO Add play button functionality
 
 		java.net.URL imageURL = AnimationPane.class.getResource("images/play.png");
 		  if (imageURL == null) {
 			 System.out.println("Issue loading play button in Animation Pane"); 
 		  }
-		 //Mark
-		  btnHolder = new JPanel(new GridBagLayout());
-		  btnHolder.setOpaque(false);
-		  
-		  
-		  btn05x = new JButton("0.5x"); 
-		  btn05x.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
-		  btn05x.setBackground(Color.black);
-		  btn05x.addActionListener(new ActionListener(){
-			  @Override
-				public void actionPerformed(ActionEvent e) {
-				  
-				  btn05x.setBackground(Color.blue);
-				  frameRate = 100;
-				  
-				  if(btn10x != null){
-					  btn10x.setBackground(Color.black);
-				  }
-				  
-				  if(btn15x != null){
-					  btn15x.setBackground(Color.black);
-				  }
-			  }
-		  });
-		  
-		  btn10x = new JButton("1.0x"); 
-		  btn10x.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
-		  btn10x.setBackground(Color.blue);
-		  btn10x.addActionListener(new ActionListener(){
-			  @Override
-				public void actionPerformed(ActionEvent e) {
-				  
-				  btn10x.setBackground(Color.blue);
-				  frameRate = 200;
-				  
-				  if(btn05x != null){
-					  btn05x.setBackground(Color.black);
-				  }
-				  
-				  if(btn15x != null){
-					  btn15x.setBackground(Color.black);
-				  }
-			  }
-		  });
-		  
-		  btn15x = new JButton("1.5x"); 
-		  btn15x.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
-		  btn15x.setBackground(Color.black);
-		  btn15x.addActionListener(new ActionListener(){
-			  @Override
-				public void actionPerformed(ActionEvent e) {
-				  
-				  btn15x.setBackground(Color.blue);
-				  frameRate = 300;
-				  
-				  if(btn10x != null){
-					  btn10x.setBackground(Color.black);
-				  }
-				  
-				  if(btn05x != null){
-					  btn05x.setBackground(Color.black);
-				  }
-			  }
-		  });
-		  
-		  
 		 play = new JButton(new ImageIcon(imageURL));
 		 play.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 		 play.setOpaque(true);
 		 play.setContentAreaFilled(false);
 		 play.setBackground(Color.BLACK);
+		 play.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				play.setBorder(BorderFactory.createLineBorder(Color.YELLOW,1));
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				play.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			 
+				 
+		 });
+		
 		 play.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				button.stop();
+				button.start();
                 BufferedImage[] b = new BufferedImage[0];
                 Vector<BufferedImage> images = new Vector<BufferedImage>();
 
@@ -157,42 +137,14 @@ public class AnimationPane extends JPanel {
                 }
 
 
-                AnimationPlayerPanel app = new AnimationPlayerPanel(images.toArray(b), frameRate);
+                AnimationPlayerPanel app = new AnimationPlayerPanel(images.toArray(b));
 
                 JOptionPane.showOptionDialog(context, app, "Your Animation",
                         JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
                         null, new Object[0], null);
 			}
 		});
-		 
-		 gbc.gridx = 0;
-		 gbc.gridy = 0;
-		 gbc.gridheight = 1;
-		 gbc.gridwidth = 3;
-		 btnHolder.add(play, gbc);
-		 
-		 gbc.gridx = 0;
-		 gbc.gridy = 1;
-		 gbc.gridheight = 1;
-		 gbc.gridwidth = 1;
-		 btnHolder.add(btn05x, gbc);
-		 
-		 gbc.gridx = 1;
-		 gbc.gridy = 1;
-		 gbc.gridheight = 1;
-		 gbc.gridwidth = 1;
-		 btnHolder.add(btn10x, gbc);
-		 
-		 gbc.gridx = 2;
-		 gbc.gridy = 1;
-		 gbc.gridheight = 1;
-		 gbc.gridwidth = 1;
-		 btnHolder.add(btn15x, gbc);
-		 
-		 this.add(btnHolder);
-		 //this.add(play);
-        //this.add(btn1x);
-        //this.setBackground(Color.blue);
+        this.add(play);
 	}
     
     /*
@@ -243,4 +195,3 @@ public class AnimationPane extends JPanel {
     	thumb.changeFocus();
     }
 }
-
