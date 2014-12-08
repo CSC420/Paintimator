@@ -281,6 +281,7 @@ public class Paintimator extends JFrame{
 							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 							refreshDrawPanel(layeredPanelList.getSelected());
 							setCurrentCanvasListener(layeredPanel);
+							toolPanel.resetState();
 							break;
 						default :
 							break;
@@ -392,6 +393,7 @@ public class Paintimator extends JFrame{
 				layeredPanelList.add(layeredPanel);
 				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 				refreshDrawPanel(layeredPanelList.getSelected());
+				toolPanel.resetState();
 				break;
 			default :
 				break;

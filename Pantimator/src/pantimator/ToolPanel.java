@@ -248,7 +248,12 @@ public class ToolPanel extends JPanel {
 	
 	}
 	
-
+	public void resetState(){
+		newSelectedButton = draw;
+		changeButtonColors();
+		op.setState(OptionsPanel.State.DRAW);
+	}
+	
 	public void changeButtonColors(){
 		if(selectedButton != null){
 			selectedButton.setSelected(false);

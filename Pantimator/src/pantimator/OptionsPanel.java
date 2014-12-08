@@ -702,6 +702,7 @@ public class OptionsPanel extends JPanel{
 		updateListener();
 	}
 	
+	
 	private void updateListener(){
 		currentState.updateListener(this);
 	}
