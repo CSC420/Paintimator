@@ -18,25 +18,33 @@ public class AnimationPlayerPanel extends JPanel {
     public AnimationPlayerPanel(BufferedImage[] imgs){
         images = imgs;
         animation = new JLabel(new ImageIcon(images[0]));
-        b = new JToggleButton("Start/Stop");
+        b = new JToggleButton("Start");
 
         this.setLayout(new BorderLayout());
         this.add(animation, BorderLayout.CENTER);
-        this.add(b, BorderLayout.SOUTH);
+
+        JPanel buttonBuffer = new JPanel();
+        buttonBuffer.add(b);
+
+        this.add(buttonBuffer, BorderLayout.PAGE_END);
         playAnimation();
     }//end Constructor
     
-    public AnimationPlayerPanel(BufferedImage[] imgs, int frameRt){
+    public AnimationPlayerPanel(BufferedImage[] imgs, int fr){
+        this.frameRate = fr;
         images = imgs;
-        frameRate = frameRt;
         animation = new JLabel(new ImageIcon(images[0]));
-        b = new JToggleButton("Start/Stop");
+        b = new JToggleButton("Start");
 
         this.setLayout(new BorderLayout());
         this.add(animation, BorderLayout.CENTER);
-        this.add(b, BorderLayout.SOUTH);
+
+        JPanel buttonBuffer = new JPanel();
+        buttonBuffer.add(b);
+
+        this.add(buttonBuffer, BorderLayout.PAGE_END);
         playAnimation();
-    }//end Constructor
+    }
 
     public void playAnimation(){
         for(BufferedImage bi : images) {
@@ -62,8 +70,10 @@ public class AnimationPlayerPanel extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     if (b.isSelected()) {
                         timer.start();
+                        b.setText("Stop");
                     } else {
                         timer.stop();
+                        b.setText("Start");
                     }
                 }
             };

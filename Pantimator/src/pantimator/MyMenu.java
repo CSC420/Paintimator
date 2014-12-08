@@ -1,30 +1,12 @@
 package pantimator;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-
-
-
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.text.IconView;
 
 public class MyMenu extends JMenuBar{
 
@@ -48,8 +30,8 @@ public class MyMenu extends JMenuBar{
         redoSound.open(ais);
 		
 		
-		JButton jbNewFrame = createButton("images/newFrame32.png", "New Page");
-		JButton jbNewProject = createButton("images/newProject322.png", "New Notebook");
+		JButton jbNewFrame = createButton("images/NewFrame32.png", "New Page");
+		JButton jbNewProject = createButton("images/NewProject322.png", "New Notebook");
 		JButton jbSave = createButton("images/save32.png", "Save Notebook");
 		JButton jbOpen = createButton("images/open32.png", "Open Notebook");
 		JButton jbUndo = createButton("images/arrow_undo.png", "Undo");

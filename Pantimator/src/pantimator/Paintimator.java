@@ -1,31 +1,15 @@
 package pantimator;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
 
 
 public class Paintimator extends JFrame{
@@ -79,7 +63,7 @@ public class Paintimator extends JFrame{
 		layeredPanel = new LayeredPanel();
 		layeredPanel.setDrawColor(Color.BLACK);
 		layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
-		myListener = new Listener(layeredPanel);
+		myListener = new Listener(layeredPanel, this);
 		layeredPanel.addMouseListener(myListener);
 		layeredPanel.addMouseMotionListener(myListener);
 
@@ -165,8 +149,10 @@ public class Paintimator extends JFrame{
 		gbc.gridx = 0;
 		gbc.gridwidth = 2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		sidePanel.add(cwPanel, gbc);
-		
+        JPanel cwBuffer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
+        cwBuffer.add(cwPanel);
+		sidePanel.add(cwBuffer, gbc);
+
 		if(debug){
 			sidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			centerPanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
@@ -278,12 +264,11 @@ public class Paintimator extends JFrame{
 							layeredPanel.addMouseListener(myListener);
 							layeredPanel.addMouseMotionListener(myListener);
 							setCurrentCanvasListener(layeredPanel);
-							layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
+							layeredPanel.setPreferredSize(new Dimension(width - 450, height - 300));
 							layeredPanelList.add(layeredPanel);
-							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
+							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel() + 1);
 							refreshDrawPanel(layeredPanelList.getSelected());
 							toolPanel.resetState();
-							layeredPanelList.getSelected().clearRootPane();
 							break;
 						default :
 							break;
@@ -372,37 +357,55 @@ public class Paintimator extends JFrame{
 	 * Gives a dialog for the user to save or discard the current frame
 	 * TODO will work on this after layeredpanellist returns an array larger than 0
 	 */
-	public void newFrame() {
-		int i = JOptionPane.showOptionDialog(this,
-				"Do you want to add a page?", 
-				"New Page", 
-				JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE,
-				null,
-				new String[]{"Cancel", "Copy Page", "Blank Page"},
-				"Add New Page");
-		
-		switch (i) {
-			case 1 :	
-				centerPanel.remove(layeredPanelList.getSelected());
-				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
-				
-				layeredPanel = new LayeredPanel();
-				layeredPanel.addMouseListener(myListener);
-				layeredPanel.addMouseMotionListener(myListener);
-				this.setCurrentCanvasListener(layeredPanel);
-				layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
-				layeredPanelList.add(layeredPanel);
-				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
-				refreshDrawPanel(layeredPanelList.getSelected());
-				toolPanel.resetState();
-				break;
-			default :
-				break;
-		}
-		layeredPanelList.getSelected().clearRootPane();
-	}
-	
+    public void newFrame() {
+        int i = JOptionPane.showOptionDialog(this,
+                "Do you want to add a page?",
+                "New Page",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new String[]{"Cancel", "Copy Page", "Blank Page"},
+                "Add New Page");
+        System.out.println("User chose: " + i);
+
+        switch (i) {
+            case 1:
+                centerPanel.remove(layeredPanelList.getSelected());
+                animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
+
+                BufferedImage bi = layeredPanel.paneToBufferedImg();
+                layeredPanel = new LayeredPanel();
+                layeredPanel.setBackground(bi);
+
+                layeredPanel.addMouseListener(myListener);
+                layeredPanel.addMouseMotionListener(myListener);
+                this.setCurrentCanvasListener(layeredPanel);
+                layeredPanel.setPreferredSize(new Dimension(width - 450, height - 300));
+                layeredPanelList.add(layeredPanel);
+                animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel() + 1);
+                refreshDrawPanel(layeredPanelList.getSelected());
+                toolPanel.resetState();
+                break;
+            case 2:
+                centerPanel.remove(layeredPanelList.getSelected());
+                animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
+
+                layeredPanel = new LayeredPanel();
+
+                layeredPanel.addMouseListener(myListener);
+                layeredPanel.addMouseMotionListener(myListener);
+                this.setCurrentCanvasListener(layeredPanel);
+                layeredPanel.setPreferredSize(new Dimension(width - 450, height - 300));
+                layeredPanelList.add(layeredPanel);
+                animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel() + 1);
+                refreshDrawPanel(layeredPanelList.getSelected());
+                toolPanel.resetState();
+            default :
+                break;
+        }
+        layeredPanelList.getSelected().clearRootPane();
+    }
+
 	public void newProj() {
 		//TODO set up method to start a new proj
 	}

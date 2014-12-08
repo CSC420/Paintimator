@@ -1,7 +1,6 @@
 package pantimator;
 
-import java.awt.Color;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
@@ -15,10 +14,26 @@ public class ShapeWrapper implements Comparable<ShapeWrapper>, Serializable {
     private boolean erase = false, text = false, magic = false;
     private String string = "";
     private BufferedImage bi;
-    private boolean img = false;
+    private boolean img;
 
     public ShapeWrapper(Shape s){
         shape = s;
+    }
+
+    /*Added by Adam
+    * Deep Copy Constructor
+    */
+    public ShapeWrapper(ShapeWrapper s){
+        this.color = s.color;
+        this.lineSize = s.lineSize;
+        this.timeStamp = s.timeStamp;
+        this.shape = s.shape;
+        this.erase = s.erase;
+        this.text = s.text;
+        this.magic = s.magic;
+        this.img = s.img;
+        this.string = new String(s.string.getBytes());
+        this.bi = s.bi;
     }
 
     /* added by Jeremy
