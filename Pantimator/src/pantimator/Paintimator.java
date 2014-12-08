@@ -283,6 +283,7 @@ public class Paintimator extends JFrame{
 							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 							refreshDrawPanel(layeredPanelList.getSelected());
 							toolPanel.resetState();
+							layeredPanelList.getSelected().clearRootPane();
 							break;
 						default :
 							break;
@@ -378,11 +379,11 @@ public class Paintimator extends JFrame{
 				JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE,
 				null,
-				new String[]{"Add New Page", "No"},
+				new String[]{"Cancel", "Copy Page", "Blank Page"},
 				"Add New Page");
 		
 		switch (i) {
-			case JOptionPane.YES_OPTION :	
+			case 1 :	
 				centerPanel.remove(layeredPanelList.getSelected());
 				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 				
