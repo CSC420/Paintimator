@@ -283,6 +283,7 @@ public class Paintimator extends JFrame{
 							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 							refreshDrawPanel(layeredPanelList.getSelected());
 							toolPanel.resetState();
+							layeredPanelList.getSelected().clearRootPane();
 							break;
 						default :
 							break;
