@@ -273,14 +273,15 @@ public class Paintimator extends JFrame{
 						case JOptionPane.YES_OPTION:	
 							centerPanel.remove(layeredPanelList.getSelected());
 							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
+							
 							layeredPanel = new LayeredPanel();
 							layeredPanel.addMouseListener(myListener);
 							layeredPanel.addMouseMotionListener(myListener);
+							setCurrentCanvasListener(layeredPanel);
 							layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 							layeredPanelList.add(layeredPanel);
 							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 							refreshDrawPanel(layeredPanelList.getSelected());
-							setCurrentCanvasListener(layeredPanel);
 							toolPanel.resetState();
 							break;
 						default :
