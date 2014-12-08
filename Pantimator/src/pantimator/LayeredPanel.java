@@ -25,20 +25,22 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
 
     private CanvasCursor canvasCursor = CanvasCursor.DEFAULT;
 
-    public void clearLayeredPanel(){
+    private Image background;
+
+/*    public void clearLayeredPanel(){
         toDrawOnCanvas.clear();
         toDrawOnGlass.clear();
         removedShapes.clear();
         canvas.repaint();
-    }
+    }*/
 
     public LayeredPanel(){
         toDrawOnCanvas = new ArrayList<ShapeWrapper>();
         toDrawOnGlass = new ArrayList<ShapeWrapper>();
         removedShapes = new ArrayList<ShapeWrapper>();
 
-        canvas = new Layer(toDrawOnCanvas);
-        glass = new Layer(toDrawOnGlass);
+        canvas = new Layer(toDrawOnCanvas, false);
+        glass = new Layer(toDrawOnGlass, true);
 
         drawColor = Color.BLACK;
         glass.setBackground(new Color(0, 0, 0, 0));
@@ -48,6 +50,33 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         canvas.setBackground(Color.WHITE);
         canvas.repaint();
 
+    }
+    /*
+    * Copy Constructor -
+    * Allows for creating a new layered panel based on a given one.
+    * Added by Adam
+    */
+//    public LayeredPanel(LayeredPanel lp){
+//        toDrawOnCanvas = new ArrayList<ShapeWrapper>();
+//        toDrawOnGlass = new ArrayList<ShapeWrapper>();
+//        removedShapes = new ArrayList<ShapeWrapper>();
+//
+//        canvas = new Layer(toDrawOnCanvas);
+//        glass = new Layer(toDrawOnGlass);
+//
+//        background = lp.paneToBufferedImg();
+//
+//        drawColor = lp.drawColor;
+//        glass.setBackground(new Color(0, 0, 0, 0));
+//
+//        this.add(canvas, canvasLayerIndex);
+//        this.add(glass, glassLayerIndex);
+//        canvas.setBackground(Color.WHITE);
+//        canvas.repaint();
+//    }
+
+    public void setBackground(Image img){
+        this.background = img;
     }
 
     public void undo(){
@@ -80,6 +109,13 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         return brushSize;
     }
 
+    public ArrayList<ShapeWrapper> getToDrawOnCanvas(){
+        return toDrawOnCanvas;
+    }
+    public void setToDrawOnCanvas(ArrayList<ShapeWrapper> shapes){
+        this.toDrawOnCanvas = shapes;
+    }
+
 
     public JPanel getCanvas(){
         return canvas;
@@ -100,6 +136,8 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
         if (!s.isImg()) {
             s.setLineSize(brushSize);
             s.setColor(drawColor);
+        } else {
+            System.out.println("Adding an image...");
         }
         s.setTimeStamp(System.nanoTime());
         toDrawOnCanvas.add(s);
@@ -178,15 +216,24 @@ public class LayeredPanel extends JLayeredPane implements Serializable{
     
     private class Layer extends JPanel{
         ArrayList<ShapeWrapper> shapes;
+        boolean isGlass;
 
-        public Layer(ArrayList<ShapeWrapper> shapes){
+        public Layer(ArrayList<ShapeWrapper> shapes, boolean isGlass){
             this.shapes = shapes;
+            this.isGlass = isGlass;
         }
 
         @Override
         public void paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D)g;
+
+            /* added by Adam
+            * this draws a background image if there is one...
+            */
+            if(background != null && !isGlass){
+                g2d.drawImage(background,0,0,null);
+            }
 
             g2d.setBackground(Color.WHITE);
             for (ShapeWrapper s : shapes) {
