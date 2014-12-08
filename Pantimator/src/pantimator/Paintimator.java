@@ -373,6 +373,7 @@ public class Paintimator extends JFrame{
                 centerPanel.remove(layeredPanelList.getSelected());
                 animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 
+                //Code to add previous image as background of new page
                 BufferedImage bi = layeredPanel.paneToBufferedImg();
                 layeredPanel = new LayeredPanel();
                 layeredPanel.setBackground(bi);
