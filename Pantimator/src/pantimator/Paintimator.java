@@ -51,7 +51,7 @@ public class Paintimator extends JFrame{
 	private int height = 900;
 	private int width = 1440;
 	
-	private boolean debug = true;
+	private boolean debug = false;
 
 	public Paintimator() throws IOException, UnsupportedAudioFileException, LineUnavailableException{
 		super();
@@ -60,7 +60,7 @@ public class Paintimator extends JFrame{
 		this.setTitle(FRAME_TITLE);
 		
 		//create a contentPane that can hold an image
-        contentPane = new BackgroundPanel("images/background.png");
+        contentPane = new BackgroundPanel("images/background2.png");
         contentPane.setLayout(new BorderLayout());
 		
 
@@ -273,14 +273,16 @@ public class Paintimator extends JFrame{
 						case JOptionPane.YES_OPTION:	
 							centerPanel.remove(layeredPanelList.getSelected());
 							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
+							
 							layeredPanel = new LayeredPanel();
 							layeredPanel.addMouseListener(myListener);
 							layeredPanel.addMouseMotionListener(myListener);
+							setCurrentCanvasListener(layeredPanel);
 							layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 							layeredPanelList.add(layeredPanel);
 							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 							refreshDrawPanel(layeredPanelList.getSelected());
-							setCurrentCanvasListener(layeredPanel);
+							toolPanel.resetState();
 							break;
 						default :
 							break;
@@ -392,6 +394,7 @@ public class Paintimator extends JFrame{
 				layeredPanelList.add(layeredPanel);
 				animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 				refreshDrawPanel(layeredPanelList.getSelected());
+				toolPanel.resetState();
 				break;
 			default :
 				break;
