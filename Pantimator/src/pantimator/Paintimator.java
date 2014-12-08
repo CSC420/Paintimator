@@ -1,15 +1,31 @@
 package pantimator;
 
-import javax.imageio.ImageIO;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 
 public class Paintimator extends JFrame{
@@ -264,11 +280,12 @@ public class Paintimator extends JFrame{
 							layeredPanel.addMouseListener(myListener);
 							layeredPanel.addMouseMotionListener(myListener);
 							setCurrentCanvasListener(layeredPanel);
-							layeredPanel.setPreferredSize(new Dimension(width - 450, height - 300));
+							layeredPanel.setPreferredSize(new Dimension(width-450,height-300));
 							layeredPanelList.add(layeredPanel);
-							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel() + 1);
+							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 							refreshDrawPanel(layeredPanelList.getSelected());
 							toolPanel.resetState();
+							layeredPanelList.getSelected().clearRootPane();
 							break;
 						default :
 							break;
