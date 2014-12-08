@@ -11,7 +11,6 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Listener implements MouseListener, MouseMotionListener  {
@@ -24,8 +23,10 @@ public class Listener implements MouseListener, MouseMotionListener  {
     private Vector<Integer> yDrawPoints;
 
     private static Shape tempShape;
+    private static Component context;
 
-    public Listener(LayeredPanel lp){
+    public Listener(LayeredPanel lp, Component c){
+        context = c;
         layeredPanel = lp;
         currentState = LisState.NONE;
         xDrawPoints = new Vector<Integer>();
@@ -344,7 +345,7 @@ public class Listener implements MouseListener, MouseMotionListener  {
 
         TEXT{
             public void mouseClicked(Listener l, MouseEvent e){
-                String s = JOptionPane.showInputDialog(null, "Enter text here:", "Text", JOptionPane.PLAIN_MESSAGE);
+                String s = JOptionPane.showInputDialog(context, "Enter text here:", "Text", JOptionPane.PLAIN_MESSAGE);
                 l.layeredPanel.drawOnRootPane(new ShapeWrapper(new Rectangle2D.Float(e.getX(), e.getY(),0,0), s));
 
             }

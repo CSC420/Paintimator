@@ -1,27 +1,14 @@
 package pantimator;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 public class ColorWheelPanel extends JPanel implements MouseListener {
 	    private final Paintimator master;
@@ -39,7 +26,7 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 			AudioInputStream ais = AudioSystem.getAudioInputStream(is);
 	        button = AudioSystem.getClip();
 	        button.open(ais);
-	        java.net.URL icon = ColorWheelPanel.class.getResource("images/color_wheel.png");
+	        java.net.URL icon = ColorWheelPanel.class.getResource("images/color_wheel2.png");
 			  if (icon == null) {
 				 System.out.println("Issue loading Color Wheel in ColorWheelPanel"); 
 				 System.exit(-1);
