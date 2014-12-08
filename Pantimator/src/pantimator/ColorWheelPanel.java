@@ -39,7 +39,7 @@ public class ColorWheelPanel extends JPanel implements MouseListener {
 			AudioInputStream ais = AudioSystem.getAudioInputStream(is);
 	        button = AudioSystem.getClip();
 	        button.open(ais);
-	        java.net.URL icon = ColorWheelPanel.class.getResource("images/color_wheel.png");
+	        java.net.URL icon = ColorWheelPanel.class.getResource("images/color_wheel2.png");
 			  if (icon == null) {
 				 System.out.println("Issue loading Color Wheel in ColorWheelPanel"); 
 				 System.exit(-1);
