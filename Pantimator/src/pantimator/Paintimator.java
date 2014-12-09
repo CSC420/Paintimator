@@ -44,7 +44,7 @@ public class Paintimator extends JFrame{
 		this.setTitle(FRAME_TITLE);
 		
 		//create a contentPane that can hold an image
-        contentPane = new BackgroundPanel("images/background2.png");
+        contentPane = new BackgroundPanel("images/background.png");
         contentPane.setLayout(new BorderLayout());
 		
 
@@ -150,6 +150,7 @@ public class Paintimator extends JFrame{
 		gbc.gridwidth = 2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
         JPanel cwBuffer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
+        cwBuffer.setOpaque(false);
         cwBuffer.add(cwPanel);
 		sidePanel.add(cwBuffer, gbc);
 
@@ -247,33 +248,52 @@ public class Paintimator extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				if(layeredPanelList.isAtEnd()){
 					int i = JOptionPane.showOptionDialog(context,
-							"Do you want to add a new page?", 
-							"Next Page", 
-							JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE,
-							null,
-							new String[]{"Add New Page", "No"},
-							"Add New Page");
-					
-					switch (i) {
-						case JOptionPane.YES_OPTION:	
-							centerPanel.remove(layeredPanelList.getSelected());
-							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
-							
-							layeredPanel = new LayeredPanel();
-							layeredPanel.addMouseListener(myListener);
-							layeredPanel.addMouseMotionListener(myListener);
-							setCurrentCanvasListener(layeredPanel);
-							layeredPanel.setPreferredSize(new Dimension(width - 450, height - 300));
-							layeredPanelList.add(layeredPanel);
-							animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel() + 1);
-							refreshDrawPanel(layeredPanelList.getSelected());
-							toolPanel.resetState();
-							layeredPanelList.getSelected().clearRootPane();
-							break;
-						default :
-							break;
-					}
+			                "Would you like to add a next page?",
+			                "Next Page",
+			                JOptionPane.YES_NO_CANCEL_OPTION,
+			                JOptionPane.QUESTION_MESSAGE,
+			                null,
+			                new String[]{"Yes, Blank Page", "Yes, Page Copy", "Cancel"},
+			                "Yes, Blank Page");
+
+			        switch (i) {
+			            case JOptionPane.NO_OPTION:
+			                centerPanel.remove(layeredPanelList.getSelected());
+			                animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
+
+			                //Code to add previous image as background of new page
+			                BufferedImage bi = layeredPanel.paneToBufferedImg();
+			                layeredPanel = new LayeredPanel();
+			                layeredPanel.setBackground(bi);
+
+			                layeredPanel.addMouseListener(myListener);
+			                layeredPanel.addMouseMotionListener(myListener);
+			                setCurrentCanvasListener(layeredPanel);
+			                layeredPanel.setPreferredSize(new Dimension(width - 450, height - 300));
+			                layeredPanelList.add(layeredPanel);
+			                animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel() + 1);
+			                refreshDrawPanel(layeredPanelList.getSelected());
+			                toolPanel.resetState();
+			                layeredPanelList.getSelected().clearRootPane();
+			                break;
+			            case JOptionPane.YES_OPTION:
+			                centerPanel.remove(layeredPanelList.getSelected());
+			                animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
+
+			                layeredPanel = new LayeredPanel();
+
+			                layeredPanel.addMouseListener(myListener);
+			                layeredPanel.addMouseMotionListener(myListener);
+			                setCurrentCanvasListener(layeredPanel);
+			                layeredPanel.setPreferredSize(new Dimension(width - 450, height - 300));
+			                layeredPanelList.add(layeredPanel);
+			                animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel() + 1);
+			                refreshDrawPanel(layeredPanelList.getSelected());
+			                toolPanel.resetState();
+			                layeredPanelList.getSelected().clearRootPane();
+			            default :
+			                break;
+			        }
 					
 				}else{
 				
@@ -361,17 +381,16 @@ public class Paintimator extends JFrame{
 	 */
     public void newFrame() {
         int i = JOptionPane.showOptionDialog(this,
-                "Do you want to add a page?",
+                "What kind of page would you like to add?",
                 "New Page",
-                JOptionPane.YES_NO_OPTION,
+                JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
-                new String[]{"Cancel", "Copy Page", "Blank Page"},
-                "Add New Page");
-        System.out.println("User chose: " + i);
+                new String[]{"Blank Page", "Copy Page", "Cancel"},
+                "Blank Page");
 
         switch (i) {
-            case 1:
+            case JOptionPane.NO_OPTION:
                 centerPanel.remove(layeredPanelList.getSelected());
                 animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 
@@ -389,7 +408,7 @@ public class Paintimator extends JFrame{
                 refreshDrawPanel(layeredPanelList.getSelected());
                 toolPanel.resetState();
                 break;
-            case 2:
+            case JOptionPane.YES_OPTION:
                 centerPanel.remove(layeredPanelList.getSelected());
                 animationPane.updateAnimation(layeredPanelList, layeredPanelList.getIntSelectedPanel()+1);
 
