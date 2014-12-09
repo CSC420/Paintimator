@@ -330,6 +330,7 @@ public class Paintimator extends JFrame{
 
 	}
 	public void saveProject(){
+		System.out.println("Test");
 		if(su.getProjectName() !=null){
 			su.saveProject(layeredPanelList);
 		}else{
