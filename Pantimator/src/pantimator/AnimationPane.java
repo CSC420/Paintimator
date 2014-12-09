@@ -261,11 +261,11 @@ public class AnimationPane extends JPanel {
         this.lpl = lpl;
         int index = 1;
         frameHolder.removeAll(); // clears everything
-        for (LayeredPanel lp : lpl.getArray()) {        	
-        	Image img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        for (int i = 0; i < lpl.getArray().size() - 1; i++) {
+        	Image img = lpl.getArray().get(i).paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         	newThumb(img, index, selected);
-        	thumbMap.put(thumbPanel, lp);
-            index++;
+        	thumbMap.put(thumbPanel, lpl.getArray().get(i));
+        	index++;
         }
     }
     
