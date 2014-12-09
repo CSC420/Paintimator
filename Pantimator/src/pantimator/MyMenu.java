@@ -2,12 +2,16 @@ package pantimator;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+
 
 
 
@@ -46,7 +50,7 @@ public class MyMenu extends JMenuBar{
 		ais = AudioSystem.getAudioInputStream(is);
         redoSound = AudioSystem.getClip();
         redoSound.open(ais);
-		
+        this.setBackground(Color.RED);
 		
 		JButton jbNewFrame = createButton("images/newFrame32.png", "New Page");
 		JButton jbNewProject = createButton("images/newProject322.png", "New Notebook");
@@ -155,5 +159,15 @@ public class MyMenu extends JMenuBar{
 		//BufferedImage thicknessIcon = ImageIO.read(new File(path));
 		return new ImageIcon(thicknessIcon, des);
 	}
+	
+    @Override
+    protected void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(new Color(223,223,223));
+        g2d.fillRect(0, 0, getWidth() - 1, getHeight() - 1);
+
+    }
 	
 }

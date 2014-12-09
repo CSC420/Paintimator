@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,7 +45,7 @@ public class Paintimator extends JFrame{
 		this.setTitle(FRAME_TITLE);
 		
 		//create a contentPane that can hold an image
-        contentPane = new BackgroundPanel("images/background.png");
+        contentPane = new BackgroundPanel("images/background2.png");
         contentPane.setLayout(new BorderLayout());
 		
 
@@ -126,6 +127,7 @@ public class Paintimator extends JFrame{
 		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
+		//gbc.insets = new Insets(10,0,0,0);
 		gbc.anchor = GridBagConstraints.CENTER;
 		centerPanel.add(animationPane, gbc);
 
@@ -133,6 +135,7 @@ public class Paintimator extends JFrame{
 		gbc.weighty = 0.50;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.insets = new Insets(0,0,0,0);
 		gbc.fill = GridBagConstraints.BOTH;
 		sidePanel.add(toolPanel, gbc);
 		
@@ -350,6 +353,7 @@ public class Paintimator extends JFrame{
 
 	}
 	public void saveProject(){
+		System.out.println("Test");
 		if(su.getProjectName() !=null){
 			su.saveProject(layeredPanelList);
 		}else{
@@ -385,7 +389,7 @@ public class Paintimator extends JFrame{
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
-                new String[]{"Blank Page", "Copy Page", "Cancel"},
+                new String[]{"Blank Page", "Page Copy", "Cancel"},
                 "Blank Page");
 
         switch (i) {
