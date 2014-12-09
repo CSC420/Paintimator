@@ -18,7 +18,6 @@ public class Thumb extends JPanel implements MouseListener {
 	
 	private Image image;
 	private AnimationPane ap;
-	private boolean isFocused = false;
 	private int index;
 
     public Thumb(AnimationPane ap, Image img, int i) {
@@ -38,28 +37,6 @@ public class Thumb extends JPanel implements MouseListener {
     	this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
     }
     
-    private void setFocusBorder() {
-    	if (!isFocused) {
-			//this.setBorder(BorderFactory.createLineBorder(Color.CYAN));
-		} else {
-			this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		}
-    	
-    	isFocused = !isFocused;
-    }
-    
-    public boolean isFocused() {
-    	return isFocused;
-    }
-    
-    public void changeFocus() {
-    	setFocusBorder();
-    }
-    
-    private void notifyAP() {
-    	ap.updateThumbArray(this);
-    }
-    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -69,23 +46,14 @@ public class Thumb extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		notifyAP();		
 		ap.thumbSelected(this.index);
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		if (!isFocused) {
-			//this.setBorder(BorderFactory.createLineBorder(Color.CYAN, 2));
-		}
-	}
+	public void mouseEntered(MouseEvent e) { }
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		if (!isFocused) {
-			//this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		}
-	}
+	public void mouseExited(MouseEvent e) { }
 
 	@Override
 	public void mousePressed(MouseEvent e) { }

@@ -261,11 +261,10 @@ public class AnimationPane extends JPanel {
         this.lpl = lpl;
         int index = 1;
         frameHolder.removeAll(); // clears everything
-        for (int i = 0; i < lpl.getArray().size() - 1; i++) {
-        	Image img = lpl.getArray().get(i).paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        for (LayeredPanel lp : lpl.getArray()) {        	
+        	Image img = lp.paneToImg().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
         	newThumb(img, index, selected);
-        	thumbMap.put(thumbPanel, lpl.getArray().get(i));
-        	index++;
+            index++;
         }
     }
     
@@ -288,17 +287,5 @@ public class AnimationPane extends JPanel {
      */
     public void updateAnimation(LayeredPanelList lpl, int selected) { 
         loadedFrameHolder(lpl, selected);
-    }
-    
-    public void updateThumbArray(Thumb thumb) {
-    	//painter.refreshDrawPanel(thumbMap.get(thumb));
-    	for (Thumb t : thumbMap.keySet()) {
-    		if (thumb != t && t.isFocused()) {
-    			t.changeFocus();
-    			break;
-    		}
-    	}
-    	
-    	thumb.changeFocus();
     }
 }
