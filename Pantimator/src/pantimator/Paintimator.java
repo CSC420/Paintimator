@@ -386,7 +386,7 @@ public class Paintimator extends JFrame{
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,
-                new String[]{"Blank Page", "Copy Page", "Cancel"},
+                new String[]{"Blank Page", "Page Copy", "Cancel"},
                 "Blank Page");
 
         switch (i) {
