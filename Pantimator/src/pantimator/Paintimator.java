@@ -45,7 +45,7 @@ public class Paintimator extends JFrame{
 		this.setTitle(FRAME_TITLE);
 		
 		//create a contentPane that can hold an image
-        contentPane = new BackgroundPanel("images/background2.png");
+        contentPane = new BackgroundPanel("images/background3.png");
         contentPane.setLayout(new BorderLayout());
 		
 
